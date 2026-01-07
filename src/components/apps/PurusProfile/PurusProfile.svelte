@@ -6,16 +6,29 @@
 	import TwitterIcon from '~icons/mdi/twitter';
 	import DiscordIcon from '~icons/mdi/discord';
 	import TelegramIcon from '~icons/mdi/telegram';
+	import SunIcon from '~icons/mdi/white-balance-sunny';
+	import MoonIcon from '~icons/mdi/moon-waning-crescent';
 
 	function external(node: HTMLAnchorElement) {
 		node.rel = 'noopener noreferrer';
 		node.target = '_blank';
 	}
+
+	function toggleTheme() {
+		preferences.theme.scheme = preferences.theme.scheme === 'light' ? 'dark' : 'light';
+	}
 </script>
 
-<section class="container">
+<section class="container" class:dark={preferences.theme.scheme === 'dark'}>
 	<header class="titlebar app-window-drag-handle">
 		<span>About the Developer</span>
+		<button class="theme-toggle" onclick={toggleTheme} title="Toggle theme">
+			{#if preferences.theme.scheme === 'light'}
+				<MoonIcon />
+			{:else}
+				<SunIcon />
+			{/if}
+		</button>
 	</header>
 
 	<aside class:light={preferences.theme.scheme === 'light'}>
@@ -92,6 +105,7 @@
 
 		display: flex;
 		justify-content: center;
+		align-items: center;
 
 		z-index: 1;
 
@@ -104,11 +118,71 @@
 
 		user-select: none;
 
+		position: relative;
+
 		span {
 			color: hsla(var(--system-color-dark-hsl), 0.8);
 			font-weight: 500;
 			font-size: 0.9rem;
 			letter-spacing: 0.5px;
+		}
+	}
+
+	.theme-toggle {
+		position: absolute;
+		right: 1rem;
+		top: 50%;
+		transform: translateY(-50%);
+
+		background: hsla(var(--system-color-dark-hsl), 0.1);
+		border: none;
+		border-radius: 50%;
+		width: 28px;
+		height: 28px;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		cursor: pointer;
+		transition: background 200ms ease;
+
+		color: hsla(var(--system-color-dark-hsl), 0.8);
+
+		&:hover {
+			background: hsla(var(--system-color-dark-hsl), 0.2);
+		}
+	}
+
+	.container.dark {
+		--color: var(--system-color-dark-hsl);
+		color: var(--system-color-light);
+
+		.titlebar span {
+			color: hsla(var(--system-color-light-hsl), 0.8);
+		}
+
+		.theme-toggle {
+			background: hsla(var(--system-color-light-hsl), 0.1);
+			color: hsla(var(--system-color-light-hsl), 0.8);
+
+			&:hover {
+				background: hsla(var(--system-color-light-hsl), 0.2);
+			}
+		}
+
+		aside nav {
+			hr {
+				background-color: hsla(var(--system-color-light-hsl), 0.2);
+			}
+
+			a {
+				color: hsla(var(--system-color-light-hsl), 0.9);
+
+				&:hover {
+					background-color: hsla(var(--system-color-light-hsl), 0.2);
+				}
+			}
 		}
 	}
 
