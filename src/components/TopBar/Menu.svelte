@@ -1,12 +1,30 @@
 <script lang="ts">
 	import { preferences } from '🍎/state/preferences.svelte.ts';
+	import { requestShutdown, requestRestart, requestLogout, sleep, lockScreen } from '🍎/state/system.svelte.ts';
+	import { menubar_state } from '🍎/state/menubar.svelte';
 
 	const { menu }: { menu: any } = $props();
+
+	function handleMenuClick(key: string) {
+		menubar_state.active = '';
+		
+		if (key === 'shutdown') {
+			requestShutdown();
+		} else if (key === 'restart') {
+			requestRestart();
+		} else if (key === 'logout') {
+			requestLogout();
+		} else if (key === 'sleep') {
+			sleep();
+		} else if (key === 'lock-screen') {
+			lockScreen();
+		}
+	}
 </script>
 
 <section class="container" class:dark={preferences.theme.scheme === 'dark'}>
-	{#each Object.entries(menu) as Array<[any, any]> as [_, val]}
-		<button class="menu-item" disabled={val.disabled}>{val.title}</button>
+	{#each Object.entries(menu) as Array<[any, any]> as [key, val]}
+		<button class="menu-item" disabled={val.disabled} onclick={() => handleMenuClick(key)}>{val.title}</button>
 		{#if val.breakAfter}
 			<div class="divider"></div>
 		{/if}
