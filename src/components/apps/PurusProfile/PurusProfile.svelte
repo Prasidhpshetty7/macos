@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { preferences } from '🍎/state/preferences.svelte.ts';
-	import TwitterIcon from '~icons/mdi/twitter';
-	import BlogIcon from '~icons/mdi/grease-pencil';
-	import WorksIcon from '~icons/ic/round-workspaces';
 	import GithubIcon from '~icons/mdi/github';
-	import DevToIcon from '~icons/mdi/dev-to';
+	import LinkedInIcon from '~icons/mdi/linkedin';
+	import InstagramIcon from '~icons/mdi/instagram';
+	import TwitterIcon from '~icons/mdi/twitter';
+	import DiscordIcon from '~icons/mdi/discord';
+	import TelegramIcon from '~icons/mdi/telegram';
 
 	function external(node: HTMLAnchorElement) {
 		node.rel = 'noopener noreferrer';
@@ -19,45 +20,48 @@
 
 	<aside class:light={preferences.theme.scheme === 'light'}>
 		<nav>
-			<a href="https://www.puruvj.dev/blog" use:external> <BlogIcon /> Blog </a>
-			<a href="https://www.puruvj.dev/works" use:external> <WorksIcon /> Works </a>
+			<a href="https://github.com/Prasidhpshetty7" use:external> <GithubIcon /> GitHub </a>
+			<a href="https://www.linkedin.com/in/prasidh-shetty7/" use:external> <LinkedInIcon /> LinkedIn </a>
 
 			<hr />
 
-			<a href="https://www.puruvj.dev/twitter" use:external>
-				<TwitterIcon />
-				Twitter
+			<a href="https://www.instagram.com/mr__shxtty/" use:external>
+				<InstagramIcon />
+				Instagram
 			</a>
-			<a href="https://www.puruvj.dev/github" use:external> <GithubIcon /> Github </a>
-			<a href="https://www.puruvj.dev/devto" use:external> <DevToIcon /> Dev.to </a>
+			<a href="https://x.com/ShettyPrasidh7" use:external> <TwitterIcon /> X / Twitter </a>
+			<a href="https://discord.com/users/prasidhshetty" use:external> <DiscordIcon /> Discord </a>
+			<a href="https://t.me/FINALSKULL" use:external> <TelegramIcon /> Telegram </a>
 		</nav>
 	</aside>
 
 	<section class="content">
-		<img height="200" width="200" src="/purus-profile/puru.webp" alt="Puru Vijay Profile pic" />
+		<img height="200" width="200" src="/purus-profile/pexels-ahmedadly-1270184.jpg" alt="Prasidh P Shetty Profile pic" />
 
 		<br />
 
-		<h1>Hi, I'm Puru</h1>
+		<h1>Hi, I'm Prasidh</h1>
 
 		<h2>
-			I'm the creator of macOS Web, which you're on right now
-			<img src="/emojis/wink.png" alt="Wink emoji" class="emoji" />
+			Web Designer & Full-Stack Developer
+			<img src="/emojis/star-struck.png" alt="Star Struck face emoji" class="emoji" />
 		</h2>
 
 		<br /><br />
 
 		<p>
-			I am a fullstack web developer, with an infinite amount of love for frontend web development,
-			esp JavaScript, TypeScript, and for frontend frameworks like Svelte, Vue and React
-			<img src="/emojis/star-struck.png" alt="Star Struck face emoji" class="emoji" />
+			I'm passionate about creating modern, visually refined, and user-centric digital experiences.
+			I build responsive, high-performance websites and web applications that look great and deliver
+			seamless functionality.
+			<img src="/emojis/wink.png" alt="Wink emoji" class="emoji" />
 		</p>
 
 		<br /><br />
 
 		<p>
-			However, my love for tech doesn't end there. I enjoy writing backend APIs, scripts, working
-			with databases, and my fav platforms are NodeJS, Deno and Go
+			As a full-stack developer, I work across the entire development lifecycle — from designing
+			intuitive frontend interfaces to building robust backend systems, APIs, and database architectures.
+			I believe great digital products are built at the intersection of design, usability, and engineering.
 		</p>
 	</section>
 </section>
@@ -196,8 +200,12 @@
 
 		padding: 1rem;
 
+		overflow-y: auto;
+
 		img {
 			border-radius: 50%;
+			object-fit: cover;
+			box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3);
 		}
 	}
 
@@ -214,11 +222,14 @@
 	}
 
 	h2 {
-		font-size: 1.618rem;
+		font-size: 1.418rem;
 		line-height: 1.2;
+		text-align: center;
 	}
 
 	p {
 		line-height: 1.618rem;
+		text-align: center;
+		max-width: 500px;
 	}
 </style>

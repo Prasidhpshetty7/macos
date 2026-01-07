@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fade_out } from '🍎/helpers/fade';
 	import { should_show_notch } from '🍎/state/menubar.svelte.ts';
+	import { elevation } from '🍎/actions';
 
 	import { sineIn } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
@@ -9,7 +10,7 @@
 	import TopBarTime from './TopBarTime.svelte';
 </script>
 
-<header>
+<header use:elevation={'topbar'}>
 	<MenuBar />
 
 	<span style:flex="1 1 auto"></span>

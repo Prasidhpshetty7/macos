@@ -5,7 +5,7 @@ export type AppID = keyof typeof apps_config;
 export const apps = $state({
 	open: {
 		wallpapers: false,
-		finder: true,
+		finder: false,
 		vscode: false,
 		calculator: false,
 		// safari: false,
@@ -14,9 +14,22 @@ export const apps = $state({
 		// 'system-preferences': false,
 
 		'purus-twitter': false,
-		'view-source': true,
+		'view-source': false,
 
-		vercel: true,
+		vercel: false,
+	} as Record<AppID, boolean>,
+
+	// Track which apps are running (even if minimized)
+	running: {
+		wallpapers: false,
+		finder: false,
+		vscode: false,
+		calculator: false,
+		appstore: false,
+		calendar: false,
+		'purus-twitter': false,
+		'view-source': false,
+		vercel: false,
 	} as Record<AppID, boolean>,
 
 	active: 'finder' satisfies AppID,

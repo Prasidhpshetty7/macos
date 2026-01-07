@@ -5,8 +5,12 @@ import { imagetools } from 'vite-imagetools';
 import { VitePWA } from 'vite-plugin-pwa';
 import { browserslistToTargets } from 'lightningcss';
 import browserslist from 'browserslist';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
 import { prefetch } from './prefetch-plugin';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
 	plugins: [
@@ -61,7 +65,7 @@ export default defineConfig({
 	],
 	resolve: {
 		alias: {
-			'🍎': new URL('./src/', import.meta.url).pathname,
+			'🍎': path.resolve(__dirname, './src'),
 		},
 	},
 	build: {

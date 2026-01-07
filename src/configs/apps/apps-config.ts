@@ -23,6 +23,8 @@ const calculator = create_app_config({
 const calendar = create_app_config({
 	title: 'Calendar',
 	resizable: true,
+	height: 600,
+	width: 800,
 });
 
 const vscode = create_app_config({
@@ -44,15 +46,19 @@ const finder = create_app_config({
 const safari = create_app_config({
 	title: 'Safari',
 	resizable: true,
+	height: 600,
+	width: 800,
 });
 
 const systemPreferences = create_app_config({
 	title: 'System Preferences',
 	resizable: true,
+	height: 600,
+	width: 800,
 });
 
 const purusTwitter = create_app_config({
-	title: `About the Developer`,
+	title: `About Prasidh`,
 	resizable: true,
 
 	dock_breaks_before: true,
@@ -62,11 +68,11 @@ const purusTwitter = create_app_config({
 });
 
 const viewSource = create_app_config({
-	title: `View Source`,
+	title: `GitHub`,
 	resizable: true,
 
 	should_open_window: false,
-	external_action: () => window.open('https://github.com/puruvj/macos-web', '_blank'),
+	external_action: () => window.open('https://github.com/Prasidhpshetty7', '_blank'),
 });
 
 const vercel = create_app_config({
@@ -83,6 +89,8 @@ const vercel = create_app_config({
 const appstore = create_app_config({
 	title: 'App Store',
 	resizable: true,
+	height: 600,
+	width: 800,
 });
 
 export const apps_config = {

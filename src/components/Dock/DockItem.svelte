@@ -20,6 +20,16 @@
 		baseWidth * 1.1,
 		baseWidth,
 	];
+	// Vertical lift output - icons rise based on proximity to cursor
+	const liftOutput = [
+		0,
+		8,
+		20,
+		35,
+		20,
+		8,
+		0,
+	];
 </script>
 
 <script lang="ts">
@@ -42,7 +52,7 @@
 		needs_update?: boolean;
 	} = $props();
 
-	let image_el = $state<HTMLImageElement>();
+	let image_el = $state<HTMLElement>();
 
 	let distance = $state(beyond_the_distance_limit);
 
@@ -51,12 +61,21 @@
 		stiffness: 0.12,
 	});
 
+	const lift_px = spring(0, {
+		damping: 0.47,
+		stiffness: 0.12,
+	});
+
 	const get_width_from_distance = interpolate(distanceInput, widthOutput);
+	const get_lift_from_distance = interpolate(distanceInput, liftOutput);
 
 	$effect(() => {
 		distance;
 
-		untrack(() => ($width_px = get_width_from_distance(distance)));
+		untrack(() => {
+			$width_px = get_width_from_distance(distance);
+			$lift_px = get_lift_from_distance(distance);
+		});
 	});
 
 	let raf: number;
@@ -80,8 +99,7 @@
 
 	$effect(() => {
 		mouse_x;
-		if (preferences.reduced_motion || apps.is_being_dragged) return;
-
+		// Always run animation for lift effect, only skip size magnification if reduced motion
 		raf = requestAnimationFrame(animate);
 	});
 
@@ -112,6 +130,7 @@
 		const isAppAlreadyOpen = apps.open[app_id];
 
 		apps.open[app_id] = true;
+		apps.running[app_id] = true;
 		apps.active = app_id;
 
 		if (isAppAlreadyOpen) return;
@@ -143,17 +162,29 @@
 		{title}
 	</p>
 
-	<span style:transform="translate(0, {$appOpenIconBounceTransform}px)">
-		<img
-			bind:this={image_el}
-			src="/app-icons/{app_id}/256.webp"
-			alt="{title} app"
-			style:width="{$width_px / 16}rem"
-			draggable="false"
-		/>
+	<span style:transform="translate(0, {$appOpenIconBounceTransform - $lift_px}px)">
+		{#if app_id === 'calendar'}
+			<div 
+				bind:this={image_el}
+				class="calendar-icon"
+				style:width="{$width_px / 16}rem"
+				style:height="{$width_px / 16}rem"
+			>
+				<span class="calendar-day">{new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}</span>
+				<span class="calendar-date">{new Date().getDate()}</span>
+			</div>
+		{:else}
+			<img
+				bind:this={image_el}
+				src="/app-icons/{app_id}/256.webp"
+				alt="{title} app"
+				style:width="{$width_px / 16}rem"
+				draggable="false"
+			/>
+		{/if}
 	</span>
 
-	<div class="dot" style:--opacity={+apps.open[app_id]}></div>
+	<div class="dot" style:--opacity={+apps.running[app_id]}></div>
 
 	{#if show_pwa_badge}
 		<div class="pwa-badge" style:transform="scale({$width_px / baseWidth})">1</div>
@@ -163,12 +194,49 @@
 <style>
 	img {
 		will-change: width;
+		border-radius: 22%;
+		aspect-ratio: 1 / 1;
+		object-fit: cover;
+	}
+
+	.calendar-icon {
+		will-change: width;
+		border-radius: 22%;
+		aspect-ratio: 1 / 1;
+		background: linear-gradient(180deg, #ff3b30 0%, #ff3b30 26%, #ffffff 26%, #ffffff 100%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-start;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+		overflow: hidden;
+		transform: scale(0.85);
+	}
+
+	.calendar-day {
+		color: white;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 0.8px;
+		margin-top: 4%;
+		line-height: 1;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+	}
+
+	.calendar-date {
+		color: #333;
+		font-size: 38px;
+		font-weight: 300;
+		line-height: 1;
+		margin-top: 4%;
+		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 	}
 
 	button {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-end;
+		align-items: center;
 		position: relative;
 
 		border-radius: 0.5rem;

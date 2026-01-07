@@ -38,9 +38,10 @@
 	const randX = rand_int(-600, 600);
 	const randY = rand_int(-100, 100);
 
+	// All apps open at the same fixed position (center-left of screen)
 	let defaultPosition = {
-		x: (document.body.clientWidth / 2 + randX) / 2,
-		y: (100 + randY) / 2,
+		x: 150,
+		y: 80,
 	};
 
 	const disabledComp = Compartment.of(() => disabled(!dragging_enabled));
@@ -71,42 +72,54 @@
 	}
 
 	async function maximizeApp() {
-		if (!preferences.reduced_motion) {
-			windowEl.style.transition = 'height 0.3s ease, width 0.3s ease, transform 0.3s ease';
-		}
-
 		if (!is_maximized) {
 			dragging_enabled = false;
-
 			minimized_transform = windowEl.style.transform;
-			windowEl.style.transform = `translate(0px, 0px)`;
-
-			windowEl.style.width = `100%`;
-			// windowEl.style.height = 'calc(100vh - 1.7rem - 5.25rem)';
-			windowEl.style.height = 'calc(100vh - 1.7rem)';
+			
+			// Position window between menu bar and dock, shifted left and up
+			windowEl.setAttribute('style', `
+				position: fixed !important;
+				top: -40px !important;
+				left: 40% !important;
+				transform: translateX(-50%) !important;
+				width: 98% !important;
+				height: 92% !important;
+				z-index: ${apps.z_indices[app_id]} !important;
+				border-radius: 0.75rem !important;
+			`);
 		} else {
 			dragging_enabled = true;
-			windowEl.style.transform = minimized_transform;
-
-			windowEl.style.width = `${+width / remModifier}rem`;
-			windowEl.style.height = `${+height / remModifier}rem`;
+			windowEl.setAttribute('style', `
+				position: absolute;
+				transform: ${minimized_transform || 'none'};
+				width: ${+width / remModifier}rem;
+				height: ${+height / remModifier}rem;
+				z-index: ${apps.z_indices[app_id]};
+				border-radius: 0.75rem;
+			`);
 		}
 
 		is_maximized = !is_maximized;
-
 		apps.fullscreen[app_id] = is_maximized;
-
-		await sleep(300);
-
-		if (!preferences.reduced_motion) windowEl.style.transition = '';
 	}
 
 	function closeApp() {
 		apps.open[app_id] = false;
+		apps.running[app_id] = false;
 		apps.fullscreen[app_id] = false;
 	}
 
+	function minimizeApp() {
+		// Hide the window but keep it running (dot stays visible)
+		apps.open[app_id] = false;
+		// apps.running stays true
+	}
+
 	function onAppDragStart() {
+		// If maximized, restore window when user starts dragging
+		if (is_maximized) {
+			maximizeApp(); // This will restore it
+		}
 		focusApp();
 		apps.is_being_dragged = true;
 	}
@@ -115,7 +128,12 @@
 		apps.is_being_dragged = false;
 	}
 
-	onMount(() => windowEl?.focus());
+	onMount(() => {
+		windowEl?.focus();
+		// Set initial size
+		windowEl.style.width = `${+width / remModifier}rem`;
+		windowEl.style.height = `${+height / remModifier}rem`;
+	});
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
@@ -124,8 +142,7 @@
 	class="container"
 	class:dark={preferences.theme.scheme === 'dark'}
 	class:active={apps.active === app_id}
-	style:width="{+width / remModifier}rem"
-	style:height="{+height / remModifier}rem"
+	class:maximized={is_maximized}
 	style:z-index={apps.z_indices[app_id]}
 	tabindex="-1"
 	bind:this={windowEl}
@@ -141,7 +158,7 @@
 	out:windowCloseTransition
 >
 	<div class="tl-container {app_id}" use:elevation={'window-traffic-lights'}>
-		<TrafficLights {app_id} on_maximize_click={maximizeApp} on_close_app={closeApp} />
+		<TrafficLights {app_id} on_maximize_click={maximizeApp} on_close_app={closeApp} on_minimize_click={minimizeApp} />
 	</div>
 
 	<AppNexus {app_id} is_being_dragged={apps.is_being_dragged} />
@@ -150,9 +167,6 @@
 <style>
 	.container {
 		--elevated-shadow: 0px 8.5px 10px rgba(0, 0, 0, 0.115), 0px 68px 80px rgba(0, 0, 0, 0.23);
-
-		width: 100%;
-		height: 100%;
 
 		display: grid;
 		grid-template-rows: 1fr;
@@ -167,8 +181,6 @@
 		cursor: var(--system-cursor-default), auto;
 
 		&.active {
-			/* // --elevated-shadow: 0px 6.7px 12px rgba(0, 0, 0, 0.218), 0px 22.3px 40.2px rgba(0, 0, 0, 0.322),
-      //   0px 100px 180px rgba(0, 0, 0, 0.54); */
 			--elevated-shadow: 0px 8.5px 10px rgba(0, 0, 0, 0.28), 0px 68px 80px rgba(0, 0, 0, 0.56);
 		}
 
