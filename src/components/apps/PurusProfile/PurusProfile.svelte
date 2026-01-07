@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { preferences } from '🍎/state/preferences.svelte.ts';
 	import GithubIcon from '~icons/mdi/github';
 	import LinkedInIcon from '~icons/mdi/linkedin';
 	import InstagramIcon from '~icons/mdi/instagram';
@@ -9,29 +8,31 @@
 	import SunIcon from '~icons/mdi/white-balance-sunny';
 	import MoonIcon from '~icons/mdi/moon-waning-crescent';
 
+	let isDark = $state(false);
+
 	function external(node: HTMLAnchorElement) {
 		node.rel = 'noopener noreferrer';
 		node.target = '_blank';
 	}
 
 	function toggleTheme() {
-		preferences.theme.scheme = preferences.theme.scheme === 'light' ? 'dark' : 'light';
+		isDark = !isDark;
 	}
 </script>
 
-<section class="container" class:dark={preferences.theme.scheme === 'dark'}>
+<section class="container" class:dark={isDark}>
 	<header class="titlebar app-window-drag-handle">
 		<span>About the Developer</span>
 		<button class="theme-toggle" onclick={toggleTheme} title="Toggle theme">
-			{#if preferences.theme.scheme === 'light'}
-				<MoonIcon />
-			{:else}
+			{#if isDark}
 				<SunIcon />
+			{:else}
+				<MoonIcon />
 			{/if}
 		</button>
 	</header>
 
-	<aside class:light={preferences.theme.scheme === 'light'}>
+	<aside>
 		<nav>
 			<a href="https://github.com/Prasidhpshetty7" use:external> <GithubIcon /> GitHub </a>
 			<a href="https://www.linkedin.com/in/prasidh-shetty7/" use:external> <LinkedInIcon /> LinkedIn </a>
@@ -81,23 +82,20 @@
 
 <style>
 	.container {
-		--color: var(--system-color-light-hsl);
-
 		display: grid;
 		grid-template-columns: 12rem 1fr;
 		grid-template-rows: 3rem 1fr;
 
 		border-radius: inherit;
 
-		background-image: linear-gradient(
-			to right,
-			hsla(var(--color), 0.7) 12rem,
-			hsla(var(--color), 1) 12rem 100%
-		);
+		background-color: #f5f5f7;
 
-		transition: --color 200ms ease-in;
+		color: #1d1d1f;
+	}
 
-		color: var(--system-color-dark);
+	.container.dark {
+		background-color: #1d1d1f;
+		color: #f5f5f7;
 	}
 
 	.titlebar {
@@ -121,10 +119,11 @@
 		position: relative;
 
 		span {
-			color: hsla(var(--system-color-dark-hsl), 0.8);
+			color: inherit;
 			font-weight: 500;
 			font-size: 0.9rem;
 			letter-spacing: 0.5px;
+			opacity: 0.8;
 		}
 	}
 
@@ -134,7 +133,7 @@
 		top: 50%;
 		transform: translateY(-50%);
 
-		background: hsla(var(--system-color-dark-hsl), 0.1);
+		background: rgba(128, 128, 128, 0.15);
 		border: none;
 		border-radius: 50%;
 		width: 28px;
@@ -147,42 +146,10 @@
 		cursor: pointer;
 		transition: background 200ms ease;
 
-		color: hsla(var(--system-color-dark-hsl), 0.8);
+		color: inherit;
 
 		&:hover {
-			background: hsla(var(--system-color-dark-hsl), 0.2);
-		}
-	}
-
-	.container.dark {
-		--color: var(--system-color-dark-hsl);
-		color: var(--system-color-light);
-
-		.titlebar span {
-			color: hsla(var(--system-color-light-hsl), 0.8);
-		}
-
-		.theme-toggle {
-			background: hsla(var(--system-color-light-hsl), 0.1);
-			color: hsla(var(--system-color-light-hsl), 0.8);
-
-			&:hover {
-				background: hsla(var(--system-color-light-hsl), 0.2);
-			}
-		}
-
-		aside nav {
-			hr {
-				background-color: hsla(var(--system-color-light-hsl), 0.2);
-			}
-
-			a {
-				color: hsla(var(--system-color-light-hsl), 0.9);
-
-				&:hover {
-					background-color: hsla(var(--system-color-light-hsl), 0.2);
-				}
-			}
+			background: rgba(128, 128, 128, 0.3);
 		}
 	}
 
@@ -199,31 +166,7 @@
 		border-top-left-radius: 0.5rem;
 		border-bottom-left-radius: inherit;
 
-		&::before {
-			content: '';
-
-			width: inherit;
-			height: inherit;
-
-			border-radius: inherit;
-
-			position: fixed;
-			left: 0;
-			top: 0;
-
-			z-index: -1;
-			backdrop-filter: blur(12px);
-		}
-
-		&.light {
-			height: calc(100% - 3px);
-			width: calc(12rem - 2.5px);
-
-			margin: 1.7px 0 0px 1.7px;
-
-			border-top-left-radius: 0.5rem;
-			border-bottom-left-radius: 0.5rem;
-		}
+		background: rgba(128, 128, 128, 0.1);
 
 		nav {
 			display: flex;
@@ -238,7 +181,7 @@
 				width: 100%;
 				height: 1px;
 
-				background-color: hsla(var(--system-color-dark-hsl), 0.2);
+				background-color: rgba(128, 128, 128, 0.3);
 
 				border: none;
 			}
@@ -248,7 +191,7 @@
 				gap: 0.4rem;
 				align-items: center;
 
-				color: hsla(var(--system-color-dark-hsl), 0.9);
+				color: inherit;
 				text-decoration: none;
 				font-weight: 400;
 
@@ -259,7 +202,7 @@
 				transition: background-color 100ms ease;
 
 				&:hover {
-					background-color: hsla(var(--system-color-dark-hsl), 0.2);
+					background-color: rgba(128, 128, 128, 0.2);
 				}
 			}
 		}
@@ -279,7 +222,7 @@
 		img {
 			border-radius: 50%;
 			object-fit: cover;
-			box-shadow: 0 4px 20px hsla(0, 0%, 0%, 0.3);
+			box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 		}
 	}
 
