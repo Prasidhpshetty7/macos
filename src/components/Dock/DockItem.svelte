@@ -131,6 +131,7 @@
 
 		apps.open[app_id] = true;
 		apps.running[app_id] = true;
+		apps.minimized[app_id] = false; // Restore from minimized state
 		apps.active = app_id;
 
 		if (isAppAlreadyOpen) return;

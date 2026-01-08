@@ -95,12 +95,12 @@ const appstore = create_app_config({
 
 export const apps_config = {
 	finder,
+	safari,
 	wallpapers,
 	calculator,
 	calendar,
 	vscode,
 	appstore,
-	// safari,
 
 	// 'system-preferences': systemPreferences,
 

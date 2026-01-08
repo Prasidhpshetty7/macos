@@ -4,29 +4,27 @@ export type AppID = keyof typeof apps_config;
 
 export const apps = $state({
 	open: {
-		wallpapers: false,
 		finder: false,
-		vscode: false,
+		safari: false,
+		wallpapers: false,
 		calculator: false,
-		// safari: false,
-		appstore: false,
 		calendar: false,
-		// 'system-preferences': false,
-
+		vscode: false,
+		appstore: false,
 		'purus-twitter': false,
 		'view-source': false,
-
 		vercel: false,
 	} as Record<AppID, boolean>,
 
 	// Track which apps are running (even if minimized)
 	running: {
-		wallpapers: false,
 		finder: false,
-		vscode: false,
+		safari: false,
+		wallpapers: false,
 		calculator: false,
-		appstore: false,
 		calendar: false,
+		vscode: false,
+		appstore: false,
 		'purus-twitter': false,
 		'view-source': false,
 		vercel: false,
@@ -41,36 +39,43 @@ export const apps = $state({
 	active_z_index: -2,
 
 	z_indices: {
-		wallpapers: 0,
 		finder: 0,
-		vscode: 0,
+		safari: 0,
+		wallpapers: 0,
 		calculator: 0,
-		// safari: 0,
-		appstore: 0,
 		calendar: 0,
-		// 'system-preferences': 0,
-
+		vscode: 0,
+		appstore: 0,
 		'purus-twitter': 0,
 		'view-source': 0,
-
 		vercel: 0,
 	} as Record<AppID, number>,
 
 	is_being_dragged: false as boolean,
 
 	fullscreen: {
-		wallpapers: false,
 		finder: false,
-		vscode: false,
+		safari: false,
+		wallpapers: false,
 		calculator: false,
-		// safari: false,
-		appstore: false,
 		calendar: false,
-		// 'system-preferences': false,
-
+		vscode: false,
+		appstore: false,
 		'purus-twitter': false,
 		'view-source': false,
+		vercel: false,
+	} as Record<AppID, boolean>,
 
+	minimized: {
+		finder: false,
+		safari: false,
+		wallpapers: false,
+		calculator: false,
+		calendar: false,
+		vscode: false,
+		appstore: false,
+		'purus-twitter': false,
+		'view-source': false,
 		vercel: false,
 	} as Record<AppID, boolean>,
 });

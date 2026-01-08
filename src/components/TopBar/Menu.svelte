@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { preferences } from '🍎/state/preferences.svelte.ts';
-	import { requestShutdown, requestRestart, requestLogout, sleep, lockScreen } from '🍎/state/system.svelte.ts';
+	import { requestShutdown, requestRestart, requestLogout, sleep, lockScreen, openAboutMac } from '🍎/state/system.svelte.ts';
 	import { menubar_state } from '🍎/state/menubar.svelte';
 
 	const { menu }: { menu: any } = $props();
@@ -18,6 +18,8 @@
 			sleep();
 		} else if (key === 'lock-screen') {
 			lockScreen();
+		} else if (key === 'about-this-mac') {
+			openAboutMac();
 		}
 	}
 </script>

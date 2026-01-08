@@ -9,6 +9,17 @@ export const systemState = persisted('macos:system', {
 	state: 'running' as SystemState,
 });
 
+// About This Mac dialog state
+export const showAboutMac = $state({ value: false });
+
+export function openAboutMac() {
+	showAboutMac.value = true;
+}
+
+export function closeAboutMac() {
+	showAboutMac.value = false;
+}
+
 // Show shutdown confirmation dialog
 export function requestShutdown() {
 	if (systemState.state !== 'running') return;

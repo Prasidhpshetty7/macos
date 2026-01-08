@@ -7,6 +7,7 @@
 	import SystemUpdate from './SystemUpdate.svelte';
 	import WindowsArea from './Window/WindowsArea.svelte';
 	import SystemOverlay from '../SystemOverlay.svelte';
+	import AboutThisMac from '../AboutThisMac.svelte';
 
 	const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
@@ -33,6 +34,7 @@
 	<BootupScreen />
 	<SystemUpdate />
 	<SystemOverlay />
+	<AboutThisMac />
 
 	<ContextMenu target_element={mainEl} />
 </div>

@@ -30,6 +30,10 @@
 	{#await import('./PurusProfile/PurusProfile.svelte') then { default: PurusProfile }}
 		<PurusProfile />
 	{/await}
+{:else if app_id === 'safari'}
+	{#await import('./Safari/Safari.svelte') then { default: Safari }}
+		<Safari />
+	{/await}
 {:else}
 	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}
 		<AppStore {app_id} />

@@ -107,11 +107,13 @@
 		apps.open[app_id] = false;
 		apps.running[app_id] = false;
 		apps.fullscreen[app_id] = false;
+		apps.minimized[app_id] = false;
 	}
 
 	function minimizeApp() {
-		// Hide the window but keep it running (dot stays visible)
+		// Hide the window but keep it mounted (for iframe state preservation)
 		apps.open[app_id] = false;
+		apps.minimized[app_id] = true;
 		// apps.running stays true
 	}
 
@@ -143,6 +145,7 @@
 	class:dark={preferences.theme.scheme === 'dark'}
 	class:active={apps.active === app_id}
 	class:maximized={is_maximized}
+	class:minimized={apps.minimized[app_id]}
 	style:z-index={apps.z_indices[app_id]}
 	tabindex="-1"
 	bind:this={windowEl}
@@ -203,5 +206,11 @@
 
 		/* // Necessary, as `.container` tries to apply shadow on it */
 		box-shadow: none !important;
+	}
+
+	.container.minimized {
+		visibility: hidden;
+		pointer-events: none;
+		opacity: 0;
 	}
 </style>
