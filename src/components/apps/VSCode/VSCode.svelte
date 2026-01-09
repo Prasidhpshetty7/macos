@@ -1,24 +1,102 @@
 ﻿<script lang="ts">
-let files = $state<Record<string, string>>({});
-let openTabs = $state<string[]>(['index.html']);
-let activeFile = $state('index.html');
+import { desktopFilesState } from '🍎/state/desktop-files.svelte.ts';
+
+type FileItem = { name: string; content: string };
+type FolderItem = { name: string; files: FileItem[]; expanded: boolean };
+
+let folders = $state<FolderItem[]>([
+	{
+		name: 'my-project',
+		expanded: true,
+		files: [
+			{ name: 'index.html', content: '<!DOCTYPE html>\n<html>\n<head>\n<title>Project</title>\n</head>\n<body>\n<h1>Hello World</h1>\n</body>\n</html>' },
+			{ name: 'style.css', content: 'body { background: #1a1a2e; color: white; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; }' },
+			{ name: 'script.js', content: 'console.log("Hello");' },
+			{ name: 'README.md', content: '# My Project\nBy Prasidh' }
+		]
+	}
+]);
+
+let openTabs = $state<string[]>(['my-project/index.html']);
+let activeFile = $state('my-project/index.html');
 let showModal = $state(false);
 let newName = $state('');
 let menu = $state<string | null>(null);
 let view = $state<'code' | 'split' | 'preview'>('split');
 
+// Get file content by path (folder/file)
+function getFileContent(path: string): string {
+	const [folderName, fileName] = path.split('/');
+	const folder = folders.find(f => f.name === folderName);
+	const file = folder?.files.find(f => f.name === fileName);
+	return file?.content || '';
+}
+
+// Set file content by path
+function setFileContent(path: string, content: string) {
+	const [folderName, fileName] = path.split('/');
+	const folder = folders.find(f => f.name === folderName);
+	if (folder) {
+		const file = folder.files.find(f => f.name === fileName);
+		if (file) file.content = content;
+	}
+}
+
+// Watch for files opened from desktop
 $effect(() => {
-files = {
-'index.html': '<!DOCTYPE html>\n<html>\n<head>\n<title>Project</title>\n</head>\n<body>\n<h1>Hello World</h1>\n</body>\n</html>',
-'style.css': 'body { background: #1a1a2e; color: white; font-family: sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; }',
-'script.js': 'console.log("Hello");',
-'README.md': '# Project\nBy Prasidh'
-};
+	const fileToOpen = desktopFilesState.fileToOpen;
+	if (fileToOpen && fileToOpen.content !== undefined) {
+		const folderName = 'Portfolio';
+		const fileName = fileToOpen.name || 'index.html';
+		const fullPath = folderName + '/' + fileName;
+		
+		// Check if Portfolio folder exists
+		let folder = folders.find(f => f.name === folderName);
+		if (!folder) {
+			folders = [...folders, { name: folderName, expanded: true, files: [] }];
+			folder = folders.find(f => f.name === folderName);
+		}
+		
+		// Add file to folder if not exists
+		if (folder && !folder.files.find(f => f.name === fileName)) {
+			folder.files = [...folder.files, { name: fileName, content: fileToOpen.content }];
+		}
+		
+		if (!openTabs.includes(fullPath)) {
+			openTabs = [...openTabs, fullPath];
+		}
+		activeFile = fullPath;
+		desktopFilesState.fileToOpen = null;
+	}
 });
 
-function getPreview() {
-return files['index.html'] + '<st' + 'yle>' + files['style.css'] + '</st' + 'yle>';
+function toggleFolder(folderName: string) {
+	const folder = folders.find(f => f.name === folderName);
+	if (folder) folder.expanded = !folder.expanded;
 }
+
+function openFile(folderName: string, fileName: string) {
+	const path = folderName + '/' + fileName;
+	if (!openTabs.includes(path)) {
+		openTabs = [...openTabs, path];
+	}
+	activeFile = path;
+}
+
+function closeTab(path: string) {
+	openTabs = openTabs.filter(t => t !== path);
+	if (activeFile === path) {
+		activeFile = openTabs[0] || '';
+	}
+}
+
+function getPreview() {
+	const html = getFileContent('my-project/index.html');
+	const css = getFileContent('my-project/style.css');
+	return html + '<st' + 'yle>' + css + '</st' + 'yle>';
+}
+
+let currentContent = $derived(getFileContent(activeFile));
 </script>
 
 <svelte:window onclick={() => menu = null} />
@@ -32,7 +110,6 @@ return files['index.html'] + '<st' + 'yle>' + files['style.css'] + '</st' + 'yle
 <div class="dd" onclick={(e) => e.stopPropagation()}>
 <button onclick={() => { showModal = true; menu = null; }}>New File</button>
 <button onclick={() => { alert('Saved'); menu = null; }}>Save</button>
-<button onclick={() => { if(activeFile) { delete files[activeFile]; openTabs = openTabs.filter(t => t !== activeFile); activeFile = openTabs[0] || ''; } menu = null; }}>Delete</button>
 </div>
 {/if}
 </div>
@@ -46,29 +123,39 @@ return files['index.html'] + '<st' + 'yle>' + files['style.css'] + '</st' + 'yle
 </div>
 {/if}
 </div>
-<div class="mw">
-<button class="mb" onclick={(e) => { e.stopPropagation(); menu = menu === 'h' ? null : 'h'; }}>Help</button>
-{#if menu === 'h'}
-<div class="dd" onclick={(e) => e.stopPropagation()}>
-<button onclick={() => { window.open('https://github.com/Prasidhpshetty7'); menu = null; }}>GitHub</button>
-<button onclick={() => { alert('Prasidh Editor v1'); menu = null; }}>About</button>
-</div>
-{/if}
-</div>
 </div>
 <span class="tt">Prasidh's Editor</span>
 </div>
 <div class="main">
 <div class="side">
-<div class="hd">EXPLORER <button onclick={() => showModal = true}>+</button></div>
-{#each Object.keys(files) as f}
-<div class="fi" class:act={activeFile === f} onclick={() => { activeFile = f; if(!openTabs.includes(f)) openTabs = [...openTabs, f]; }}>{f}</div>
+<div class="hd">EXPLORER</div>
+{#each folders as folder}
+<div class="folder">
+<button class="folder-btn" onclick={() => toggleFolder(folder.name)}>
+<span class="arrow" class:open={folder.expanded}>▶</span>
+<span class="folder-icon">📁</span>
+{folder.name}
+</button>
+{#if folder.expanded}
+<div class="folder-files">
+{#each folder.files as file}
+<button class="fi" class:act={activeFile === folder.name + '/' + file.name} onclick={() => openFile(folder.name, file.name)}>
+<span class="file-icon">{file.name.endsWith('.html') ? '🌐' : file.name.endsWith('.css') ? '🎨' : file.name.endsWith('.js') ? '📜' : '📄'}</span>
+{file.name}
+</button>
+{/each}
+</div>
+{/if}
+</div>
 {/each}
 </div>
 <div class="ed">
 <div class="tabs">
 {#each openTabs as t}
-<div class="tb" class:act={activeFile === t} onclick={() => activeFile = t}>{t} <button onclick={(e) => { e.stopPropagation(); openTabs = openTabs.filter(x => x !== t); if(activeFile === t) activeFile = openTabs[0] || ''; }}>x</button></div>
+<div class="tb" class:act={activeFile === t} onclick={() => activeFile = t}>
+<span class="tab-name">{t.split('/')[1]}</span>
+<button class="tab-close" onclick={(e) => { e.stopPropagation(); closeTab(t); }}>×</button>
+</div>
 {/each}
 <div class="vb">
 <button class:act={view === 'code'} onclick={() => view = 'code'}>Code</button>
@@ -78,7 +165,7 @@ return files['index.html'] + '<st' + 'yle>' + files['style.css'] + '</st' + 'yle
 </div>
 <div class="cnt" class:sp={view === 'split'}>
 {#if view !== 'preview'}
-<div class="code"><textarea bind:value={files[activeFile]} spellcheck="false"></textarea></div>
+<div class="code"><textarea value={currentContent} oninput={(e) => setFileContent(activeFile, e.currentTarget.value)} spellcheck="false"></textarea></div>
 {/if}
 {#if view !== 'code'}
 <div class="prev"><div class="ph">Preview</div><iframe srcdoc={getPreview()} title="P"></iframe></div>
@@ -94,7 +181,7 @@ return files['index.html'] + '<st' + 'yle>' + files['style.css'] + '</st' + 'yle
 <div class="md" onclick={(e) => e.stopPropagation()}>
 <h3>New File</h3>
 <input bind:value={newName} placeholder="name.ext" />
-<div class="mb2"><button onclick={() => showModal = false}>Cancel</button><button onclick={() => { if(newName) { files[newName] = ''; openTabs = [...openTabs, newName]; activeFile = newName; } showModal = false; newName = ''; }}>Create</button></div>
+<div class="mb2"><button onclick={() => showModal = false}>Cancel</button><button onclick={() => { if(newName && folders[0]) { folders[0].files = [...folders[0].files, {name: newName, content: ''}]; openTabs = [...openTabs, folders[0].name + '/' + newName]; activeFile = folders[0].name + '/' + newName; } showModal = false; newName = ''; }}>Create</button></div>
 </div>
 </div>
 {/if}
@@ -103,25 +190,34 @@ return files['index.html'] + '<st' + 'yle>' + files['style.css'] + '</st' + 'yle
 .box{background:#1e1e1e;border-radius:inherit;display:flex;flex-direction:column;height:100%;font:13px system-ui;color:#ccc}
 .bar{display:flex;align-items:center;background:#3c3c3c;padding:0 10px 0 75px;height:30px}
 .menus{display:flex;gap:2px}
-.mb{background:0;border:0;color:#ccc;padding:4px 8px;font-size:12px;cursor:pointer;border-radius:4px}
+.mb{background:transparent;border:0;color:#ccc;padding:4px 8px;font-size:12px;cursor:pointer;border-radius:4px}
 .mb:hover{background:rgba(255,255,255,.1)}
 .mw{position:relative}
 .dd{position:absolute;top:100%;left:0;background:#252526;border:1px solid #454545;border-radius:6px;padding:4px 0;min-width:120px;z-index:1000}
-.dd button{display:block;width:100%;padding:6px 12px;background:0;border:0;color:#ccc;text-align:left;cursor:pointer;font-size:12px}
+.dd button{display:block;width:100%;padding:6px 12px;background:transparent;border:0;color:#ccc;text-align:left;cursor:pointer;font-size:12px}
 .dd button:hover{background:#094771}
 .tt{flex:1;text-align:center;font-size:12px;color:#888}
 .main{display:flex;flex:1;overflow:hidden}
-.side{background:#252526;width:180px;padding:8px}
-.hd{display:flex;justify-content:space-between;padding:8px;font-size:11px;color:#bbb}
-.hd button{background:0;border:0;color:#888;cursor:pointer}
-.fi{padding:4px 8px;cursor:pointer;border-radius:4px}
+.side{background:#252526;width:200px;padding:0;overflow-y:auto}
+.hd{padding:10px 12px;font-size:11px;color:#bbb;text-transform:uppercase;letter-spacing:1px}
+.folder{margin-bottom:2px}
+.folder-btn{display:flex;align-items:center;gap:6px;width:100%;padding:4px 8px;background:transparent;border:0;color:#ccc;cursor:pointer;font-size:13px;text-align:left}
+.folder-btn:hover{background:rgba(255,255,255,.05)}
+.arrow{font-size:10px;transition:transform 0.2s;color:#888}
+.arrow.open{transform:rotate(90deg)}
+.folder-icon{font-size:14px}
+.folder-files{padding-left:20px}
+.fi{display:flex;align-items:center;gap:6px;width:100%;padding:3px 8px;background:transparent;border:0;color:#ccc;cursor:pointer;font-size:12px;text-align:left}
 .fi:hover{background:rgba(255,255,255,.05)}
 .fi.act{background:rgba(255,255,255,.1)}
+.file-icon{font-size:12px}
 .ed{flex:1;display:flex;flex-direction:column;overflow:hidden}
-.tabs{display:flex;background:#252526;align-items:center;min-height:35px}
-.tb{display:flex;align-items:center;gap:6px;padding:8px 12px;background:#2d2d2d;cursor:pointer;font-size:12px}
+.tabs{display:flex;background:#252526;align-items:center;min-height:35px;overflow-x:auto}
+.tb{display:flex;align-items:center;gap:4px;padding:8px 8px 8px 12px;background:#2d2d2d;cursor:pointer;font-size:12px;border-right:1px solid #1e1e1e;white-space:nowrap}
 .tb.act{background:#1e1e1e;border-top:1px solid #007acc}
-.tb button{background:0;border:0;color:#888;cursor:pointer}
+.tab-name{color:#ccc}
+.tab-close{background:transparent;border:0;color:#888;cursor:pointer;font-size:14px;padding:0 4px;border-radius:3px}
+.tab-close:hover{background:rgba(255,255,255,.1);color:#fff}
 .vb{margin-left:auto;display:flex;gap:4px;padding:0 8px}
 .vb button{background:#3c3c3c;border:0;color:#888;padding:4px 8px;cursor:pointer;border-radius:4px;font-size:11px}
 .vb button.act{background:#007acc;color:#fff}

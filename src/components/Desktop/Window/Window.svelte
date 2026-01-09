@@ -77,15 +77,16 @@
 			minimized_transform = windowEl.style.transform;
 			
 			// Position window between menu bar and dock, shifted left and up
+			// Use z-index 85 to be above dock (80) but below menus
 			windowEl.setAttribute('style', `
-				position: fixed !important;
-				top: -40px !important;
-				left: 40% !important;
-				transform: translateX(-50%) !important;
-				width: 98% !important;
-				height: 92% !important;
-				z-index: ${apps.z_indices[app_id]} !important;
-				border-radius: 0.75rem !important;
+				position: fixed;
+				top: -40px;
+				left: 40%;
+				transform: translateX(-50%);
+				width: 98%;
+				height: 92%;
+				z-index: 85;
+				border-radius: 0.75rem;
 			`);
 		} else {
 			dragging_enabled = true;

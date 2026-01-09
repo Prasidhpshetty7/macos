@@ -178,6 +178,7 @@
 			<img
 				bind:this={image_el}
 				src="/app-icons/{app_id}/256.webp"
+				onerror={(e) => { e.currentTarget.src = `/app-icons/${app_id}/256.png`; }}
 				alt="{title} app"
 				style:width="{$width_px / 16}rem"
 				draggable="false"

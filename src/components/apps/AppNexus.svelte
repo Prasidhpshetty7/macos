@@ -34,6 +34,10 @@
 	{#await import('./Safari/Safari.svelte') then { default: Safari }}
 		<Safari />
 	{/await}
+{:else if app_id === 'music'}
+	{#await import('./Music/Music.svelte') then { default: Music }}
+		<Music />
+	{/await}
 {:else}
 	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}
 		<AppStore {app_id} />

@@ -93,6 +93,14 @@ const appstore = create_app_config({
 	width: 800,
 });
 
+const music = create_app_config({
+	title: 'Music',
+	resizable: true,
+	height: 600,
+	width: 900,
+	hide_from_dock: true,
+});
+
 export const apps_config = {
 	finder,
 	safari,
@@ -101,6 +109,7 @@ export const apps_config = {
 	calendar,
 	vscode,
 	appstore,
+	music,
 
 	// 'system-preferences': systemPreferences,
 

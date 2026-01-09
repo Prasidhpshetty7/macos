@@ -13,12 +13,16 @@ export type AppConfig = {
 
 	/** Break before this app */
 	dock_breaks_before?: boolean;
+
+	/** Hide from dock (for desktop-only apps) */
+	hide_from_dock?: boolean;
 };
 
 export const create_app_config = (et: AppConfig) =>
 	({
 		should_open_window: true,
 		dock_breaks_before: false,
+		hide_from_dock: false,
 
 		resizable: true,
 		expandable: false,

@@ -8,6 +8,7 @@
 	import WindowsArea from './Window/WindowsArea.svelte';
 	import SystemOverlay from '../SystemOverlay.svelte';
 	import AboutThisMac from '../AboutThisMac.svelte';
+	import DesktopIcons from './DesktopIcons.svelte';
 
 	const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
@@ -27,6 +28,7 @@
 	<main>
 		<TopBar />
 		<WindowsArea />
+		<DesktopIcons />
 		<Dock />
 	</main>
 
