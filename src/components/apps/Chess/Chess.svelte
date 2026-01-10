@@ -42,10 +42,8 @@
 	const pieceStyles = [
 		{ name: 'Classic', pieces: { wK: '♔', wQ: '♕', wR: '♖', wB: '♗', wN: '♘', wP: '♙', bK: '♚', bQ: '♛', bR: '♜', bB: '♝', bN: '♞', bP: '♟' } as Record<string, string> },
 		{ name: 'Filled', pieces: { wK: '♚', wQ: '♛', wR: '♜', wB: '♝', wN: '♞', wP: '♟', bK: '♚', bQ: '♛', bR: '♜', bB: '♝', bN: '♞', bP: '♟' } as Record<string, string> },
-		{ name: 'Outlined', pieces: { wK: '♔', wQ: '♕', wR: '♖', wB: '♗', wN: '♘', wP: '♙', bK: '♔', bQ: '♕', bR: '♖', bB: '♗', bN: '♘', bP: '♙' } as Record<string, string> },
 		{ name: 'Neo', pieces: { wK: '⛃', wQ: '⛁', wR: '▣', wB: '◆', wN: '▲', wP: '●', bK: '⛂', bQ: '⛀', bR: '▢', bB: '◇', bN: '△', bP: '○' } as Record<string, string> },
 		{ name: 'Royal', pieces: { wK: '👑', wQ: '♕', wR: '♖', wB: '♗', wN: '♘', wP: '♙', bK: '🏴', bQ: '♛', bR: '♜', bB: '♝', bN: '♞', bP: '♟' } as Record<string, string> },
-		{ name: 'Fancy', pieces: { wK: '♔', wQ: '♕', wR: '⚔', wB: '✦', wN: '♘', wP: '◉', bK: '♚', bQ: '♛', bR: '⚔', bB: '✧', bN: '♞', bP: '◎' } as Record<string, string> },
 	];
 	
 	const boardStyles = [
@@ -726,7 +724,7 @@ h1{font-size:22px;font-weight:700;margin-bottom:2px}
 .color-piece.black{color:#000}
 .color-label{font-size:12px;font-weight:600;color:#fff}
 .chess-app.light .color-label{color:#333}
-.style-opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.style-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .style-btn{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;background:#1a1816;border:2px solid transparent;border-radius:10px;cursor:pointer;color:#fff;transition:all 0.2s}
 .style-btn:hover{transform:translateY(-2px);background:#262421}
 .style-btn.selected{border-color:#629924;background:rgba(98,153,36,0.15)}

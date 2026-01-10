@@ -107,8 +107,16 @@ function openPlaylist(playlist: Playlist) {
 						<span class="col-link"></span>
 					</div>
 					{#each searchResults as song, i}
-						<button class="song-row" class:playing={musicState.currentSong?.id === song.id} onclick={() => playSong(song)}>
-							<span class="col-num">{i + 1}</span>
+						<button class="song-row" class:playing={musicState.currentSong?.id === song.id} class:loading={musicState.currentSong?.id === song.id && musicState.isLoading} onclick={() => playSong(song)}>
+							<span class="col-num">
+								{#if musicState.currentSong?.id === song.id && musicState.isLoading}
+									<span class="loading-spinner">⏳</span>
+								{:else if musicState.currentSong?.id === song.id && musicState.isPlaying}
+									🔊
+								{:else}
+									{i + 1}
+								{/if}
+							</span>
 							<div class="col-title">
 								<span class="song-cover">{song.cover}</span>
 								<div class="song-info">
@@ -191,8 +199,16 @@ function openPlaylist(playlist: Playlist) {
 							<span class="col-link"></span>
 						</div>
 						{#each currentPlaylistView.songs as song, i}
-							<button class="song-row" class:playing={musicState.currentSong?.id === song.id} onclick={() => playSong(song, currentPlaylistView)}>
-								<span class="col-num">{musicState.currentSong?.id === song.id && musicState.isPlaying ? '🔊' : i + 1}</span>
+							<button class="song-row" class:playing={musicState.currentSong?.id === song.id} class:loading={musicState.currentSong?.id === song.id && musicState.isLoading} onclick={() => playSong(song, currentPlaylistView)}>
+								<span class="col-num">
+									{#if musicState.currentSong?.id === song.id && musicState.isLoading}
+										<span class="loading-spinner">⏳</span>
+									{:else if musicState.currentSong?.id === song.id && musicState.isPlaying}
+										🔊
+									{:else}
+										{i + 1}
+									{/if}
+								</span>
 								<div class="col-title">
 									<span class="song-cover">{song.cover}</span>
 									<div class="song-info">
@@ -293,7 +309,11 @@ function openPlaylist(playlist: Playlist) {
 			<div class="np-controls">
 				<button class="control-btn" type="button" onclick={() => playPrev()}>⏮</button>
 				<button class="control-btn play-btn" type="button" onclick={() => togglePlay()}>
-					{musicState.isPlaying ? '⏸' : '▶'}
+					{#if musicState.isLoading}
+						<span class="btn-loading">⏳</span>
+					{:else}
+						{musicState.isPlaying ? '⏸' : '▶'}
+					{/if}
 				</button>
 				<button class="control-btn" type="button" onclick={() => playNext()}>⏭</button>
 			</div>
@@ -472,4 +492,10 @@ function openPlaylist(playlist: Playlist) {
 
 /* Play button playing state */
 .play-all-btn.playing { background: #fa2d48; box-shadow: 0 0 20px rgba(250, 45, 72, 0.4); }
+
+/* Loading spinner */
+.loading-spinner { animation: pulse 0.8s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.btn-loading { animation: pulse 0.8s ease-in-out infinite; }
+.song-row.loading { background: rgba(250,45,72,0.15); }
 </style>

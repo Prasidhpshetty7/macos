@@ -3,11 +3,29 @@
 <script lang="ts">
 	import { elevation } from '🍎/actions';
 	import { apps_config } from '🍎/configs/apps/apps-config';
-	import { apps } from '🍎/state/apps.svelte';
+	import { apps, type AppID } from '🍎/state/apps.svelte';
 	import { system_needs_update } from '🍎/state/system.svelte';
 	import { is_dock_hidden } from '🍎/state/dock.svelte';
 	import DockItem from './DockItem.svelte';
 	import { untrack } from 'svelte';
+
+	// Get apps that are hidden from dock but currently running (open or minimized)
+	// These show on the right side of dock like real macOS
+	const hiddenDockApps = $derived(
+		Object.entries(apps_config)
+			.filter(([appId, config]) => {
+				if (!config.hide_from_dock) return false;
+				// Show if app is running (either open or minimized)
+				return apps.running[appId as AppID];
+			})
+			.map(([appId]) => appId as AppID)
+	);
+
+	function openHiddenApp(appId: AppID) {
+		apps.open[appId] = true;
+		apps.minimized[appId] = false;
+		apps.active = appId;
+	}
 
 	let dock_mouse_x = $state<number | null>(null);
 
@@ -59,7 +77,7 @@
 		onmousemove={(event) => (dock_mouse_x = event.x)}
 		onmouseleave={() => (dock_mouse_x = null)}
 	>
-		{#each Object.entries(apps_config) as [appID, config]}
+					{#each Object.entries(apps_config) as [appID, config]}
 			{#if !config.hide_from_dock}
 				{#if config.dock_breaks_before}
 					<div class="divider" aria-hidden="true"></div>
@@ -68,6 +86,30 @@
 				<DockItem mouse_x={dock_mouse_x} app_id={appID} needs_update={system_needs_update.value} />
 			{/if}
 		{/each}
+
+		<!-- Apps hidden from dock but running (like Music, Chess) -->
+		{#if hiddenDockApps.length > 0}
+			<div class="divider" aria-hidden="true"></div>
+			{#each hiddenDockApps as appId}
+				<button 
+					class="hidden-dock-app"
+					class:minimized={apps.minimized[appId]}
+					onclick={() => openHiddenApp(appId)}
+					aria-label="{apps.minimized[appId] ? 'Restore' : 'Focus'} {apps_config[appId].title}"
+				>
+					<div class="hidden-app-icon">
+						<img 
+							src="/app-icons/{appId}/256.webp" 
+							onerror={(e) => { e.currentTarget.src = `/app-icons/${appId}/256.png`; }}
+							alt="{apps_config[appId].title}"
+							draggable="false"
+						/>
+					</div>
+					<div class="dot" style:--opacity="1"></div>
+					<span class="hidden-app-label">{apps_config[appId].title}</span>
+				</button>
+			{/each}
+		{/if}
 	</div>
 </section>
 
@@ -154,5 +196,73 @@
 		background-color: hsla(var(--system-color-dark-hsl), 0.3);
 
 		margin: 0 4px;
+	}
+
+	/* Hidden dock apps (Music, Chess, etc.) - shown on right side when running */
+	.hidden-dock-app {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: flex-end;
+		padding: 0 2px;
+		cursor: pointer;
+		position: relative;
+		transition: transform 0.2s ease;
+	}
+
+	.hidden-dock-app:hover {
+		transform: translateY(-8px);
+	}
+
+	.hidden-dock-app:hover .hidden-app-label {
+		opacity: 1;
+		transform: translate(-50%, -8px);
+	}
+
+	.hidden-app-icon {
+		width: 48px;
+		height: 48px;
+		border-radius: 22%;
+		overflow: hidden;
+		transition: opacity 0.2s ease;
+	}
+
+	/* Dimmed when minimized */
+	.hidden-dock-app.minimized .hidden-app-icon {
+		opacity: 0.6;
+	}
+
+	.hidden-app-icon img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		border-radius: inherit;
+	}
+
+	.hidden-dock-app .dot {
+		height: 4px;
+		width: 4px;
+		margin: 0px;
+		border-radius: 50%;
+		background-color: var(--system-color-dark);
+		opacity: var(--opacity);
+	}
+
+	.hidden-app-label {
+		position: absolute;
+		top: -28px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: hsla(var(--system-color-light-hsl), 0.5);
+		backdrop-filter: blur(5px);
+		padding: 4px 8px;
+		border-radius: 4px;
+		font-size: 11px;
+		color: var(--system-color-light-contrast);
+		white-space: nowrap;
+		opacity: 0;
+		transition: all 0.2s ease;
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+		pointer-events: none;
 	}
 </style>
