@@ -38,6 +38,10 @@
 	{#await import('./Music/Music.svelte') then { default: Music }}
 		<Music />
 	{/await}
+{:else if app_id === 'chess'}
+	{#await import('./Chess/Chess.svelte') then { default: Chess }}
+		<Chess />
+	{/await}
 {:else}
 	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}
 		<AppStore {app_id} />

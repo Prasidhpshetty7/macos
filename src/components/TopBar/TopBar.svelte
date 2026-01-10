@@ -8,6 +8,7 @@
 	import ActionCenterToggle from './ActionCenterToggle.svelte';
 	import MenuBar from './MenuBar.svelte';
 	import TopBarTime from './TopBarTime.svelte';
+	import MusicControl from './MusicControl.svelte';
 </script>
 
 <header use:elevation={'topbar'}>
@@ -20,6 +21,8 @@
 			<span> <img src="/emojis/wink.png" alt="Wink emoji" class="emoji" /> </span>
 		</div>
 	{/if}
+
+	<MusicControl />
 
 	<ActionCenterToggle />
 

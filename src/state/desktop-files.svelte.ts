@@ -134,6 +134,13 @@ export const desktopFilesState = $state({
 			type: 'app',
 			icon: '🎵',
 			appId: 'music'
+		},
+		{
+			id: 'chess-app',
+			name: 'Chess',
+			type: 'app',
+			icon: '♟️',
+			appId: 'chess'
 		}
 	] as DesktopFile[],
 	fileToOpen: null as DesktopFile | null,

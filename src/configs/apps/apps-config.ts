@@ -101,6 +101,14 @@ const music = create_app_config({
 	hide_from_dock: true,
 });
 
+const chess = create_app_config({
+	title: 'Chess',
+	resizable: true,
+	height: 620,
+	width: 520,
+	hide_from_dock: true,
+});
+
 export const apps_config = {
 	finder,
 	safari,
@@ -110,6 +118,7 @@ export const apps_config = {
 	vscode,
 	appstore,
 	music,
+	chess,
 
 	// 'system-preferences': systemPreferences,
 

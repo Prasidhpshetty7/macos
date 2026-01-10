@@ -25,7 +25,7 @@
 	];
 	
 	// Sites that block iframes
-	const blockedDomains = ['github.com', 'twitter.com', 'facebook.com', 'instagram.com', 'linkedin.com', 'youtube.com'];
+	const blockedDomains = ['github.com', 'twitter.com', 'facebook.com', 'instagram.com', 'linkedin.com', 'youtube.com', 'lichess.org', 'chess.com'];
 	
 	function isBlocked(url: string): boolean {
 		if (url.startsWith('github://') || url.startsWith('vercel://') || url.startsWith('youtube://')) return true;

@@ -18,6 +18,7 @@
 	import { sleep } from '🍎/helpers/sleep';
 	import { apps, type AppID } from '🍎/state/apps.svelte.ts';
 	import { preferences } from '🍎/state/preferences.svelte.ts';
+	import { stopMusic } from '🍎/state/music.svelte.ts';
 
 	import AppNexus from '../../apps/AppNexus.svelte';
 	import TrafficLights from './TrafficLights.svelte';
@@ -105,6 +106,10 @@
 	}
 
 	function closeApp() {
+		// Stop music if closing the music app
+		if (app_id === 'music') {
+			stopMusic();
+		}
 		apps.open[app_id] = false;
 		apps.running[app_id] = false;
 		apps.fullscreen[app_id] = false;

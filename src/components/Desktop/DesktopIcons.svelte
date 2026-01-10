@@ -88,6 +88,9 @@
 							<path d="M4 12C4 8 7 5 11 5H28L34 12H69C73 12 76 15 76 19V52C76 56 73 59 69 59H11C7 59 4 56 4 52V12Z" fill="url(#folderBack)"/>
 							<path d="M4 20H76V52C76 56 73 59 69 59H11C7 59 4 56 4 52V20Z" fill="url(#folderFront)"/>
 						</svg>
+					{:else if file.type === 'app' && file.appId === 'chess'}
+						<!-- Chess icon -->
+						<img src="/app-icons/chess/256.png.webp" alt="{file.name}" class="app-icon-img" />
 					{:else if file.type === 'app'}
 						<!-- App icon from public folder -->
 						<img src="/app-icons/{file.appId}/256.png" alt="{file.name}" class="app-icon-img" />
@@ -254,6 +257,18 @@
 	.app-icon-img {
 		width: 100%;
 		height: 100%;
+		border-radius: 12px;
+		filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+	}
+	
+	.emoji-icon {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 42px;
+		background: linear-gradient(135deg, #4a4a4a 0%, #2a2a2a 100%);
 		border-radius: 12px;
 		filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 	}
