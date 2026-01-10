@@ -1,4 +1,5 @@
 import { persisted } from './persisted.svelte.ts';
+import { stopMusic } from './music.svelte.ts';
 
 export type SystemState = 'running' | 'confirm-shutdown' | 'confirm-restart' | 'confirm-logout' | 'shutting-down' | 'restarting' | 'sleeping' | 'locked' | 'off' | 'booting';
 
@@ -8,6 +9,11 @@ export const system_needs_update = $state({ value: false });
 export const systemState = persisted('macos:system', {
 	state: 'running' as SystemState,
 });
+
+// Reset stuck states on page load (transitional states shouldn't persist)
+if (['shutting-down', 'restarting', 'booting', 'confirm-shutdown', 'confirm-restart', 'confirm-logout'].includes(systemState.state)) {
+	systemState.state = 'running';
+}
 
 // About This Mac dialog state
 export const showAboutMac = $state({ value: false });
@@ -47,6 +53,7 @@ export function cancelConfirm() {
 // Confirm and start shutdown
 export function confirmShutdown() {
 	if (systemState.state !== 'confirm-shutdown') return;
+	stopMusic(); // Stop music on shutdown
 	systemState.state = 'shutting-down';
 	
 	setTimeout(() => {
@@ -57,6 +64,7 @@ export function confirmShutdown() {
 // Confirm and start restart
 export function confirmRestart() {
 	if (systemState.state !== 'confirm-restart') return;
+	stopMusic(); // Stop music on restart
 	systemState.state = 'restarting';
 	
 	setTimeout(() => {
@@ -67,12 +75,14 @@ export function confirmRestart() {
 // Confirm logout - goes to lock screen
 export function confirmLogout() {
 	if (systemState.state !== 'confirm-logout') return;
+	stopMusic(); // Stop music on logout
 	systemState.state = 'locked';
 }
 
 // Sleep mode
 export function sleep() {
 	if (systemState.state !== 'running') return;
+	stopMusic(); // Stop music on sleep
 	systemState.state = 'sleeping';
 }
 
@@ -85,6 +95,7 @@ export function wake() {
 // Lock screen
 export function lockScreen() {
 	if (systemState.state !== 'running') return;
+	stopMusic(); // Stop music on lock
 	systemState.state = 'locked';
 }
 
