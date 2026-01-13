@@ -5,6 +5,7 @@ export type AppID = keyof typeof apps_config;
 export const apps = $state({
 	open: {
 		finder: false,
+		launchpad: false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,
@@ -13,6 +14,7 @@ export const apps = $state({
 		appstore: false,
 		music: false,
 		chess: false,
+		drift: false,
 		'purus-twitter': false,
 		'view-source': false,
 		vercel: false,
@@ -21,6 +23,7 @@ export const apps = $state({
 	// Track which apps are running (even if minimized)
 	running: {
 		finder: false,
+		launchpad: false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,
@@ -29,6 +32,7 @@ export const apps = $state({
 		appstore: false,
 		music: false,
 		chess: false,
+		drift: false,
 		'purus-twitter': false,
 		'view-source': false,
 		vercel: false,
@@ -44,6 +48,7 @@ export const apps = $state({
 
 	z_indices: {
 		finder: 0,
+		launchpad: 0,
 		safari: 0,
 		wallpapers: 0,
 		calculator: 0,
@@ -52,6 +57,7 @@ export const apps = $state({
 		appstore: 0,
 		music: 0,
 		chess: 0,
+		drift: 0,
 		'purus-twitter': 0,
 		'view-source': 0,
 		vercel: 0,
@@ -61,6 +67,7 @@ export const apps = $state({
 
 	fullscreen: {
 		finder: false,
+		launchpad: false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,
@@ -69,6 +76,7 @@ export const apps = $state({
 		appstore: false,
 		music: false,
 		chess: false,
+		drift: false,
 		'purus-twitter': false,
 		'view-source': false,
 		vercel: false,
@@ -76,6 +84,7 @@ export const apps = $state({
 
 	minimized: {
 		finder: false,
+		launchpad: false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,
@@ -84,6 +93,7 @@ export const apps = $state({
 		appstore: false,
 		music: false,
 		chess: false,
+		drift: false,
 		'purus-twitter': false,
 		'view-source': false,
 		vercel: false,

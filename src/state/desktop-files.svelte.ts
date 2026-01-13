@@ -8,6 +8,7 @@ export type DesktopFile = {
 	content?: string;
 	children?: DesktopFile[];
 	appId?: string;
+	position?: 'left'; // For positioning next to another icon
 };
 
 const portfolioHTML = `<!DOCTYPE html>
@@ -121,6 +122,14 @@ I'm a passionate developer based in India, specializing in creating exceptional 
 
 export const desktopFilesState = $state({
 	files: [
+		{
+			id: 'drift-app',
+			name: 'Drift',
+			type: 'app',
+			icon: '🌊',
+			appId: 'drift',
+			position: 'left' // Special position - left of portfolio
+		},
 		{
 			id: 'portfolio-folder',
 			name: 'Portfolio',

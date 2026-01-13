@@ -1,4 +1,5 @@
 import { create_app_config } from '🍎/helpers/create-app-config.ts';
+import { openLaunchpad } from '🍎/state/launchpad.svelte.ts';
 
 const wallpapers = create_app_config({
 	title: 'Wallpapers',
@@ -38,9 +39,17 @@ const vscode = create_app_config({
 const finder = create_app_config({
 	title: 'Finder',
 	resizable: true,
+	height: 500,
+	width: 800,
+});
 
-	// dockBreaksBefore: true,
+const launchpad = create_app_config({
+	title: 'Launchpad',
+	resizable: true,
 	should_open_window: false,
+	external_action: () => {
+		openLaunchpad();
+	},
 });
 
 const safari = create_app_config({
@@ -109,8 +118,17 @@ const chess = create_app_config({
 	hide_from_dock: true,
 });
 
+const drift = create_app_config({
+	title: 'Drift',
+	resizable: true,
+	height: 650,
+	width: 450,
+	hide_from_dock: true,
+});
+
 export const apps_config = {
 	finder,
+	launchpad,
 	safari,
 	wallpapers,
 	calculator,
@@ -119,6 +137,7 @@ export const apps_config = {
 	appstore,
 	music,
 	chess,
+	drift,
 
 	// 'system-preferences': systemPreferences,
 

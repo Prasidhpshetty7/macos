@@ -141,6 +141,11 @@
 		// Set initial size
 		windowEl.style.width = `${+width / remModifier}rem`;
 		windowEl.style.height = `${+height / remModifier}rem`;
+		
+		// If app should open fullscreen (like Drift), maximize it
+		if (apps.fullscreen[app_id] && !is_maximized) {
+			setTimeout(() => maximizeApp(), 50);
+		}
 	});
 </script>
 

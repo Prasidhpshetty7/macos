@@ -15,6 +15,11 @@
 			apps.running[appId] = true;
 			apps.minimized[appId] = false;
 			apps.active = appId;
+			
+			// Drift opens maximized directly
+			if (appId === 'drift') {
+				apps.fullscreen[appId] = true;
+			}
 		} else if (file.type === 'folder' && file.children && !file.content) {
 			// Only expand if it has children and no direct content
 			openFolder = openFolder === file.id ? null : file.id;
@@ -46,6 +51,11 @@
 			apps.running[appId] = true;
 			apps.minimized[appId] = false;
 			apps.active = appId;
+			
+			// Drift opens maximized directly
+			if (appId === 'drift') {
+				apps.fullscreen[appId] = true;
+			}
 		}
 		contextMenu = null;
 	}
@@ -93,7 +103,7 @@
 						<img src="/app-icons/chess/256.png.webp" alt="{file.name}" class="app-icon-img" />
 					{:else if file.type === 'app'}
 						<!-- App icon from public folder -->
-						<img src="/app-icons/{file.appId}/256.png" alt="{file.name}" class="app-icon-img" />
+						<img src="/app-icons/{file.appId}/256.webp" alt="{file.name}" class="app-icon-img" onerror={(e) => { e.currentTarget.src = `/app-icons/${file.appId}/256.png`; }} />
 					{:else}
 						<!-- macOS style document icon -->
 						<svg viewBox="0 0 60 72" fill="none">
@@ -202,8 +212,9 @@
 		position: absolute;
 		top: 40px;
 		right: 20px;
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: repeat(2, 80px);
+		grid-auto-rows: auto;
 		gap: 8px;
 		z-index: 1;
 	}
@@ -211,9 +222,15 @@
 	.icon-wrapper {
 		display: flex;
 		flex-direction: column;
-		align-items: flex-end;
+		align-items: center;
 		gap: 4px;
 	}
+	
+	/* Drift goes in first column, Portfolio in second */
+	.icon-wrapper:nth-child(1) { grid-column: 1; grid-row: 1; } /* Drift - left */
+	.icon-wrapper:nth-child(2) { grid-column: 2; grid-row: 1; } /* Portfolio - right */
+	.icon-wrapper:nth-child(3) { grid-column: 2; grid-row: 2; } /* Music */
+	.icon-wrapper:nth-child(4) { grid-column: 2; grid-row: 3; } /* Chess */
 	
 	.desktop-icon {
 		display: flex;
@@ -259,6 +276,8 @@
 		height: 100%;
 		border-radius: 12px;
 		filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+		object-fit: contain;
+		background: transparent;
 	}
 	
 	.emoji-icon {

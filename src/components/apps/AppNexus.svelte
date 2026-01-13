@@ -10,7 +10,11 @@
 	} = $props();
 </script>
 
-{#if app_id === 'calendar'}
+{#if app_id === 'finder'}
+	{#await import('./Finder/Finder.svelte') then { default: Finder }}
+		<Finder />
+	{/await}
+{:else if app_id === 'calendar'}
 	{#await import('./Calendar/Calendar.svelte') then { default: Calendar }}
 		<Calendar />
 	{/await}
@@ -41,6 +45,10 @@
 {:else if app_id === 'chess'}
 	{#await import('./Chess/Chess.svelte') then { default: Chess }}
 		<Chess />
+	{/await}
+{:else if app_id === 'drift'}
+	{#await import('./Drift/Drift.svelte') then { default: Drift }}
+		<Drift />
 	{/await}
 {:else}
 	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}

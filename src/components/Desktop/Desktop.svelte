@@ -9,6 +9,7 @@
 	import SystemOverlay from '../SystemOverlay.svelte';
 	import AboutThisMac from '../AboutThisMac.svelte';
 	import DesktopIcons from './DesktopIcons.svelte';
+	import Launchpad from '../Launchpad.svelte';
 
 	const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
@@ -37,6 +38,7 @@
 	<SystemUpdate />
 	<SystemOverlay />
 	<AboutThisMac />
+	<Launchpad />
 
 	<ContextMenu target_element={mainEl} />
 </div>
