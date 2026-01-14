@@ -38,9 +38,9 @@
 	import { sineInOut } from 'svelte/easing';
 	import { spring, tweened } from 'svelte/motion';
 	import { elevation } from '🍎/actions';
-	import { apps_config } from '🍎/configs/apps/apps-config.ts';
-	import { apps, type AppID } from '🍎/state/apps.svelte.ts';
-	import { preferences } from '🍎/state/preferences.svelte.ts';
+	import { apps_config } from '🍎/configs/apps/apps-config';
+	import { apps, type AppID } from '🍎/state/apps.svelte';
+	import { preferences } from '🍎/state/preferences.svelte';
 
 	const {
 		mouse_x,
@@ -174,6 +174,20 @@
 				<span class="calendar-day">{new Date().toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase()}</span>
 				<span class="calendar-date">{new Date().getDate()}</span>
 			</div>
+		{:else if app_id === 'mission-control'}
+			<div 
+				bind:this={image_el}
+				class="mission-control-icon"
+				style:width="{$width_px / 16}rem"
+				style:height="{$width_px / 16}rem"
+			>
+				<svg viewBox="0 0 24 24" fill="currentColor">
+					<rect x="2" y="2" width="9" height="9" rx="2" />
+					<rect x="13" y="2" width="9" height="9" rx="2" />
+					<rect x="2" y="13" width="9" height="9" rx="2" />
+					<rect x="13" y="13" width="9" height="9" rx="2" />
+				</svg>
+			</div>
 		{:else}
 			<img
 				bind:this={image_el}
@@ -232,6 +246,24 @@
 		line-height: 1;
 		margin-top: 4%;
 		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+	}
+
+	.mission-control-icon {
+		will-change: width;
+		border-radius: 22%;
+		aspect-ratio: 1 / 1;
+		background: linear-gradient(180deg, #3a3a3c 0%, #1c1c1e 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		transform: scale(0.85);
+	}
+
+	.mission-control-icon svg {
+		width: 60%;
+		height: 60%;
+		color: #fff;
 	}
 
 	button {

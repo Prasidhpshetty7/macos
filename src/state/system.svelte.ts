@@ -1,5 +1,5 @@
-import { persisted } from './persisted.svelte.ts';
-import { stopMusic } from './music.svelte.ts';
+import { persisted } from './persisted.svelte';
+import { stopMusic } from './music.svelte';
 
 export type SystemState = 'running' | 'confirm-shutdown' | 'confirm-restart' | 'confirm-logout' | 'shutting-down' | 'restarting' | 'sleeping' | 'locked' | 'off' | 'booting';
 
@@ -35,6 +35,28 @@ export function openAboutFinder() {
 
 export function closeAboutFinder() {
 	showAboutFinder.value = false;
+}
+
+// Mission Control state
+export const missionControlActive = $state({ value: false });
+export const missionControlUsed = $state({ value: false }); // Track if user has ever used Mission Control
+
+export function openMissionControl() {
+	missionControlActive.value = true;
+	missionControlUsed.value = true; // Mark as used
+}
+
+export function closeMissionControl() {
+	missionControlActive.value = false;
+}
+
+export function toggleMissionControl() {
+	if (missionControlActive.value) {
+		missionControlActive.value = false;
+	} else {
+		missionControlActive.value = true;
+		missionControlUsed.value = true; // Mark as used
+	}
 }
 
 // Show shutdown confirmation dialog

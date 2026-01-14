@@ -77,7 +77,7 @@
 		onmousemove={(event) => (dock_mouse_x = event.x)}
 		onmouseleave={() => (dock_mouse_x = null)}
 	>
-					{#each Object.entries(apps_config) as [appID, config]}
+		{#each Object.entries(apps_config) as [appID, config]}
 			{#if !config.hide_from_dock}
 				{#if config.dock_breaks_before}
 					<div class="divider" aria-hidden="true"></div>

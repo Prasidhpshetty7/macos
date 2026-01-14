@@ -159,6 +159,7 @@
 	class:minimized={apps.minimized[app_id]}
 	style:z-index={apps.z_indices[app_id]}
 	tabindex="-1"
+	data-app-id={app_id}
 	bind:this={windowEl}
 	{@attach draggable(() => [
 		controls({ allow: ControlFrom.selector('.app-window-drag-handle') }),

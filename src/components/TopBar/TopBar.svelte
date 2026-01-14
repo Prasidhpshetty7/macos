@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { fade_out } from '🍎/helpers/fade';
-	import { should_show_notch } from '🍎/state/menubar.svelte.ts';
+	import { should_show_notch } from '🍎/state/menubar.svelte';
 	import { elevation } from '🍎/actions';
+	import { apps } from '🍎/state/apps.svelte';
+	import { apps_config } from '🍎/configs/apps/apps-config';
+	import { missionControl } from '🍎/state/mission-control.svelte';
+	import type { AppID } from '🍎/state/apps.svelte';
 
 	import { sineIn } from 'svelte/easing';
 	import { fade } from 'svelte/transition';
@@ -9,6 +13,21 @@
 	import MenuBar from './MenuBar.svelte';
 	import TopBarTime from './TopBarTime.svelte';
 	import MusicControl from './MusicControl.svelte';
+	
+	// Count open windows
+	const openWindowCount = $derived(
+		Object.entries(apps.open)
+			.filter(([id, isOpen]) => {
+				if (!isOpen) return false;
+				const config = apps_config[id as AppID];
+				return config && config.should_open_window !== false;
+			})
+			.length
+	);
+	
+	function handleMCClick() {
+		missionControl.open();
+	}
 </script>
 
 <header use:elevation={'topbar'}>
@@ -20,6 +39,18 @@
 		<div class="notch" in:fade={{ duration: 150, easing: sineIn }} out:fade_out>
 			<span> <img src="/emojis/wink.png" alt="Wink emoji" class="emoji" /> </span>
 		</div>
+	{/if}
+
+	<!-- Mission Control button - shows when 2+ windows open -->
+	{#if openWindowCount >= 2}
+	<button class="mission-control-btn" onclick={handleMCClick} aria-label="Mission Control">
+		<svg viewBox="0 0 24 24" fill="currentColor">
+			<rect x="2" y="2" width="9" height="9" rx="2" />
+			<rect x="13" y="2" width="9" height="9" rx="2" />
+			<rect x="2" y="13" width="9" height="9" rx="2" />
+			<rect x="13" y="13" width="9" height="9" rx="2" />
+		</svg>
+	</button>
 	{/if}
 
 	<MusicControl />
@@ -120,8 +151,9 @@
 		left: 0;
 		top: 0;
 
-		z-index: 0;
+		z-index: -1;
 		backdrop-filter: blur(12px);
+		pointer-events: none;
 	}
 
 	.emoji {
@@ -129,5 +161,35 @@
 		width: 1.5em;
 
 		vertical-align: middle;
+	}
+	
+	.mission-control-btn {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 8px;
+		height: 100%;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		color: inherit;
+		opacity: 0.9;
+		transition: opacity 0.2s;
+		z-index: 10;
+		position: relative;
+	}
+	
+	.mission-control-btn.hidden {
+		display: none;
+	}
+	
+	.mission-control-btn:hover {
+		opacity: 1;
+		background: rgba(255, 255, 255, 0.1);
+	}
+	
+	.mission-control-btn svg {
+		width: 14px;
+		height: 14px;
 	}
 </style>

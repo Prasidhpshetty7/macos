@@ -11,6 +11,7 @@
 	import AboutFinder from '../AboutFinder.svelte';
 	import DesktopIcons from './DesktopIcons.svelte';
 	import Launchpad from '../Launchpad.svelte';
+	import MissionControl from '../MissionControl.svelte';
 
 	const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
@@ -41,6 +42,7 @@
 	<AboutThisMac />
 	<AboutFinder />
 	<Launchpad />
+	<MissionControl />
 
 	<ContextMenu target_element={mainEl} />
 </div>
