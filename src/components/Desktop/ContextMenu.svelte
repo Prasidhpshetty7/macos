@@ -3,6 +3,9 @@
 	import { context_menu_config } from '🍎/configs/menu/context.menu.config.ts';
 	import { fade_out } from '🍎/helpers/fade.ts';
 	import { preferences } from '🍎/state/preferences.svelte.ts';
+	import { apps } from '🍎/state/apps.svelte.ts';
+	import { openAboutMac } from '🍎/state/system.svelte.ts';
+	import { createNewFolder } from '🍎/state/desktop-files.svelte.ts';
 
 	const { target_element }: { target_element: HTMLElement } = $props();
 
@@ -29,6 +32,28 @@
 	function hideMenu() {
 		is_menu_visible = false;
 	}
+
+	function handleMenuClick(key: string) {
+		hideMenu();
+		
+		if (key === 'new-folder') {
+			// Create new folder on desktop
+			createNewFolder();
+		} else if (key === 'get-info') {
+			// Show About This Mac as system info
+			openAboutMac();
+		} else if (key === 'change-desktop-bg') {
+			// Open Wallpapers app
+			apps.open['wallpapers'] = true;
+			apps.running['wallpapers'] = true;
+			apps.active = 'wallpapers';
+		} else if (key === 'show-view-options') {
+			// Open Finder
+			apps.open['finder'] = true;
+			apps.running['finder'] = true;
+			apps.active = 'finder';
+		}
+	}
 </script>
 
 <svelte:body
@@ -47,8 +72,8 @@
 		out:fade_out
 		use:elevation={'context-menu'}
 	>
-		{#each Object.values(context_menu_config.default) as contents}
-			<button class="menu-item">{contents.title}</button>
+		{#each Object.entries(context_menu_config.default) as [key, contents]}
+			<button class="menu-item" onclick={() => handleMenuClick(key)}>{contents.title}</button>
 
 			{#if contents.breakAfter}
 				<div class="divider"></div>

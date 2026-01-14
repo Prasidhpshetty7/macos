@@ -153,4 +153,64 @@ export const desktopFilesState = $state({
 		}
 	] as DesktopFile[],
 	fileToOpen: null as DesktopFile | null,
+	folderToOpen: null as DesktopFile | null, // For opening folder in Finder
+	finderSection: null as string | null, // For opening Finder to a specific section (recents, applications, etc.)
+	editingFileId: null as string | null, // For renaming
+	newlyCreatedId: null as string | null, // To auto-focus new folder name
 });
+
+// Create a new folder on desktop
+let folderCounter = 1;
+export function createNewFolder(): DesktopFile {
+	// Find unique name
+	let name = 'untitled folder';
+	const existingNames = desktopFilesState.files.map(f => f.name.toLowerCase());
+	
+	if (existingNames.includes(name)) {
+		while (existingNames.includes(`untitled folder ${folderCounter}`)) {
+			folderCounter++;
+		}
+		name = `untitled folder ${folderCounter}`;
+		folderCounter++;
+	}
+	
+	const newFolder: DesktopFile = {
+		id: `folder-${Date.now()}`,
+		name,
+		type: 'folder',
+		icon: '📁',
+		children: []
+	};
+	
+	desktopFilesState.files = [...desktopFilesState.files, newFolder];
+	desktopFilesState.editingFileId = newFolder.id;
+	desktopFilesState.newlyCreatedId = newFolder.id;
+	
+	return newFolder;
+}
+
+// Rename a file/folder
+export function renameFile(id: string, newName: string) {
+	const file = desktopFilesState.files.find(f => f.id === id);
+	if (file && newName.trim()) {
+		file.name = newName.trim();
+	}
+	desktopFilesState.editingFileId = null;
+	desktopFilesState.newlyCreatedId = null;
+}
+
+// Delete a file/folder
+export function deleteFile(id: string) {
+	desktopFilesState.files = desktopFilesState.files.filter(f => f.id !== id);
+}
+
+// Start editing a file name
+export function startEditing(id: string) {
+	desktopFilesState.editingFileId = id;
+}
+
+// Stop editing
+export function stopEditing() {
+	desktopFilesState.editingFileId = null;
+	desktopFilesState.newlyCreatedId = null;
+}

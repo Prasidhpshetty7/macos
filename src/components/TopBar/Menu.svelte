@@ -3,6 +3,7 @@
 	import { requestShutdown, requestRestart, requestLogout, sleep, lockScreen, openAboutMac, openAboutFinder } from '🍎/state/system.svelte.ts';
 	import { menubar_state } from '🍎/state/menubar.svelte';
 	import { apps } from '🍎/state/apps.svelte.ts';
+	import { createNewFolder, desktopFilesState } from '🍎/state/desktop-files.svelte.ts';
 
 	const { menu }: { menu: any } = $props();
 
@@ -61,6 +62,8 @@
 			apps.running['finder'] = true;
 			apps.minimized['finder'] = false;
 			apps.active = 'finder';
+		} else if (key === 'new-folder') {
+			createNewFolder();
 		}
 		// Go menu actions
 		else if (key === 'applications') {
@@ -71,6 +74,25 @@
 			apps.open['finder'] = true;
 			apps.running['finder'] = true;
 			apps.active = 'finder';
+		}
+		// Apple menu actions
+		else if (key === 'app-store') {
+			apps.open['appstore'] = true;
+			apps.running['appstore'] = true;
+			apps.minimized['appstore'] = false;
+			apps.active = 'appstore';
+		} else if (key === 'recent-items') {
+			// Open Finder to Recents section
+			desktopFilesState.finderSection = 'recents';
+			apps.open['finder'] = true;
+			apps.running['finder'] = true;
+			apps.minimized['finder'] = false;
+			apps.active = 'finder';
+		} else if (key === 'system-preferences') {
+			apps.open['system-preferences'] = true;
+			apps.running['system-preferences'] = true;
+			apps.minimized['system-preferences'] = false;
+			apps.active = 'system-preferences';
 		}
 		// Window menu actions
 		else if (key === 'minimize') {

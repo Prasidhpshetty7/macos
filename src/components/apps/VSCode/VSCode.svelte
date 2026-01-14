@@ -17,28 +17,65 @@ let folders = $state<FolderItem[]>([
 	}
 ]);
 
+// Derive desktop folders to show in sidebar
+const desktopFolders = $derived(
+	desktopFilesState.files
+		.filter(f => f.type === 'folder')
+		.map(f => ({
+			name: f.name,
+			expanded: expandedDesktopFolders.has(f.name),
+			files: f.content ? [{ name: 'index.html', content: f.content }] : [],
+			isDesktopFolder: true
+		}))
+);
+
+// Combined folders for display
+const allFolders = $derived([...folders, ...desktopFolders]);
+
 let openTabs = $state<string[]>(['my-project/index.html']);
 let activeFile = $state('my-project/index.html');
 let showModal = $state(false);
 let newName = $state('');
 let menu = $state<string | null>(null);
 let view = $state<'code' | 'split' | 'preview'>('split');
+let expandedDesktopFolders = $state<Set<string>>(new Set());
 
 // Get file content by path (folder/file)
 function getFileContent(path: string): string {
 	const [folderName, fileName] = path.split('/');
+	
+	// Check regular folders first
 	const folder = folders.find(f => f.name === folderName);
-	const file = folder?.files.find(f => f.name === fileName);
-	return file?.content || '';
+	if (folder) {
+		const file = folder.files.find(f => f.name === fileName);
+		return file?.content || '';
+	}
+	
+	// Check desktop folders
+	const desktopFolder = desktopFilesState.files.find(f => f.type === 'folder' && f.name === folderName);
+	if (desktopFolder && desktopFolder.content && fileName === 'index.html') {
+		return desktopFolder.content;
+	}
+	
+	return '';
 }
 
 // Set file content by path
 function setFileContent(path: string, content: string) {
 	const [folderName, fileName] = path.split('/');
+	
+	// Check regular folders first
 	const folder = folders.find(f => f.name === folderName);
 	if (folder) {
 		const file = folder.files.find(f => f.name === fileName);
 		if (file) file.content = content;
+		return;
+	}
+	
+	// Check desktop folders
+	const desktopFolder = desktopFilesState.files.find(f => f.type === 'folder' && f.name === folderName);
+	if (desktopFolder && fileName === 'index.html') {
+		desktopFolder.content = content;
 	}
 }
 
@@ -70,9 +107,18 @@ $effect(() => {
 	}
 });
 
-function toggleFolder(folderName: string) {
-	const folder = folders.find(f => f.name === folderName);
-	if (folder) folder.expanded = !folder.expanded;
+function toggleFolder(folderName: string, isDesktopFolder: boolean = false) {
+	if (isDesktopFolder) {
+		if (expandedDesktopFolders.has(folderName)) {
+			expandedDesktopFolders.delete(folderName);
+		} else {
+			expandedDesktopFolders.add(folderName);
+		}
+		expandedDesktopFolders = new Set(expandedDesktopFolders); // Trigger reactivity
+	} else {
+		const folder = folders.find(f => f.name === folderName);
+		if (folder) folder.expanded = !folder.expanded;
+	}
 }
 
 function openFile(folderName: string, fileName: string) {
@@ -129,12 +175,13 @@ let currentContent = $derived(getFileContent(activeFile));
 <div class="main">
 <div class="side">
 <div class="hd">EXPLORER</div>
-{#each folders as folder}
+{#each allFolders as folder}
 <div class="folder">
-<button class="folder-btn" onclick={() => toggleFolder(folder.name)}>
+<button class="folder-btn" onclick={() => toggleFolder(folder.name, folder.isDesktopFolder || false)}>
 <span class="arrow" class:open={folder.expanded}>▶</span>
 <span class="folder-icon">📁</span>
 {folder.name}
+{#if folder.isDesktopFolder}<span class="desktop-badge">Desktop</span>{/if}
 </button>
 {#if folder.expanded}
 <div class="folder-files">
@@ -144,6 +191,9 @@ let currentContent = $derived(getFileContent(activeFile));
 {file.name}
 </button>
 {/each}
+{#if folder.files.length === 0}
+<div class="empty-folder">Empty folder</div>
+{/if}
 </div>
 {/if}
 </div>
@@ -211,6 +261,8 @@ let currentContent = $derived(getFileContent(activeFile));
 .fi:hover{background:rgba(255,255,255,.05)}
 .fi.act{background:rgba(255,255,255,.1)}
 .file-icon{font-size:12px}
+.desktop-badge{font-size:9px;background:#007acc;color:#fff;padding:1px 4px;border-radius:3px;margin-left:auto}
+.empty-folder{padding:4px 8px;color:#666;font-size:11px;font-style:italic}
 .ed{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .tabs{display:flex;background:#252526;align-items:center;min-height:35px;overflow-x:auto}
 .tb{display:flex;align-items:center;gap:4px;padding:8px 8px 8px 12px;background:#2d2d2d;cursor:pointer;font-size:12px;border-right:1px solid #1e1e1e;white-space:nowrap}

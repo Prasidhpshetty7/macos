@@ -1,13 +1,27 @@
 <script lang="ts">
-	import { desktopFilesState, type DesktopFile } from '🍎/state/desktop-files.svelte.ts';
+	import { desktopFilesState, type DesktopFile, renameFile, startEditing, stopEditing, deleteFile } from '🍎/state/desktop-files.svelte.ts';
 	import { apps, type AppID } from '🍎/state/apps.svelte.ts';
+	import { onMount } from 'svelte';
 	
 	let selectedFile = $state<string | null>(null);
 	let contextMenu = $state<{ x: number; y: number; file: DesktopFile } | null>(null);
 	let openFolder = $state<string | null>(null);
 	let previewFile = $state<DesktopFile | null>(null);
+	let editInputEl = $state<HTMLInputElement | null>(null);
+	let editValue = $state('');
+	
+	// Watch for newly created folders to focus input
+	$effect(() => {
+		if (desktopFilesState.newlyCreatedId && editInputEl) {
+			editInputEl.focus();
+			editInputEl.select();
+		}
+	});
 	
 	function handleDoubleClick(file: DesktopFile) {
+		// Don't open if we're editing
+		if (desktopFilesState.editingFileId === file.id) return;
+		
 		if (file.type === 'app' && file.appId) {
 			// Open the app
 			const appId = file.appId as AppID;
@@ -20,17 +34,22 @@
 			if (appId === 'drift') {
 				apps.fullscreen[appId] = true;
 			}
-		} else if (file.type === 'folder' && file.children && !file.content) {
-			// Only expand if it has children and no direct content
-			openFolder = openFolder === file.id ? null : file.id;
+		} else if (file.type === 'folder') {
+			// Open folder in Finder
+			desktopFilesState.folderToOpen = file;
+			apps.open['finder'] = true;
+			apps.running['finder'] = true;
+			apps.minimized['finder'] = false;
+			apps.active = 'finder';
 		} else {
-			// Show preview modal for files or folders with content
+			// Show preview modal for files
 			previewFile = file;
 		}
 	}
 	
 	function handleContextMenu(e: MouseEvent, file: DesktopFile) {
 		e.preventDefault();
+		e.stopPropagation();
 		contextMenu = { x: e.clientX, y: e.clientY, file };
 	}
 	
@@ -67,6 +86,39 @@
 	function closePreview() {
 		previewFile = null;
 	}
+	
+	function handleRename(file: DesktopFile) {
+		editValue = file.name;
+		startEditing(file.id);
+		contextMenu = null;
+	}
+	
+	function handleRenameSubmit(fileId: string) {
+		renameFile(fileId, editValue);
+	}
+	
+	function handleRenameKeydown(e: KeyboardEvent, fileId: string) {
+		if (e.key === 'Enter') {
+			handleRenameSubmit(fileId);
+		} else if (e.key === 'Escape') {
+			stopEditing();
+		}
+	}
+	
+	function handleDelete(file: DesktopFile) {
+		// Don't allow deleting apps
+		if (file.type === 'app') return;
+		deleteFile(file.id);
+		contextMenu = null;
+	}
+	
+	function handleClick(file: DesktopFile) {
+		// If clicking on a different file while editing, save the edit
+		if (desktopFilesState.editingFileId && desktopFilesState.editingFileId !== file.id) {
+			handleRenameSubmit(desktopFilesState.editingFileId);
+		}
+		selectedFile = file.id;
+	}
 </script>
 
 <svelte:window onclick={closeContextMenu} />
@@ -77,7 +129,7 @@
 			<button
 				class="desktop-icon"
 				class:selected={selectedFile === file.id}
-				onclick={() => selectedFile = file.id}
+				onclick={() => handleClick(file)}
 				ondblclick={() => handleDoubleClick(file)}
 				oncontextmenu={(e) => handleContextMenu(e, file)}
 			>
@@ -86,17 +138,17 @@
 						<!-- macOS Blue Folder -->
 						<svg viewBox="0 0 80 64" fill="none">
 							<defs>
-								<linearGradient id="folderFront" x1="0%" y1="0%" x2="0%" y2="100%">
+								<linearGradient id="folderFront-{file.id}" x1="0%" y1="0%" x2="0%" y2="100%">
 									<stop offset="0%" style="stop-color:#6ED4F7"/>
 									<stop offset="100%" style="stop-color:#28A3DC"/>
 								</linearGradient>
-								<linearGradient id="folderBack" x1="0%" y1="0%" x2="0%" y2="100%">
+								<linearGradient id="folderBack-{file.id}" x1="0%" y1="0%" x2="0%" y2="100%">
 									<stop offset="0%" style="stop-color:#5BC8F0"/>
 									<stop offset="100%" style="stop-color:#1E90CF"/>
 								</linearGradient>
 							</defs>
-							<path d="M4 12C4 8 7 5 11 5H28L34 12H69C73 12 76 15 76 19V52C76 56 73 59 69 59H11C7 59 4 56 4 52V12Z" fill="url(#folderBack)"/>
-							<path d="M4 20H76V52C76 56 73 59 69 59H11C7 59 4 56 4 52V20Z" fill="url(#folderFront)"/>
+							<path d="M4 12C4 8 7 5 11 5H28L34 12H69C73 12 76 15 76 19V52C76 56 73 59 69 59H11C7 59 4 56 4 52V12Z" fill="url(#folderBack-{file.id})"/>
+							<path d="M4 20H76V52C76 56 73 59 69 59H11C7 59 4 56 4 52V20Z" fill="url(#folderFront-{file.id})"/>
 						</svg>
 					{:else if file.type === 'app' && file.appId === 'chess'}
 						<!-- Chess icon -->
@@ -133,7 +185,20 @@
 						</svg>
 					{/if}
 				</div>
-				<span class="icon-name">{file.name}</span>
+				{#if desktopFilesState.editingFileId === file.id}
+					<input
+						type="text"
+						class="icon-name-input"
+						bind:value={editValue}
+						bind:this={editInputEl}
+						onblur={() => handleRenameSubmit(file.id)}
+						onkeydown={(e) => handleRenameKeydown(e, file.id)}
+						onclick={(e) => e.stopPropagation()}
+						ondblclick={(e) => e.stopPropagation()}
+					/>
+				{:else}
+					<span class="icon-name">{file.name}</span>
+				{/if}
 			</button>
 			
 			{#if file.type === 'folder' && openFolder === file.id && file.children}
@@ -164,7 +229,7 @@
 {#if contextMenu}
 	<div 
 		class="context-menu"
-		style:left="{contextMenu.x}px"
+		style:left="{contextMenu.x - 180}px"
 		style:top="{contextMenu.y}px"
 	>
 		{#if contextMenu.file.type === 'app'}
@@ -173,12 +238,21 @@
 			</button>
 		{:else}
 			<button onclick={() => openInVSCode(contextMenu.file)}>
-				<span class="ctx-icon">📝</span> Open with VS Code
+				<span class="ctx-icon">📝</span> Open
 			</button>
 		{/if}
 		<button onclick={() => { selectedFile = contextMenu.file.id; contextMenu = null; }}>
 			<span class="ctx-icon">ℹ️</span> Get Info
 		</button>
+		{#if contextMenu.file.type !== 'app'}
+			<div class="ctx-divider"></div>
+			<button onclick={() => handleRename(contextMenu.file)}>
+				<span class="ctx-icon">✏️</span> Rename
+			</button>
+			<button onclick={() => handleDelete(contextMenu.file)} class="delete-btn">
+				<span class="ctx-icon">🗑️</span> Move to Trash
+			</button>
+		{/if}
 	</div>
 {/if}
 
@@ -301,6 +375,25 @@
 		max-width: 70px;
 	}
 	
+	.icon-name-input {
+		font-size: 11px;
+		color: #fff;
+		text-align: center;
+		background: rgba(0, 122, 255, 0.8);
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 4px;
+		padding: 2px 4px;
+		max-width: 70px;
+		width: 100%;
+		outline: none;
+		text-shadow: none;
+	}
+	
+	.icon-name-input:focus {
+		background: rgba(0, 122, 255, 0.9);
+		border-color: rgba(255, 255, 255, 0.5);
+	}
+	
 	.folder-contents {
 		display: flex;
 		flex-direction: column;
@@ -350,6 +443,16 @@
 	
 	.ctx-icon {
 		font-size: 14px;
+	}
+	
+	.ctx-divider {
+		height: 1px;
+		background: rgba(255, 255, 255, 0.1);
+		margin: 4px 0;
+	}
+	
+	.context-menu .delete-btn:hover {
+		background: #ff3b30;
 	}
 	
 	.preview-overlay {

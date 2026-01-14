@@ -2,6 +2,7 @@
 	import { apps_config } from '🍎/configs/apps/apps-config.ts';
 	import { apps, type AppID } from '🍎/state/apps.svelte.ts';
 	import { desktopFilesState, type DesktopFile } from '🍎/state/desktop-files.svelte.ts';
+	import { onMount } from 'svelte';
 	
 	type SidebarItem = {
 		id: string;
@@ -10,6 +11,17 @@
 		type: 'favorite' | 'tag';
 		color?: string;
 	};
+	
+	type RecentItem = {
+		id: string;
+		name: string;
+		type: 'app' | 'folder' | 'file';
+		appId?: string;
+		timestamp: number;
+	};
+	
+	// Track recent activities
+	let recentItems = $state<RecentItem[]>([]);
 	
 	const favorites: SidebarItem[] = [
 		{ id: 'recents', name: 'Recents', icon: '🕐', type: 'favorite' },
@@ -33,6 +45,45 @@
 	let viewMode = $state<'grid' | 'list' | 'columns'>('grid');
 	let navigationHistory = $state<string[]>(['desktop']);
 	let historyIndex = $state(0);
+	let currentFolder = $state<DesktopFile | null>(null);
+	
+	// Check if a folder was requested to open
+	$effect(() => {
+		if (desktopFilesState.folderToOpen) {
+			currentFolder = desktopFilesState.folderToOpen;
+			activeSection = `folder:${desktopFilesState.folderToOpen.id}`;
+			navigationHistory = [...navigationHistory.slice(0, historyIndex + 1), activeSection];
+			historyIndex = navigationHistory.length - 1;
+			
+			// Add to recent items
+			addToRecent({
+				id: desktopFilesState.folderToOpen.id,
+				name: desktopFilesState.folderToOpen.name,
+				type: 'folder',
+				timestamp: Date.now()
+			});
+			
+			desktopFilesState.folderToOpen = null;
+		}
+	});
+	
+	// Check if a specific section was requested
+	$effect(() => {
+		if (desktopFilesState.finderSection) {
+			activeSection = desktopFilesState.finderSection;
+			currentFolder = null;
+			navigationHistory = [desktopFilesState.finderSection];
+			historyIndex = 0;
+			desktopFilesState.finderSection = null;
+		}
+	});
+	
+	function addToRecent(item: RecentItem) {
+		// Remove if already exists
+		recentItems = recentItems.filter(r => r.id !== item.id);
+		// Add to front
+		recentItems = [item, ...recentItems].slice(0, 10); // Keep max 10 items
+	}
 	
 	// Get all apps for Applications view
 	const allApps = Object.entries(apps_config)
@@ -46,6 +97,11 @@
 	function navigate(sectionId: string) {
 		if (sectionId === activeSection) return;
 		
+		// Clear current folder if navigating to a standard section
+		if (!sectionId.startsWith('folder:')) {
+			currentFolder = null;
+		}
+		
 		// Add to history
 		navigationHistory = [...navigationHistory.slice(0, historyIndex + 1), sectionId];
 		historyIndex = navigationHistory.length - 1;
@@ -56,6 +112,13 @@
 		if (historyIndex > 0) {
 			historyIndex--;
 			activeSection = navigationHistory[historyIndex];
+			// Update currentFolder if going back to a folder view
+			if (activeSection.startsWith('folder:')) {
+				const folderId = activeSection.replace('folder:', '');
+				currentFolder = desktopFilesState.files.find(f => f.id === folderId) || null;
+			} else {
+				currentFolder = null;
+			}
 		}
 	}
 	
@@ -63,6 +126,13 @@
 		if (historyIndex < navigationHistory.length - 1) {
 			historyIndex++;
 			activeSection = navigationHistory[historyIndex];
+			// Update currentFolder if going forward to a folder view
+			if (activeSection.startsWith('folder:')) {
+				const folderId = activeSection.replace('folder:', '');
+				currentFolder = desktopFilesState.files.find(f => f.id === folderId) || null;
+			} else {
+				currentFolder = null;
+			}
 		}
 	}
 	
@@ -74,6 +144,18 @@
 		
 		if (appId === 'drift') {
 			apps.fullscreen[appId] = true;
+		}
+		
+		// Add to recent items
+		const appConfig = apps_config[appId];
+		if (appConfig) {
+			addToRecent({
+				id: appId,
+				name: appConfig.title,
+				type: 'app',
+				appId: appId,
+				timestamp: Date.now()
+			});
 		}
 	}
 	
@@ -88,6 +170,10 @@
 	}
 	
 	function getSectionTitle(id: string): string {
+		// Check if it's a folder view
+		if (id.startsWith('folder:') && currentFolder) {
+			return currentFolder.name;
+		}
 		const item = [...favorites, ...tags].find(i => i.id === id);
 		return item?.name || 'Finder';
 	}
@@ -209,10 +295,56 @@
 					{/each}
 				</div>
 			{:else if activeSection === 'recents'}
-				<div class="empty-state">
-					<span class="empty-icon">🕐</span>
-					<span class="empty-text">No Recent Items</span>
-				</div>
+				{#if recentItems.length === 0}
+					<div class="empty-state">
+						<span class="empty-icon">🕐</span>
+						<span class="empty-text">No Recent Items</span>
+					</div>
+				{:else}
+					<div class="files-grid" class:list-view={viewMode === 'list'}>
+						{#each recentItems as item}
+							<button class="file-item" ondblclick={() => {
+								if (item.type === 'app' && item.appId) {
+									openApp(item.appId as AppID);
+								} else if (item.type === 'folder') {
+									const folder = desktopFilesState.files.find(f => f.id === item.id);
+									if (folder) {
+										currentFolder = folder;
+										activeSection = `folder:${folder.id}`;
+									}
+								}
+							}}>
+								<div class="file-icon">
+									{#if item.type === 'app' && item.appId}
+										<img 
+											src="/app-icons/{item.appId}/256.webp" 
+											alt={item.name}
+											onerror={(e) => { e.currentTarget.src = `/app-icons/${item.appId}/256.png`; }}
+										/>
+									{:else if item.type === 'folder'}
+										<svg viewBox="0 0 80 64" fill="none" class="folder-svg">
+											<defs>
+												<linearGradient id="recentFolderFront" x1="0%" y1="0%" x2="0%" y2="100%">
+													<stop offset="0%" style="stop-color:#6ED4F7"/>
+													<stop offset="100%" style="stop-color:#28A3DC"/>
+												</linearGradient>
+												<linearGradient id="recentFolderBack" x1="0%" y1="0%" x2="0%" y2="100%">
+													<stop offset="0%" style="stop-color:#5BC8F0"/>
+													<stop offset="100%" style="stop-color:#1E90CF"/>
+												</linearGradient>
+											</defs>
+											<path d="M4 12C4 8 7 5 11 5H28L34 12H69C73 12 76 15 76 19V52C76 56 73 59 69 59H11C7 59 4 56 4 52V12Z" fill="url(#recentFolderBack)"/>
+											<path d="M4 20H76V52C76 56 73 59 69 59H11C7 59 4 56 4 52V20Z" fill="url(#recentFolderFront)"/>
+										</svg>
+									{:else}
+										<span class="doc-icon">📄</span>
+									{/if}
+								</div>
+								<span class="file-name">{item.name}</span>
+							</button>
+						{/each}
+					</div>
+				{/if}
 			{:else if activeSection === 'documents'}
 				<div class="files-grid" class:list-view={viewMode === 'list'}>
 					{#each desktopFilesState.files.filter(f => f.type === 'folder') as file}
@@ -249,6 +381,43 @@
 						</div>
 						<span class="file-name">Chess</span>
 					</button>
+				</div>
+			{:else if activeSection.startsWith('folder:') && currentFolder}
+				<!-- Folder contents view -->
+				<div class="folder-view">
+					{#if currentFolder.content}
+						<!-- Folder has content (like Portfolio) - show preview -->
+						<div class="folder-content-preview">
+							<div class="preview-header">
+								<span class="preview-icon">📄</span>
+								<span>index.html</span>
+							</div>
+							<div class="preview-body">
+								<pre>{currentFolder.content.substring(0, 500)}...</pre>
+							</div>
+							<button class="open-vscode-btn" onclick={() => { desktopFilesState.fileToOpen = currentFolder; openApp('vscode'); }}>
+								Open in VS Code
+							</button>
+						</div>
+					{:else if currentFolder.children && currentFolder.children.length > 0}
+						<!-- Folder has children -->
+						<div class="files-grid" class:list-view={viewMode === 'list'}>
+							{#each currentFolder.children as child}
+								<button class="file-item">
+									<div class="file-icon">
+										<span class="doc-icon">📄</span>
+									</div>
+									<span class="file-name">{child.name}</span>
+								</button>
+							{/each}
+						</div>
+					{:else}
+						<!-- Empty folder -->
+						<div class="empty-state">
+							<span class="empty-icon">📁</span>
+							<span class="empty-text">This folder is empty</span>
+						</div>
+					{/if}
 				</div>
 			{:else}
 				<div class="empty-state">
@@ -547,5 +716,65 @@
 	
 	.empty-text {
 		font-size: 14px;
+	}
+	
+	/* Folder View */
+	.folder-view {
+		height: 100%;
+	}
+	
+	.folder-content-preview {
+		background: #f5f5f7;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+	
+	.preview-header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		padding: 10px 14px;
+		background: #e8e8ea;
+		font-size: 12px;
+		font-weight: 500;
+		color: #333;
+	}
+	
+	.preview-icon {
+		font-size: 16px;
+	}
+	
+	.preview-body {
+		padding: 12px;
+		max-height: 200px;
+		overflow: auto;
+	}
+	
+	.preview-body pre {
+		font-family: 'SF Mono', Monaco, monospace;
+		font-size: 10px;
+		color: #666;
+		white-space: pre-wrap;
+		word-break: break-all;
+		margin: 0;
+	}
+	
+	.open-vscode-btn {
+		display: block;
+		width: calc(100% - 24px);
+		margin: 12px;
+		padding: 8px 16px;
+		background: #007acc;
+		color: #fff;
+		border: none;
+		border-radius: 6px;
+		font-size: 12px;
+		font-weight: 500;
+		cursor: pointer;
+		transition: background 0.2s;
+	}
+	
+	.open-vscode-btn:hover {
+		background: #0098ff;
 	}
 </style>
