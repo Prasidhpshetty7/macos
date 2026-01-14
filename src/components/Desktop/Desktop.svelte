@@ -8,6 +8,7 @@
 	import WindowsArea from './Window/WindowsArea.svelte';
 	import SystemOverlay from '../SystemOverlay.svelte';
 	import AboutThisMac from '../AboutThisMac.svelte';
+	import AboutFinder from '../AboutFinder.svelte';
 	import DesktopIcons from './DesktopIcons.svelte';
 	import Launchpad from '../Launchpad.svelte';
 
@@ -38,6 +39,7 @@
 	<SystemUpdate />
 	<SystemOverlay />
 	<AboutThisMac />
+	<AboutFinder />
 	<Launchpad />
 
 	<ContextMenu target_element={mainEl} />

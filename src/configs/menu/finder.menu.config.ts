@@ -24,7 +24,6 @@ export const finder_menu_config = create_menu_config({
 			},
 			'show-all': {
 				title: 'Show All',
-				disabled: true,
 			},
 		},
 	},
@@ -328,7 +327,6 @@ export const finder_menu_config = create_menu_config({
 		menu: {
 			minimize: {
 				title: 'Minimize',
-				disabled: true,
 			},
 			zoom: {
 				title: 'Zoom',

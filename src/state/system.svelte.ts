@@ -26,6 +26,17 @@ export function closeAboutMac() {
 	showAboutMac.value = false;
 }
 
+// About Finder dialog state
+export const showAboutFinder = $state({ value: false });
+
+export function openAboutFinder() {
+	showAboutFinder.value = true;
+}
+
+export function closeAboutFinder() {
+	showAboutFinder.value = false;
+}
+
 // Show shutdown confirmation dialog
 export function requestShutdown() {
 	if (systemState.state !== 'running') return;
