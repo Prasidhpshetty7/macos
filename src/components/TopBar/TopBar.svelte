@@ -14,11 +14,11 @@
 	import TopBarTime from './TopBarTime.svelte';
 	import MusicControl from './MusicControl.svelte';
 	
-	// Count open windows
-	const openWindowCount = $derived(
-		Object.entries(apps.open)
-			.filter(([id, isOpen]) => {
-				if (!isOpen) return false;
+	// Count running apps (open or minimized - just need to have been opened)
+	const runningAppCount = $derived(
+		Object.entries(apps.running)
+			.filter(([id, isRunning]) => {
+				if (!isRunning) return false;
 				const config = apps_config[id as AppID];
 				return config && config.should_open_window !== false;
 			})
@@ -41,8 +41,8 @@
 		</div>
 	{/if}
 
-	<!-- Mission Control button - shows when 2+ windows open -->
-	{#if openWindowCount >= 2}
+	<!-- Mission Control button - shows when 2+ apps running (open or minimized) -->
+	{#if runningAppCount >= 2}
 	<button class="mission-control-btn" onclick={handleMCClick} aria-label="Mission Control">
 		<svg viewBox="0 0 24 24" fill="currentColor">
 			<rect x="2" y="2" width="9" height="9" rx="2" />

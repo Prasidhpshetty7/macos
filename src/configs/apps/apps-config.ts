@@ -1,15 +1,6 @@
 import { create_app_config } from '🍎/helpers/create-app-config';
 import { openLaunchpad } from '🍎/state/launchpad.svelte';
-import { toggleMissionControl } from '🍎/state/system.svelte';
-
-const missionControl = create_app_config({
-	title: 'Mission Control',
-	resizable: false,
-	should_open_window: false,
-	external_action: () => {
-		toggleMissionControl();
-	},
-});
+import { missionControl } from '🍎/state/mission-control.svelte';
 
 const wallpapers = create_app_config({
 	title: 'Wallpapers',
@@ -59,6 +50,15 @@ const launchpad = create_app_config({
 	should_open_window: false,
 	external_action: () => {
 		openLaunchpad();
+	},
+});
+
+const missionControlApp = create_app_config({
+	title: 'Mission Control',
+	resizable: false,
+	should_open_window: false,
+	external_action: () => {
+		missionControl.toggle();
 	},
 });
 
@@ -137,9 +137,9 @@ const drift = create_app_config({
 });
 
 export const apps_config = {
-	'mission-control': missionControl,
 	finder,
 	launchpad,
+	'mission-control': missionControlApp,
 	safari,
 	wallpapers,
 	calculator,

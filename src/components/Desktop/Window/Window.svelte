@@ -19,6 +19,7 @@
 	import { apps, type AppID } from '🍎/state/apps.svelte.ts';
 	import { preferences } from '🍎/state/preferences.svelte.ts';
 	import { stopMusic } from '🍎/state/music.svelte.ts';
+	import { spacesManager } from '🍎/state/spaces.svelte';
 
 	import AppNexus from '../../apps/AppNexus.svelte';
 	import TrafficLights from './TrafficLights.svelte';
@@ -114,6 +115,8 @@
 		apps.running[app_id] = false;
 		apps.fullscreen[app_id] = false;
 		apps.minimized[app_id] = false;
+		// Clear space assignment so app can be opened fresh on any desktop
+		spacesManager.removeWindowSpace(app_id);
 	}
 
 	function minimizeApp() {

@@ -20,6 +20,16 @@
 			})
 			.map(([appId]) => appId as AppID)
 	);
+	
+	// Check if any window is visible (open AND not minimized)
+	const hasVisibleWindows = $derived(
+		Object.entries(apps.open).some(([id, isOpen]) => {
+			if (!isOpen) return false;
+			const config = apps_config[id as AppID];
+			if (!config || config.should_open_window === false) return false;
+			return !apps.minimized[id as AppID];
+		})
+	);
 
 	function openHiddenApp(appId: AppID) {
 		apps.open[appId] = true;
@@ -51,11 +61,13 @@
 			return;
 		}
 
-		if (!Object.values(apps.fullscreen).some(Boolean)) {
+		// If no visible windows (all closed or all minimized), always show dock
+		if (!hasVisibleWindows) {
 			untrack(() => (is_dock_hidden.value = false));
 			return;
 		}
 
+		// Has visible windows - auto-hide dock based on mouse position
 		untrack(() => (is_dock_hidden.value = Math.abs(mouseY - bodyHeight) > HIDDEN_DOCK_THRESHOLD));
 	});
 </script>

@@ -4,9 +4,9 @@ export type AppID = keyof typeof apps_config;
 
 export const apps = $state({
 	open: {
-		'mission-control': false,
 		finder: false,
 		launchpad: false,
+		'mission-control': false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,
@@ -23,9 +23,9 @@ export const apps = $state({
 
 	// Track which apps are running (even if minimized)
 	running: {
-		'mission-control': false,
 		finder: false,
 		launchpad: false,
+		'mission-control': false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,
@@ -49,9 +49,9 @@ export const apps = $state({
 	active_z_index: -2,
 
 	z_indices: {
-		'mission-control': 0,
 		finder: 0,
 		launchpad: 0,
+		'mission-control': 0,
 		safari: 0,
 		wallpapers: 0,
 		calculator: 0,
@@ -69,9 +69,9 @@ export const apps = $state({
 	is_being_dragged: false as boolean,
 
 	fullscreen: {
-		'mission-control': false,
 		finder: false,
 		launchpad: false,
+		'mission-control': false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,
@@ -87,9 +87,9 @@ export const apps = $state({
 	} as Record<AppID, boolean>,
 
 	minimized: {
-		'mission-control': false,
 		finder: false,
 		launchpad: false,
+		'mission-control': false,
 		safari: false,
 		wallpapers: false,
 		calculator: false,

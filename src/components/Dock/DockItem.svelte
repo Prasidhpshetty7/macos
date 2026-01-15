@@ -41,6 +41,7 @@
 	import { apps_config } from '🍎/configs/apps/apps-config';
 	import { apps, type AppID } from '🍎/state/apps.svelte';
 	import { preferences } from '🍎/state/preferences.svelte';
+	import { spacesManager } from '🍎/state/spaces.svelte';
 
 	const {
 		mouse_x,
@@ -123,6 +124,11 @@
 		appOpenIconBounceTransform.set(0);
 	}
 
+	// Check if app is running in current space
+	const isRunningInCurrentSpace = $derived(
+		apps.running[app_id] && spacesManager.isWindowInActiveSpace(app_id)
+	);
+
 	async function openApp(e: MouseEvent) {
 		if (!shouldOpenWindow) return externalAction?.(e);
 
@@ -133,6 +139,9 @@
 		apps.running[app_id] = true;
 		apps.minimized[app_id] = false; // Restore from minimized state
 		apps.active = app_id;
+		
+		// Assign window to current space when opening
+		spacesManager.assignWindowToCurrentSpace(app_id);
 
 		if (isAppAlreadyOpen) return;
 
@@ -200,7 +209,7 @@
 		{/if}
 	</span>
 
-	<div class="dot" style:--opacity={+apps.running[app_id]}></div>
+	<div class="dot" style:--opacity={+isRunningInCurrentSpace}></div>
 
 	{#if show_pwa_badge}
 		<div class="pwa-badge" style:transform="scale({$width_px / baseWidth})">1</div>
@@ -257,7 +266,6 @@
 		align-items: center;
 		justify-content: center;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-		transform: scale(0.85);
 	}
 
 	.mission-control-icon svg {

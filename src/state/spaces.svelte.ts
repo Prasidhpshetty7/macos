@@ -1,123 +1,101 @@
-// Desktop Spaces state - for Mission Control multiple desktops
+// Desktop Spaces state for Mission Control
+// Each desktop is independent - apps can only exist on ONE desktop at a time
+// Moving an app transfers it completely to the new desktop
 
 import { apps, type AppID } from './apps.svelte';
 
-export type DesktopSpace = {
+export interface DesktopSpace {
 	id: number;
 	wallpaper: string;
-	windows: AppID[]; // Windows assigned to this desktop
-};
-
-// Default wallpaper
-const defaultWallpaper = 'ventura-dark';
-
-// Create initial desktop
-const initialSpaces: DesktopSpace[] = [
-	{ id: 1, wallpaper: defaultWallpaper, windows: [] }
-];
-
-export const spacesState = $state({
-	spaces: initialSpaces as DesktopSpace[],
-	activeSpaceId: 1,
-	maxSpaces: 10,
-});
-
-// Get current active space
-export function getActiveSpace(): DesktopSpace {
-	return spacesState.spaces.find(s => s.id === spacesState.activeSpaceId) || spacesState.spaces[0];
 }
 
-// Add a new desktop space
-export function addSpace(): DesktopSpace | null {
-	if (spacesState.spaces.length >= spacesState.maxSpaces) return null;
+class SpacesManager {
+	spaces = $state<DesktopSpace[]>([{ id: 1, wallpaper: 'default' }]);
+	activeSpaceId = $state(1);
+	windowSpaces = $state<Record<string, number>>({}); // appId -> spaceId (which desktop owns this window)
+	maxSpaces = 10;
 	
-	const newId = Math.max(...spacesState.spaces.map(s => s.id)) + 1;
-	const newSpace: DesktopSpace = {
-		id: newId,
-		wallpaper: defaultWallpaper,
-		windows: []
-	};
-	
-	spacesState.spaces = [...spacesState.spaces, newSpace];
-	return newSpace;
-}
-
-// Remove a desktop space (can't remove last one)
-export function removeSpace(spaceId: number): boolean {
-	if (spacesState.spaces.length <= 1) return false;
-	
-	const space = spacesState.spaces.find(s => s.id === spaceId);
-	if (!space) return false;
-	
-	// Move windows to first space
-	const firstSpace = spacesState.spaces[0];
-	if (firstSpace && space.windows.length > 0) {
-		firstSpace.windows = [...firstSpace.windows, ...space.windows];
+	get activeSpace() {
+		return this.spaces.find(s => s.id === this.activeSpaceId) || this.spaces[0];
 	}
 	
-	spacesState.spaces = spacesState.spaces.filter(s => s.id !== spaceId);
-	
-	// If active space was removed, switch to first
-	if (spacesState.activeSpaceId === spaceId) {
-		spacesState.activeSpaceId = spacesState.spaces[0].id;
+	addSpace() {
+		if (this.spaces.length >= this.maxSpaces) return null;
+		const newId = Math.max(...this.spaces.map(s => s.id)) + 1;
+		const newSpace: DesktopSpace = { id: newId, wallpaper: 'default' };
+		this.spaces = [...this.spaces, newSpace];
+		return newSpace;
 	}
 	
-	return true;
-}
-
-// Switch to a different desktop space
-export function switchToSpace(spaceId: number) {
-	const space = spacesState.spaces.find(s => s.id === spaceId);
-	if (space) {
-		spacesState.activeSpaceId = spaceId;
+	removeSpace(spaceId: number) {
+		if (this.spaces.length <= 1) return false;
+		
+		// Move all windows from this space to space 1
+		Object.keys(this.windowSpaces).forEach(appId => {
+			if (this.windowSpaces[appId] === spaceId) {
+				this.windowSpaces[appId] = 1;
+			}
+		});
+		
+		this.spaces = this.spaces.filter(s => s.id !== spaceId);
+		
+		if (this.activeSpaceId === spaceId) {
+			this.activeSpaceId = this.spaces[0].id;
+		}
+		return true;
 	}
-}
-
-// Move a window to a different space
-export function moveWindowToSpace(appId: AppID, targetSpaceId: number) {
-	// Remove from all spaces first
-	spacesState.spaces.forEach(space => {
-		space.windows = space.windows.filter(w => w !== appId);
-	});
 	
-	// Add to target space
-	const targetSpace = spacesState.spaces.find(s => s.id === targetSpaceId);
-	if (targetSpace) {
-		targetSpace.windows = [...targetSpace.windows, appId];
-	}
-}
-
-// Get which space a window belongs to (or null if not assigned)
-export function getWindowSpace(appId: AppID): number | null {
-	for (const space of spacesState.spaces) {
-		if (space.windows.includes(appId)) {
-			return space.id;
+	switchToSpace(spaceId: number) {
+		if (this.spaces.find(s => s.id === spaceId)) {
+			this.activeSpaceId = spaceId;
 		}
 	}
-	return null;
-}
-
-// Set wallpaper for a space
-export function setSpaceWallpaper(spaceId: number, wallpaper: string) {
-	const space = spacesState.spaces.find(s => s.id === spaceId);
-	if (space) {
-		space.wallpaper = wallpaper;
+	
+	// Move window to another space - the window now belongs ONLY to that space
+	moveWindowToSpace(appId: string, spaceId: number) {
+		this.windowSpaces[appId] = spaceId;
+	}
+	
+	getWindowSpace(appId: string): number {
+		return this.windowSpaces[appId] || this.activeSpaceId;
+	}
+	
+	// When opening an app, assign it to current active space
+	assignWindowToCurrentSpace(appId: string) {
+		if (!this.windowSpaces[appId]) {
+			this.windowSpaces[appId] = this.activeSpaceId;
+		}
+	}
+	
+	// When closing an app, remove its space assignment
+	removeWindowSpace(appId: string) {
+		delete this.windowSpaces[appId];
+	}
+	
+	setSpaceWallpaper(spaceId: number, wallpaper: string) {
+		const space = this.spaces.find(s => s.id === spaceId);
+		if (space) {
+			space.wallpaper = wallpaper;
+		}
+	}
+	
+	isWindowInActiveSpace(appId: string): boolean {
+		const windowSpace = this.getWindowSpace(appId);
+		return windowSpace === this.activeSpaceId;
+	}
+	
+	// Check if an app is open in a specific space
+	isAppOpenInSpace(appId: string, spaceId: number): boolean {
+		if (!apps.open[appId as AppID] && !apps.running[appId as AppID]) return false;
+		return this.getWindowSpace(appId) === spaceId;
+	}
+	
+	// Get all open apps in a specific space
+	getAppsInSpace(spaceId: number): string[] {
+		return Object.entries(this.windowSpaces)
+			.filter(([appId, space]) => space === spaceId && (apps.open[appId as AppID] || apps.running[appId as AppID]))
+			.map(([appId]) => appId);
 	}
 }
 
-// Get windows for current active space (or all if not assigned)
-export function getVisibleWindows(): AppID[] {
-	const activeSpace = getActiveSpace();
-	
-	// Get all open windows
-	const allOpenWindows = Object.entries(apps.open)
-		.filter(([_, isOpen]) => isOpen)
-		.map(([id]) => id as AppID);
-	
-	// If window is assigned to a space, only show if it's the active space
-	// If window is not assigned to any space, show it on all spaces
-	return allOpenWindows.filter(appId => {
-		const windowSpace = getWindowSpace(appId);
-		return windowSpace === null || windowSpace === activeSpace.id;
-	});
-}
+export const spacesManager = new SpacesManager();

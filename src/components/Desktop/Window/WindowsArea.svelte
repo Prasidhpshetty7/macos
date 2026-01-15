@@ -2,6 +2,7 @@
 	import { untrack } from 'svelte';
 	import { apps_config } from '🍎/configs/apps/apps-config';
 	import { apps } from '🍎/state/apps.svelte';
+	import { spacesManager } from '🍎/state/spaces.svelte';
 
 	$effect(() => {
 		apps.active;
@@ -33,9 +34,12 @@
 <section id="windows-area">
 	{#each Object.keys(apps_config) as app_id}
 		{#if (apps.open[app_id] || apps.minimized[app_id]) && apps_config[app_id].should_open_window}
-			{#await import('./Window.svelte') then { default: Window }}
-				<Window {app_id} />
-			{/await}
+			<!-- Wrap in a div that controls visibility based on space -->
+			<div class="window-space-wrapper" class:hidden-space={!spacesManager.isWindowInActiveSpace(app_id)}>
+				{#await import('./Window.svelte') then { default: Window }}
+					<Window {app_id} />
+				{/await}
+			</div>
 		{/if}
 	{/each}
 </section>
@@ -52,5 +56,13 @@
 		width: 100vw;
 
 		justify-self: center;
+	}
+	
+	.window-space-wrapper {
+		display: contents;
+	}
+	
+	.window-space-wrapper.hidden-space {
+		display: none;
 	}
 </style>
