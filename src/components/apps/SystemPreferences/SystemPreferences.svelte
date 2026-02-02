@@ -44,6 +44,9 @@
 </script>
 
 <section class="system-settings">
+	<!-- Drag handle area for traffic lights -->
+	<div class="drag-handle app-window-drag-handle"></div>
+	
 	<div class="sidebar">
 		<div class="search-bar">
 			<span class="search-icon">🔍</span>
@@ -186,6 +189,17 @@
 		height: 100%;
 		background: #f5f5f7;
 		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+		position: relative;
+	}
+	
+	.drag-handle {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 52px;
+		z-index: 100;
+		pointer-events: auto;
 	}
 	
 	.sidebar {
@@ -196,6 +210,7 @@
 		display: flex;
 		flex-direction: column;
 		overflow-y: auto;
+		padding-top: 52px;
 	}
 	
 	.search-bar {
@@ -323,6 +338,7 @@
 		display: flex;
 		flex-direction: column;
 		background: white;
+		padding-top: 52px;
 	}
 	
 	.content-header {
