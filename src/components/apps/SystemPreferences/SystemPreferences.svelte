@@ -198,7 +198,7 @@
 		left: 0;
 		right: 0;
 		height: 52px;
-		z-index: 100;
+		z-index: 1;
 		pointer-events: auto;
 	}
 	
