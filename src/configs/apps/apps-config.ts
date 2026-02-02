@@ -141,6 +141,7 @@ export const apps_config = {
 	launchpad,
 	'mission-control': missionControlApp,
 	safari,
+	'system-preferences': systemPreferences,
 	wallpapers,
 	calculator,
 	calendar,
@@ -149,8 +150,6 @@ export const apps_config = {
 	music,
 	chess,
 	drift,
-
-	// 'system-preferences': systemPreferences,
 
 	'purus-twitter': purusTwitter,
 	'view-source': viewSource,

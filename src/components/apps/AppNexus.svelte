@@ -50,6 +50,10 @@
 	{#await import('./Drift/Drift.svelte') then { default: Drift }}
 		<Drift />
 	{/await}
+{:else if app_id === 'system-preferences'}
+	{#await import('./SystemPreferences/SystemPreferences.svelte') then { default: SystemPreferences }}
+		<SystemPreferences />
+	{/await}
 {:else}
 	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}
 		<AppStore {app_id} />
