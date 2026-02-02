@@ -1,10 +1,46 @@
-> 🛑🛑 Note: This is the new iteration of macOS Web written in Svelte. Previous version written in Preact is available at [PuruVJ/macos-preact](https://github.com/puruvj/macos-preact) 🛑🛑
+# macOS UI Replica
+
+A web-based replica inspired by the macOS desktop interface, built to explore system-level UI patterns and interactions.
+
+---
+
+## Overview
+This project recreates the look and feel of macOS using frontend web technologies. It focuses on window layouts, desktop-style interactions, and visual hierarchy inspired by a real operating system interface.
+
+The goal of the project is experimentation and learning, not exact replication.
+
+---
+
+## Tech Stack
+- HTML
+- CSS
+- JavaScript
+
+---
+
+## Key Focus Areas
+- Desktop-style UI layout
+- Window positioning and interactions
+- System-inspired visual design
+- Interactive elements and transitions
+
+---
+
+## Development Notes
+Built using a **vibe coding** approach, emphasizing creative exploration and UI experimentation over strict implementation.
+
+---
+
+## How to Run
+Open the `index.html` file in a modern browser to explore the interface.
+
+> 🛑🛑 Note: This is the new iteration of macOS Web written in Svelte.
 
 # Mac OS Ventura Web
 
 This open source project aims to replicate some of the Mac OS(Monterey, at the time of writing)'s desktop experience on web, using Svelte!
 
-🔗🔗 [macos-web.app](https://macos.now.sh)
+🔗🔗 [macos-web.app](https://os.prasidhshetty.in)
 
 # Why
 
@@ -17,9 +53,6 @@ I've always been very fascinated with macOS, and have never owned a Mac/book. So
 - Component Library - None!!
 - Styling Solution - SCSS.
 
-# When will it be ready?
-
-![Who knows?](https://i.imgur.com/6xfbPzs.gif)
 
 # Can I contribute?
 
