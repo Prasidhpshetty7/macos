@@ -23,8 +23,9 @@ class SpacesManager {
 	addSpace() {
 		if (this.spaces.length >= this.maxSpaces) return null;
 		const newId = Math.max(...this.spaces.map(s => s.id)) + 1;
-		// New spaces get the current global wallpaper
-		const newSpace: DesktopSpace = { id: newId, wallpaper: preferences.wallpaper.image };
+		// New space inherits wallpaper from the last (rightmost) desktop
+		const lastSpace = this.spaces[this.spaces.length - 1];
+		const newSpace: DesktopSpace = { id: newId, wallpaper: lastSpace.wallpaper };
 		this.spaces = [...this.spaces, newSpace];
 		return newSpace;
 	}
@@ -75,9 +76,12 @@ class SpacesManager {
 	}
 	
 	setSpaceWallpaper(spaceId: number, wallpaper: string) {
-		const space = this.spaces.find(s => s.id === spaceId);
-		if (space) {
-			space.wallpaper = wallpaper;
+		const spaceIndex = this.spaces.findIndex(s => s.id === spaceId);
+		if (spaceIndex !== -1) {
+			// Create a new array to trigger reactivity
+			this.spaces = this.spaces.map((space, i) => 
+				i === spaceIndex ? { ...space, wallpaper } : space
+			);
 		}
 	}
 	

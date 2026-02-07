@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { wallpapers_config, type WallpaperID } from '🍎/configs/wallpapers/wallpaper.config.ts';
 	import { preferences } from '🍎/state/preferences.svelte.ts';
+	import { spacesManager } from '🍎/state/spaces.svelte';
 
 	const dynamic_wallpapers = Object.entries(wallpapers_config).filter(
 		([, { type }]) => type === 'dynamic',
@@ -10,9 +11,27 @@
 		([, { type }]) => type === 'standalone',
 	);
 
-	const current_wallpaper_thumb = $derived(`url(${preferences.wallpaper.image})`);
+	// Show the wallpaper of the current active desktop
+	const currentDesktopWallpaper = $derived(spacesManager.activeSpace.wallpaper);
+	const current_wallpaper_thumb = $derived(`url(${currentDesktopWallpaper})`);
+	
+	// Get the wallpaper ID from the image path
+	const currentWallpaperId = $derived.by(() => {
+		const wallpaper = currentDesktopWallpaper;
+		// Find which wallpaper config matches this image
+		for (const [id, config] of Object.entries(wallpapers_config)) {
+			if (config.image === wallpaper || config.thumbnail === wallpaper) {
+				return id as WallpaperID;
+			}
+		}
+		return preferences.wallpaper.id;
+	});
 
 	function change_wallpaper(wallpaperName: WallpaperID) {
+		const wallpaperImage = wallpapers_config[wallpaperName].image;
+		// Update the current desktop's wallpaper
+		spacesManager.setSpaceWallpaper(spacesManager.activeSpaceId, wallpaperImage);
+		// Also update global preference for new desktops
 		preferences.wallpaper.id = wallpaperName;
 	}
 
@@ -37,14 +56,14 @@
 			<div class="image" style:background-image={current_wallpaper_thumb}></div>
 
 			<div class="info">
-				<h2>{wallpapers_config[preferences.wallpaper.id].name}</h2>
+				<h2>{wallpapers_config[currentWallpaperId]?.name || 'Wallpaper'}</h2>
 				<p class="wallpaper-type">
-					{wallpapers_config[preferences.wallpaper.id].type} wallpaper
+					{wallpapers_config[currentWallpaperId]?.type || 'standalone'} wallpaper
 				</p>
 
 				<br /> <br />
 
-				{#if wallpapers_config[preferences.wallpaper.id].type !== 'standalone'}
+				{#if wallpapers_config[currentWallpaperId]?.type !== 'standalone'}
 					<label>
 						<input type="checkbox" bind:checked={preferences.wallpaper.canControlTheme} />
 						Change dark/light mode as wallpapers change

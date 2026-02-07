@@ -5,10 +5,18 @@
 	import { smaller_closest_value } from '🍎/helpers/smaller-closest-value.ts';
 	import { create_interval } from '🍎/state/interval.svelte.ts';
 	import { preferences } from '🍎/state/preferences.svelte.ts';
+	import { spacesManager } from '🍎/state/spaces.svelte';
 
-	let visible_background_image = $state(wallpapers_config.ventura.image);
+	// Use the active space's wallpaper instead of global preference
+	let visible_background_image = $state(spacesManager.activeSpace.wallpaper);
 
 	const interval = create_interval(5 * 1000);
+
+	// React to active space changes
+	$effect(() => {
+		const activeWallpaper = spacesManager.activeSpace.wallpaper;
+		visible_background_image = activeWallpaper;
+	});
 
 	$effect(() => {
 		interval.value;
@@ -78,12 +86,12 @@
 	}
 
 	function previewImageOnLoad() {
-		visible_background_image = preferences.wallpaper.image;
+		visible_background_image = spacesManager.activeSpace.wallpaper;
 	}
 </script>
 
 <!-- This preload and render the image for browser but invisible to user -->
-<img src={preferences.wallpaper.image} aria-hidden="true" alt="" onload={previewImageOnLoad} />
+<img src={spacesManager.activeSpace.wallpaper} aria-hidden="true" alt="" onload={previewImageOnLoad} />
 
 <div
 	class="background-cover"
