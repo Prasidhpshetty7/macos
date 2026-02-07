@@ -3,7 +3,7 @@
 // Moving an app transfers it completely to the new desktop
 
 import { apps, type AppID } from './apps.svelte';
-import { preferences } from './preferences.svelte';
+import { wallpapers_config } from '🍎/configs/wallpapers/wallpaper.config.ts';
 
 export interface DesktopSpace {
 	id: number;
@@ -11,7 +11,10 @@ export interface DesktopSpace {
 }
 
 class SpacesManager {
-	spaces = $state<DesktopSpace[]>([{ id: 1, wallpaper: preferences.wallpaper.image }]);
+	spaces = $state<DesktopSpace[]>([{ 
+		id: 1, 
+		wallpaper: wallpapers_config.iridescence.image 
+	}]);
 	activeSpaceId = $state(1);
 	windowSpaces = $state<Record<string, number>>({}); // appId -> spaceId (which desktop owns this window)
 	maxSpaces = 10;

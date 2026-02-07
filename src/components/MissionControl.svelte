@@ -24,11 +24,6 @@
 			}))
 	);
 	
-	// Get the actual window element for live preview
-	function getWindowElement(appId: string): HTMLElement | null {
-		return document.querySelector(`[data-app-id="${appId}"]`) as HTMLElement;
-	}
-	
 	// Calculate window positions - fill space like real macOS
 	// Windows have different sizes based on count, filling the available area
 	function getWindowLayout(index: number, total: number): { x: number; y: number; width: number; height: number } {
@@ -284,7 +279,6 @@
 								<span class="mc-window-name">{win.title}</span>
 							</div>
 							<div class="mc-window-body">
-								<!-- Reference to actual window for live preview -->
 								<div class="mc-window-preview">
 									<div class="preview-placeholder">
 										<img src="/app-icons/{win.id}/256.webp" alt={win.title} class="preview-icon" />
@@ -567,19 +561,6 @@
 	background: #1e1e1e;
 	overflow: hidden;
 	position: relative;
-}
-
-.live-preview-container {
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
-	position: relative;
-	background: white;
-}
-
-.live-preview-content {
-	pointer-events: none;
-	user-select: none;
 }
 
 .preview-placeholder {

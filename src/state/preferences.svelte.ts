@@ -14,7 +14,26 @@ export type Theme = {
 	primaryColor: keyof typeof colors;
 };
 
+// Check if we need to reset preferences (for wallpaper fix)
+const PREFERENCES_VERSION = 2;
+const storedPrefs = localStorage.getItem('macos:preferences');
+let needsReset = false;
+
+if (storedPrefs) {
+	try {
+		const parsed = JSON.parse(storedPrefs);
+		if (!parsed.version || parsed.version < PREFERENCES_VERSION) {
+			needsReset = true;
+			localStorage.removeItem('macos:preferences');
+		}
+	} catch (e) {
+		needsReset = true;
+		localStorage.removeItem('macos:preferences');
+	}
+}
+
 export const preferences = persisted('macos:preferences', {
+	version: PREFERENCES_VERSION,
 	reduced_motion: matchMedia('(prefers-reduced-motion)').matches,
 	theme: {
 		scheme: matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
