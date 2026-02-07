@@ -24,6 +24,11 @@
 			}))
 	);
 	
+	// Get the actual window element for live preview
+	function getWindowElement(appId: string): HTMLElement | null {
+		return document.querySelector(`[data-app-id="${appId}"]`) as HTMLElement;
+	}
+	
 	// Calculate window positions - fill space like real macOS
 	// Windows have different sizes based on count, filling the available area
 	function getWindowLayout(index: number, total: number): { x: number; y: number; width: number; height: number } {
@@ -225,7 +230,7 @@
 						ondragleave={onSpaceDragLeave}
 						ondrop={(e) => onSpaceDrop(e, space.id)}
 					>
-						<div class="mc-space-preview">
+						<div class="mc-space-preview" style="background-image: url('{space.wallpaper}'); background-size: cover; background-position: center;">
 							<div class="mc-space-live">
 								{#each Object.entries(apps.open) as [appId, isOpen]}
 									{#if isOpen && spacesManager.getWindowSpace(appId) === space.id && apps_config[appId]?.should_open_window !== false}
@@ -279,7 +284,13 @@
 								<span class="mc-window-name">{win.title}</span>
 							</div>
 							<div class="mc-window-body">
-								<img src="/app-icons/{win.id}/256.webp" alt={win.title} />
+								<!-- Reference to actual window for live preview -->
+								<div class="mc-window-preview">
+									<div class="preview-placeholder">
+										<img src="/app-icons/{win.id}/256.webp" alt={win.title} class="preview-icon" />
+										<span class="preview-label">{win.title}</span>
+									</div>
+								</div>
 							</div>
 						</div>
 						<span class="mc-window-label">{win.title}</span>
@@ -347,7 +358,6 @@
 	position: relative;
 	border: 3px solid transparent;
 	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
 	transition: all 0.2s ease;
 }
 
@@ -544,15 +554,54 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	overflow: hidden;
+	position: relative;
 }
 
-.mc-window-body img {
+.mc-window-preview {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #1e1e1e;
+	overflow: hidden;
+	position: relative;
+}
+
+.live-preview-container {
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: relative;
+	background: white;
+}
+
+.live-preview-content {
+	pointer-events: none;
+	user-select: none;
+}
+
+.preview-placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 12px;
+}
+
+.preview-icon {
 	width: 25%;
-	max-width: 100px;
+	max-width: 80px;
 	min-width: 48px;
 	aspect-ratio: 1;
 	border-radius: 16px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.preview-label {
+	font-size: 11px;
+	color: rgba(255, 255, 255, 0.6);
+	font-weight: 500;
 }
 
 .mc-window-label {

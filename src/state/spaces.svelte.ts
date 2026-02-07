@@ -3,6 +3,7 @@
 // Moving an app transfers it completely to the new desktop
 
 import { apps, type AppID } from './apps.svelte';
+import { preferences } from './preferences.svelte';
 
 export interface DesktopSpace {
 	id: number;
@@ -10,7 +11,7 @@ export interface DesktopSpace {
 }
 
 class SpacesManager {
-	spaces = $state<DesktopSpace[]>([{ id: 1, wallpaper: 'default' }]);
+	spaces = $state<DesktopSpace[]>([{ id: 1, wallpaper: preferences.wallpaper.image }]);
 	activeSpaceId = $state(1);
 	windowSpaces = $state<Record<string, number>>({}); // appId -> spaceId (which desktop owns this window)
 	maxSpaces = 10;
@@ -22,7 +23,8 @@ class SpacesManager {
 	addSpace() {
 		if (this.spaces.length >= this.maxSpaces) return null;
 		const newId = Math.max(...this.spaces.map(s => s.id)) + 1;
-		const newSpace: DesktopSpace = { id: newId, wallpaper: 'default' };
+		// New spaces get the current global wallpaper
+		const newSpace: DesktopSpace = { id: newId, wallpaper: preferences.wallpaper.image };
 		this.spaces = [...this.spaces, newSpace];
 		return newSpace;
 	}
