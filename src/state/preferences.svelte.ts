@@ -1,5 +1,6 @@
 import { colors } from '🍎/configs/theme/colors.config.ts';
 import type { WallpaperID } from '🍎/configs/wallpapers/wallpaper.config.ts';
+import { wallpapers_config } from '🍎/configs/wallpapers/wallpaper.config.ts';
 import { persisted } from './persisted.svelte.ts';
 
 export type WallpaperSettings = {
@@ -20,7 +21,7 @@ export const preferences = persisted('macos:preferences', {
 		primaryColor: 'blue',
 	} as Theme,
 	wallpaper: {
-		image: 'iridescence-2',
+		image: wallpapers_config.iridescence.image,
 		id: 'iridescence',
 		canControlTheme: true,
 	} as WallpaperSettings,
