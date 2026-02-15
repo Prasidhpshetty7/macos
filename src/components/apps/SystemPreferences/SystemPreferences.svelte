@@ -717,6 +717,36 @@
 		background: white;
 		font-size: 13px;
 		cursor: pointer;
+		appearance: none;
+		background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: right 10px center;
+	}
+	
+	.dropdown select:focus {
+		outline: none;
+		border-color: #007aff;
+	}
+	
+	.radio-group {
+		margin-left: 24px;
+		margin-top: 8px;
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	
+	.radio-label {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-size: 13px;
+		color: #1d1d1f;
+		cursor: pointer;
+	}
+	
+	.radio-label input {
+		cursor: pointer;
 	}
 	
 	.checkbox-label {
