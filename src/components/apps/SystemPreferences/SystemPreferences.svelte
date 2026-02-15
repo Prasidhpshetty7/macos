@@ -237,26 +237,33 @@
 		border-right: 1px solid rgba(0, 0, 0, 0.08);
 		display: flex;
 		flex-direction: column;
-		overflow-y: auto;
+		overflow-y: scroll;
+		overflow-x: hidden;
 		padding-top: 52px;
+		scroll-behavior: smooth;
 	}
 	
 	.sidebar::-webkit-scrollbar {
-		width: 10px;
+		width: 12px;
 	}
 	
 	.sidebar::-webkit-scrollbar-track {
-		background: transparent;
+		background: rgba(0, 0, 0, 0.03);
+		border-left: 1px solid rgba(0, 0, 0, 0.08);
 	}
 	
 	.sidebar::-webkit-scrollbar-thumb {
-		background: rgba(0, 0, 0, 0.2);
+		background: rgba(0, 0, 0, 0.25);
 		border-radius: 10px;
-		border: 2px solid rgba(242, 242, 247, 0.95);
+		border: 3px solid rgba(242, 242, 247, 0.95);
 	}
 	
 	.sidebar::-webkit-scrollbar-thumb:hover {
-		background: rgba(0, 0, 0, 0.3);
+		background: rgba(0, 0, 0, 0.35);
+	}
+	
+	.sidebar::-webkit-scrollbar-thumb:active {
+		background: rgba(0, 0, 0, 0.45);
 	}
 	
 	.search-bar {
