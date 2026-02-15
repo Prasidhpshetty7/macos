@@ -572,6 +572,20 @@
 		margin: 0 0 12px 0;
 	}
 	
+	.setting-description {
+		font-size: 12px;
+		color: #86868b;
+		margin: 0 0 12px 0;
+		line-height: 1.4;
+	}
+	
+	.setting-hint {
+		font-size: 11px;
+		color: #86868b;
+		margin: 6px 0 0 24px;
+		line-height: 1.4;
+	}
+	
 	.description {
 		font-size: 13px;
 		color: #86868b;
