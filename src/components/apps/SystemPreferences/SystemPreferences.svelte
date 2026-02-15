@@ -10,11 +10,13 @@
 		{ id: 'network', name: 'Network', icon: 'network', color: '#34C759' },
 		{ id: 'vpn', name: 'VPN', icon: 'vpn', color: '#007AFF' },
 		
-		// System
+		// Notifications & System
 		{ id: 'notifications', name: 'Notifications', icon: 'notifications', color: '#FF3B30' },
 		{ id: 'sound', name: 'Sound', icon: 'sound', color: '#FF3B30' },
 		{ id: 'focus', name: 'Focus', icon: 'focus', color: '#5E5CE6' },
 		{ id: 'screen-time', name: 'Screen Time', icon: 'screentime', color: '#5E5CE6' },
+		
+		// General Settings
 		{ id: 'general', name: 'General', icon: 'general', color: '#8E8E93' },
 		{ id: 'appearance', name: 'Appearance', icon: 'appearance', color: '#FF9500' },
 		{ id: 'accessibility', name: 'Accessibility', icon: 'accessibility', color: '#007AFF' },
@@ -28,14 +30,15 @@
 		{ id: 'wallpaper', name: 'Wallpaper', icon: 'wallpaper', color: '#FF9500' },
 		{ id: 'screen-saver', name: 'Screen Saver', icon: 'screensaver', color: '#34C759' },
 		{ id: 'battery', name: 'Battery', icon: 'battery', color: '#34C759' },
+		{ id: 'energy-saver', name: 'Energy Saver', icon: 'battery', color: '#34C759' },
 		
-		// Security
+		// Security & Privacy
 		{ id: 'lock-screen', name: 'Lock Screen', icon: 'lockscreen', color: '#8E8E93' },
 		{ id: 'touch-id', name: 'Touch ID & Password', icon: 'touchid', color: '#FF3B30' },
 		{ id: 'users', name: 'Users & Groups', icon: 'users', color: '#007AFF' },
 		{ id: 'passwords', name: 'Passwords', icon: 'passwords', color: '#007AFF' },
 		
-		// Accounts
+		// Internet & Accounts
 		{ id: 'internet-accounts', name: 'Internet Accounts', icon: 'accounts', color: '#007AFF' },
 		{ id: 'game-center', name: 'Game Center', icon: 'gamecenter', color: '#34C759' },
 		{ id: 'wallet', name: 'Wallet & Apple Pay', icon: 'wallet', color: '#1D1D1F' },
@@ -44,7 +47,32 @@
 		{ id: 'keyboard', name: 'Keyboard', icon: 'keyboard', color: '#007AFF' },
 		{ id: 'trackpad', name: 'Trackpad', icon: 'trackpad', color: '#007AFF' },
 		{ id: 'mouse', name: 'Mouse', icon: 'mouse', color: '#007AFF' },
+		
+		// Peripherals & Devices
 		{ id: 'printers', name: 'Printers & Scanners', icon: 'printers', color: '#8E8E93' },
+		{ id: 'external-storage', name: 'External Storage', icon: 'storage', color: '#8E8E93' },
+		{ id: 'cd-dvd', name: 'CDs & DVDs', icon: 'disk', color: '#8E8E93' },
+		
+		// Sharing & Network
+		{ id: 'sharing', name: 'Sharing', icon: 'sharing', color: '#34C759' },
+		{ id: 'airdrop', name: 'AirDrop & Handoff', icon: 'airdrop', color: '#007AFF' },
+		
+		// Software & Updates
+		{ id: 'software-update', name: 'Software Update', icon: 'update', color: '#007AFF' },
+		{ id: 'storage', name: 'Storage', icon: 'storage', color: '#FF9500' },
+		
+		// Time & Language
+		{ id: 'time-machine', name: 'Time Machine', icon: 'timemachine', color: '#5E5CE6' },
+		{ id: 'date-time', name: 'Date & Time', icon: 'clock', color: '#8E8E93' },
+		{ id: 'language', name: 'Language & Region', icon: 'globe', color: '#007AFF' },
+		
+		// Extensions & Profiles
+		{ id: 'extensions', name: 'Extensions', icon: 'extensions', color: '#8E8E93' },
+		{ id: 'profiles', name: 'Profiles', icon: 'profiles', color: '#8E8E93' },
+		
+		// Startup & Login
+		{ id: 'startup-disk', name: 'Startup Disk', icon: 'disk', color: '#8E8E93' },
+		{ id: 'login-items', name: 'Login Items', icon: 'login', color: '#8E8E93' },
 	];
 	
 	function getIcon(iconName: string) {
@@ -78,7 +106,17 @@
 			keyboard: '<path d="M20 5H4c-1.1 0-1.99.9-1.99 2L2 17c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-9 3h2v2h-2V8zm0 3h2v2h-2v-2zM8 8h2v2H8V8zm0 3h2v2H8v-2zm-1 2H5v-2h2v2zm0-3H5V8h2v2zm9 7H8v-2h8v2zm0-4h-2v-2h2v2zm0-3h-2V8h2v2zm3 3h-2v-2h2v2zm0-3h-2V8h2v2z"/>',
 			trackpad: '<path d="M13 1.07V9h7c0-4.08-3.05-7.44-7-7.93zM4 15c0 4.42 3.58 8 8 8s8-3.58 8-8v-4H4v4zm7-13.93C7.05 1.56 4 4.92 4 9h7V1.07z"/>',
 			mouse: '<path d="M13 1.07V9h7c0-4.08-3.05-7.44-7-7.93zM4 15c0 4.42 3.58 8 8 8s8-3.58 8-8v-4H4v4zm7-13.93C7.05 1.56 4 4.92 4 9h7V1.07z"/>',
-			printers: '<path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/>',
+			storage: '<path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/>',
+			disk: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>',
+			sharing: '<path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>',
+			airdrop: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>',
+			update: '<path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>',
+			timemachine: '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>',
+			clock: '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>',
+			globe: '<path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm6.93 6h-2.95c-.32-1.25-.78-2.45-1.38-3.56 1.84.63 3.37 1.91 4.33 3.56zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14C4.1 13.36 4 12.69 4 12s.1-1.36.26-2h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.82 2h2.95c.32 1.25.78 2.45 1.38 3.56-1.84-.63-3.37-1.9-4.33-3.56zm2.95-8H5.08c.96-1.66 2.49-2.93 4.33-3.56C8.81 5.55 8.35 6.75 8.03 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82c-.43 1.43-1.08 2.76-1.91 3.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95c-.96 1.65-2.49 2.93-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38c.16.64.26 1.31.26 2s-.1 1.36-.26 2h-3.38z"/>',
+			extensions: '<path d="M20.5 11H19V7c0-1.1-.9-2-2-2h-4V3.5C13 2.12 11.88 1 10.5 1S8 2.12 8 3.5V5H4c-1.1 0-1.99.9-1.99 2v3.8H3.5c1.49 0 2.7 1.21 2.7 2.7s-1.21 2.7-2.7 2.7H2V20c0 1.1.9 2 2 2h3.8v-1.5c0-1.49 1.21-2.7 2.7-2.7 1.49 0 2.7 1.21 2.7 2.7V22H17c1.1 0 2-.9 2-2v-4h1.5c1.38 0 2.5-1.12 2.5-2.5S21.88 11 20.5 11z"/>',
+			profiles: '<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>',
+			login: '<path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/>',
 		};
 		return icons[iconName] || icons.general;
 	}
@@ -353,7 +391,6 @@
 	.sections {
 		flex: 1;
 		padding: 4px 10px 10px 10px;
-		min-height: 600px;
 	}
 	
 	.section-item {
