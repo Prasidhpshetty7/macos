@@ -2,15 +2,6 @@
 	import { preferences } from '🍎/state/preferences.svelte';
 	
 	let selectedSection = $state('appearance');
-	let sidebarEl: HTMLElement | null = $state(null);
-	
-	// Handle mouse wheel scrolling
-	function handleWheel(e: WheelEvent) {
-		if (sidebarEl) {
-			e.preventDefault();
-			sidebarEl.scrollTop += e.deltaY;
-		}
-	}
 	
 	const sections = [
 		// Network & Connectivity
@@ -136,7 +127,7 @@
 	<!-- Drag handle area for traffic lights -->
 	<div class="drag-handle app-window-drag-handle"></div>
 	
-	<div class="sidebar" bind:this={sidebarEl} onwheel={handleWheel}>
+	<div class="sidebar">
 		<div class="search-bar">
 			<span class="search-icon">🔍</span>
 			<input type="text" placeholder="Search" />
@@ -214,16 +205,52 @@
 				
 				<div class="setting-section">
 					<h3>Accent Color</h3>
+					<p class="setting-description">Choose an accent color to use in buttons, menus, and windows.</p>
 					<div class="color-options">
-						<button class="color-btn multicolor">🌈</button>
-						<button class="color-btn" style="background: #007AFF"></button>
-						<button class="color-btn" style="background: #5E5CE6"></button>
-						<button class="color-btn" style="background: #FF2D55"></button>
-						<button class="color-btn" style="background: #FF3B30"></button>
-						<button class="color-btn" style="background: #FF9500"></button>
-						<button class="color-btn" style="background: #FFCC00"></button>
-						<button class="color-btn" style="background: #34C759"></button>
-						<button class="color-btn" style="background: #8E8E93"></button>
+						<button class="color-btn multicolor" title="Multicolor">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #007AFF" title="Blue">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #5E5CE6" title="Purple">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #FF2D55" title="Pink">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #FF3B30" title="Red">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #FF9500" title="Orange">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #FFCC00" title="Yellow">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #34C759" title="Green">
+							<span class="color-check">✓</span>
+						</button>
+						<button class="color-btn" style="background: #8E8E93" title="Graphite">
+							<span class="color-check">✓</span>
+						</button>
+					</div>
+				</div>
+				
+				<div class="setting-section">
+					<h3>Highlight Color</h3>
+					<p class="setting-description">Choose a color for highlighted text.</p>
+					<div class="dropdown">
+						<select>
+							<option>Blue</option>
+							<option>Purple</option>
+							<option>Pink</option>
+							<option>Red</option>
+							<option>Orange</option>
+							<option>Yellow</option>
+							<option>Green</option>
+							<option>Graphite</option>
+						</select>
 					</div>
 				</div>
 				
@@ -240,6 +267,35 @@
 				
 				<div class="setting-section">
 					<label class="checkbox-label">
+						<input type="checkbox" />
+						<span>Allow wallpaper tinting in windows</span>
+					</label>
+					<p class="setting-hint">Window backgrounds will be tinted with your wallpaper color.</p>
+				</div>
+				
+				<div class="setting-section">
+					<label class="checkbox-label">
+						<input type="checkbox" />
+						<span>Show scroll bars</span>
+					</label>
+					<div class="radio-group">
+						<label class="radio-label">
+							<input type="radio" name="scrollbars" checked />
+							<span>Automatically based on mouse or trackpad</span>
+						</label>
+						<label class="radio-label">
+							<input type="radio" name="scrollbars" />
+							<span>When scrolling</span>
+						</label>
+						<label class="radio-label">
+							<input type="radio" name="scrollbars" />
+							<span>Always</span>
+						</label>
+					</div>
+				</div>
+				
+				<div class="setting-section">
+					<label class="checkbox-label">
 						<input 
 							type="checkbox" 
 							checked={preferences.reduced_motion}
@@ -247,6 +303,15 @@
 						/>
 						<span>Reduce motion</span>
 					</label>
+					<p class="setting-hint">Reduce the motion of user interface elements.</p>
+				</div>
+				
+				<div class="setting-section">
+					<label class="checkbox-label">
+						<input type="checkbox" />
+						<span>Reduce transparency</span>
+					</label>
+					<p class="setting-hint">Reduce the transparency of some user interface elements.</p>
 				</div>
 			{:else}
 				<div class="setting-section">
@@ -265,6 +330,7 @@
 		background: #f5f5f7;
 		font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
 		position: relative;
+		overflow: hidden;
 	}
 	
 	.drag-handle {
@@ -279,6 +345,7 @@
 	
 	.sidebar {
 		width: 280px;
+		height: 100%;
 		background: rgba(242, 242, 247, 0.95);
 		backdrop-filter: blur(20px);
 		border-right: 1px solid rgba(0, 0, 0, 0.08);
@@ -289,7 +356,7 @@
 		padding-top: 52px;
 		padding-bottom: 10px;
 		scroll-behavior: smooth;
-		max-height: 100%;
+		position: relative;
 	}
 	
 	/* Force scrollbar to always show with visible thumb */
