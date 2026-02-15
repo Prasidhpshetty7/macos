@@ -241,23 +241,41 @@
 		padding-top: 52px;
 	}
 	
+	.sidebar::-webkit-scrollbar {
+		width: 10px;
+	}
+	
+	.sidebar::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	
+	.sidebar::-webkit-scrollbar-thumb {
+		background: rgba(0, 0, 0, 0.2);
+		border-radius: 10px;
+		border: 2px solid rgba(242, 242, 247, 0.95);
+	}
+	
+	.sidebar::-webkit-scrollbar-thumb:hover {
+		background: rgba(0, 0, 0, 0.3);
+	}
+	
 	.search-bar {
-		padding: 12px 16px;
+		padding: 8px 12px;
 		position: relative;
 	}
 	
 	.search-icon {
 		position: absolute;
-		left: 28px;
+		left: 24px;
 		top: 50%;
 		transform: translateY(-50%);
-		font-size: 13px;
+		font-size: 12px;
 		opacity: 0.5;
 	}
 	
 	.search-bar input {
 		width: 100%;
-		padding: 6px 12px 6px 32px;
+		padding: 5px 10px 5px 28px;
 		border: none;
 		border-radius: 6px;
 		background: rgba(255, 255, 255, 0.8);
@@ -272,11 +290,11 @@
 	.user-profile {
 		display: flex;
 		align-items: center;
-		gap: 12px;
-		padding: 12px 16px;
-		margin: 8px 12px;
+		gap: 10px;
+		padding: 10px 12px;
+		margin: 6px 10px;
 		background: white;
-		border-radius: 10px;
+		border-radius: 8px;
 		cursor: pointer;
 		transition: background 0.2s;
 	}
@@ -286,14 +304,14 @@
 	}
 	
 	.avatar {
-		width: 48px;
-		height: 48px;
+		width: 40px;
+		height: 40px;
 		border-radius: 50%;
 		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 24px;
+		font-size: 20px;
 	}
 	
 	.user-info {
@@ -301,36 +319,36 @@
 	}
 	
 	.user-name {
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 600;
 		color: #1d1d1f;
 	}
 	
 	.user-account {
-		font-size: 12px;
+		font-size: 11px;
 		color: #86868b;
 	}
 	
 	.sections {
 		flex: 1;
-		padding: 8px 12px;
+		padding: 4px 10px 10px 10px;
 	}
 	
 	.section-item {
 		display: flex;
 		align-items: center;
-		gap: 12px;
+		gap: 10px;
 		width: 100%;
-		padding: 8px 12px;
+		padding: 5px 10px;
 		border: none;
 		background: transparent;
-		border-radius: 8px;
+		border-radius: 6px;
 		cursor: pointer;
 		font-size: 13px;
 		color: #1d1d1f;
 		transition: background 0.15s;
 		text-align: left;
-		margin-bottom: 2px;
+		margin-bottom: 1px;
 	}
 	
 	.section-item:hover {
@@ -343,8 +361,8 @@
 	}
 	
 	.section-icon {
-		width: 28px;
-		height: 28px;
+		width: 26px;
+		height: 26px;
 		border-radius: 6px;
 		display: flex;
 		align-items: center;
@@ -353,8 +371,8 @@
 	}
 	
 	.section-icon svg {
-		width: 16px;
-		height: 16px;
+		width: 15px;
+		height: 15px;
 	}
 	
 	.section-name {
