@@ -682,18 +682,32 @@
 		border: 2px solid transparent;
 		cursor: pointer;
 		transition: all 0.2s;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 	
 	.color-btn:hover {
 		transform: scale(1.1);
+		border-color: rgba(0, 0, 0, 0.2);
 	}
 	
 	.color-btn.multicolor {
 		background: linear-gradient(135deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
-		font-size: 16px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+	}
+	
+	.color-check {
+		color: white;
+		font-size: 14px;
+		font-weight: bold;
+		opacity: 0;
+		transition: opacity 0.2s;
+		text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	}
+	
+	.color-btn:hover .color-check {
+		opacity: 1;
 	}
 	
 	.dropdown select {
