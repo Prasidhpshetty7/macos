@@ -237,33 +237,47 @@
 		border-right: 1px solid rgba(0, 0, 0, 0.08);
 		display: flex;
 		flex-direction: column;
-		overflow-y: scroll;
+		overflow-y: scroll !important;
 		overflow-x: hidden;
 		padding-top: 52px;
+		padding-bottom: 10px;
 		scroll-behavior: smooth;
+		max-height: 100%;
 	}
 	
+	/* Force scrollbar to always show with visible thumb */
 	.sidebar::-webkit-scrollbar {
-		width: 12px;
+		width: 14px;
+		background: rgba(220, 220, 225, 0.8);
+		-webkit-appearance: none;
 	}
 	
 	.sidebar::-webkit-scrollbar-track {
-		background: rgba(0, 0, 0, 0.03);
-		border-left: 1px solid rgba(0, 0, 0, 0.08);
+		background: rgba(220, 220, 225, 0.8);
+		border-left: 1px solid rgba(0, 0, 0, 0.1);
+		border-radius: 0;
 	}
 	
 	.sidebar::-webkit-scrollbar-thumb {
-		background: rgba(0, 0, 0, 0.25);
-		border-radius: 10px;
+		background: rgba(100, 100, 105, 0.8);
+		border-radius: 7px;
 		border: 3px solid rgba(242, 242, 247, 0.95);
+		min-height: 50px;
+		-webkit-appearance: none;
 	}
 	
 	.sidebar::-webkit-scrollbar-thumb:hover {
-		background: rgba(0, 0, 0, 0.35);
+		background: rgba(80, 80, 85, 0.9);
 	}
 	
 	.sidebar::-webkit-scrollbar-thumb:active {
-		background: rgba(0, 0, 0, 0.45);
+		background: rgba(60, 60, 65, 1);
+	}
+	
+	/* Firefox scrollbar */
+	.sidebar {
+		scrollbar-width: auto;
+		scrollbar-color: rgba(100, 100, 105, 0.8) rgba(220, 220, 225, 0.8);
 	}
 	
 	.search-bar {
@@ -339,6 +353,7 @@
 	.sections {
 		flex: 1;
 		padding: 4px 10px 10px 10px;
+		min-height: 600px;
 	}
 	
 	.section-item {
