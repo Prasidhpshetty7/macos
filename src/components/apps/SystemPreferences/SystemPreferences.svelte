@@ -2,6 +2,15 @@
 	import { preferences } from '🍎/state/preferences.svelte';
 	
 	let selectedSection = $state('appearance');
+	let sidebarEl: HTMLElement | null = $state(null);
+	
+	// Handle mouse wheel scrolling
+	function handleWheel(e: WheelEvent) {
+		if (sidebarEl) {
+			e.preventDefault();
+			sidebarEl.scrollTop += e.deltaY;
+		}
+	}
 	
 	const sections = [
 		// Network & Connectivity
@@ -127,7 +136,7 @@
 	<!-- Drag handle area for traffic lights -->
 	<div class="drag-handle app-window-drag-handle"></div>
 	
-	<div class="sidebar">
+	<div class="sidebar" bind:this={sidebarEl} onwheel={handleWheel}>
 		<div class="search-bar">
 			<span class="search-icon">🔍</span>
 			<input type="text" placeholder="Search" />
