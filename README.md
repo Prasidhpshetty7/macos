@@ -60,4 +60,4 @@ Sure, open an issue, point out errors, and what not. Wanna fix something yoursel
 
 # MADE BY
 
-[Prasidh P Shetty].(prasidhshetty.in)
+🔗🔗 [Prasidh P Shetty](https://prasidhshetty.in)
