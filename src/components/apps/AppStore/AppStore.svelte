@@ -36,37 +36,37 @@
 	];
 	
 	const apps = [
-		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', color: '#4A154B', icon: '💬' },
-		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', color: '#000000', icon: '📝' },
-		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', color: '#F24E1E', icon: '🎨' },
-		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', color: '#5865F2', icon: '🎮' },
-		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', color: '#1DB954', icon: '🎵' },
-		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', color: '#31A8FF', icon: '🖼️' },
-		{ name: 'Microsoft Office', category: 'Productivity', price: '$69.99/yr', rating: 4.3, reviews: '8.5M', color: '#D83B01', icon: '📊' },
-		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', color: '#2D8CFF', icon: '📹' },
-		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', color: '#0088CC', icon: '✈️' },
-		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', color: '#FF8800', icon: '🎬' },
-		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', color: '#147EFB', icon: '⚙️' },
-		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', color: '#007ACC', icon: '💻' },
-		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', color: '#2496ED', icon: '🐳' },
-		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', color: '#FF6C37', icon: '📮' },
-		{ name: 'GitHub Desktop', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', color: '#181717', icon: '🐙' },
-		{ name: 'TablePlus', category: 'Developer Tools', price: '$89', rating: 4.7, reviews: '450K', color: '#FF0000', icon: '🗄️' },
+		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', icon: 'https://cdn.simpleicons.org/slack/4A154B' },
+		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', icon: 'https://cdn.simpleicons.org/notion/000000' },
+		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', icon: 'https://cdn.simpleicons.org/figma/F24E1E' },
+		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', icon: 'https://cdn.simpleicons.org/discord/5865F2' },
+		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', icon: 'https://cdn.simpleicons.org/spotify/1DB954' },
+		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', icon: 'https://cdn.simpleicons.org/adobephotoshop/31A8FF' },
+		{ name: 'Microsoft Office', category: 'Productivity', price: '$69.99/yr', rating: 4.3, reviews: '8.5M', icon: 'https://cdn.simpleicons.org/microsoftoffice/D83B01' },
+		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', icon: 'https://cdn.simpleicons.org/zoom/2D8CFF' },
+		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', icon: 'https://cdn.simpleicons.org/telegram/26A5E4' },
+		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', icon: 'https://cdn.simpleicons.org/vlcmediaplayer/FF8800' },
+		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', icon: 'https://cdn.simpleicons.org/xcode/147EFB' },
+		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', icon: 'https://cdn.simpleicons.org/visualstudiocode/007ACC' },
+		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', icon: 'https://cdn.simpleicons.org/docker/2496ED' },
+		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', icon: 'https://cdn.simpleicons.org/postman/FF6C37' },
+		{ name: 'GitHub', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', icon: 'https://cdn.simpleicons.org/github/181717' },
+		{ name: 'MongoDB', category: 'Developer Tools', price: 'Free', rating: 4.7, reviews: '450K', icon: 'https://cdn.simpleicons.org/mongodb/47A248' },
 	];
 	
 	const games = [
-		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', color: '#62A35C', icon: '🧱' },
-		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', color: '#C51111', icon: '🚀' },
-		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', color: '#8BC34A', icon: '🌾' },
-		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', color: '#4CAF50', icon: '⛏️' },
-		{ name: 'The Sims 4', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', color: '#00B2A9', icon: '🏠' },
-		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', color: '#0078F2', icon: '🎯' },
-		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', color: '#E03C28', icon: '🎮' },
-		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', color: '#C28F2C', icon: '⚔️' },
-		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', color: '#FF4655', icon: '🔫' },
-		{ name: 'Genshin Impact', category: 'RPG', price: 'Free', rating: 4.7, reviews: '38M', color: '#FFB800', icon: '⚡' },
-		{ name: 'Apex Legends', category: 'Action', price: 'Free', rating: 4.4, reviews: '32M', color: '#CD3333', icon: '🎖️' },
-		{ name: 'Rocket League', category: 'Sports', price: 'Free', rating: 4.6, reviews: '22M', color: '#0165C5', icon: '🚗' },
+		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', icon: 'https://cdn.simpleicons.org/minecraft/62A35C' },
+		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', icon: 'https://cdn.simpleicons.org/amongus/C51111' },
+		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', icon: 'https://cdn.simpleicons.org/stardewvalley/8BC34A' },
+		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', icon: 'https://cdn.simpleicons.org/terraria/4CAF50' },
+		{ name: 'The Sims', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', icon: 'https://cdn.simpleicons.org/thesims/00B2A9' },
+		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', icon: 'https://cdn.simpleicons.org/epicgames/313131' },
+		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', icon: 'https://cdn.simpleicons.org/roblox/000000' },
+		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', icon: 'https://cdn.simpleicons.org/leagueoflegends/D4AF37' },
+		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', icon: 'https://cdn.simpleicons.org/valorant/FF4655' },
+		{ name: 'Steam', category: 'Platform', price: 'Free', rating: 4.7, reviews: '38M', icon: 'https://cdn.simpleicons.org/steam/000000' },
+		{ name: 'Epic Games', category: 'Platform', price: 'Free', rating: 4.4, reviews: '32M', icon: 'https://cdn.simpleicons.org/epicgames/313131' },
+		{ name: 'Unity', category: 'Game Engine', price: 'Free', rating: 4.6, reviews: '22M', icon: 'https://cdn.simpleicons.org/unity/000000' },
 	];
 	
 	const categories = [
@@ -178,8 +178,8 @@
 					<div class="apps-list">
 						{#each apps.slice(0, 8) as app}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-emoji">{app.icon}</span>
+								<div class="app-icon-round">
+									<img src={app.icon} alt={app.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -201,8 +201,8 @@
 					<div class="apps-list">
 						{#each games.slice(0, 6) as game}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {game.color}">
-									<span class="icon-emoji">{game.icon}</span>
+								<div class="app-icon-round">
+									<img src={game.icon} alt={game.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -226,8 +226,8 @@
 					<div class="apps-list">
 						{#each games as game}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {game.color}">
-									<span class="icon-emoji">{game.icon}</span>
+								<div class="app-icon-round">
+									<img src={game.icon} alt={game.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -251,8 +251,8 @@
 					<div class="apps-list">
 						{#each apps.filter(a => a.category === 'Developer Tools') as app}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-emoji">{app.icon}</span>
+								<div class="app-icon-round">
+									<img src={app.icon} alt={app.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -288,8 +288,8 @@
 					<div class="apps-list">
 						{#each apps.slice(0, 10) as app}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-emoji">{app.icon}</span>
+								<div class="app-icon-round">
+									<img src={app.icon} alt={app.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -573,16 +573,20 @@
 	.app-icon-round {
 		width: 64px;
 		height: 64px;
+		background: white;
 		border-radius: 14px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+		padding: 12px;
 	}
 	
-	.app-icon-round .icon-emoji {
-		font-size: 32px;
+	.app-icon-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
 	}
 	
 	.app-info-row {
