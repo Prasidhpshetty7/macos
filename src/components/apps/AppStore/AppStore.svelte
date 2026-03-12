@@ -12,8 +12,8 @@
 			price: '$299.99', 
 			rating: 4.5, 
 			description: 'Revolutionary video editing',
-			gradient: 'linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%)',
-			iconBg: '#1a1a1a'
+			gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+			icon: '🎬'
 		},
 		{ 
 			name: 'Logic Pro', 
@@ -21,8 +21,8 @@
 			price: '$199.99', 
 			rating: 4.8,
 			description: 'Professional music production',
-			gradient: 'linear-gradient(135deg, #2d2d2d 0%, #5a5a5a 100%)',
-			iconBg: '#2d2d2d'
+			gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+			icon: '🎵'
 		},
 		{ 
 			name: 'Affinity Photo', 
@@ -30,43 +30,43 @@
 			price: '$69.99', 
 			rating: 4.7,
 			description: 'Professional photo editing',
-			gradient: 'linear-gradient(135deg, #4a148c 0%, #7b1fa2 100%)',
-			iconBg: '#4a148c'
+			gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+			icon: '🖼️'
 		},
 	];
 	
 	const apps = [
-		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', color: '#4A154B' },
-		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', color: '#000000' },
-		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', color: '#F24E1E' },
-		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', color: '#5865F2' },
-		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', color: '#1DB954' },
-		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', color: '#31A8FF' },
-		{ name: 'Microsoft Office', category: 'Productivity', price: '$69.99/yr', rating: 4.3, reviews: '8.5M', color: '#D83B01' },
-		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', color: '#2D8CFF' },
-		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', color: '#0088CC' },
-		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', color: '#FF8800' },
-		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', color: '#147EFB' },
-		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', color: '#007ACC' },
-		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', color: '#2496ED' },
-		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', color: '#FF6C37' },
-		{ name: 'GitHub Desktop', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', color: '#181717' },
-		{ name: 'TablePlus', category: 'Developer Tools', price: '$89', rating: 4.7, reviews: '450K', color: '#FF0000' },
+		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', color: '#4A154B', icon: '💬' },
+		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', color: '#000000', icon: '📝' },
+		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', color: '#F24E1E', icon: '🎨' },
+		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', color: '#5865F2', icon: '🎮' },
+		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', color: '#1DB954', icon: '🎵' },
+		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', color: '#31A8FF', icon: '🖼️' },
+		{ name: 'Microsoft Office', category: 'Productivity', price: '$69.99/yr', rating: 4.3, reviews: '8.5M', color: '#D83B01', icon: '📊' },
+		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', color: '#2D8CFF', icon: '📹' },
+		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', color: '#0088CC', icon: '✈️' },
+		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', color: '#FF8800', icon: '🎬' },
+		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', color: '#147EFB', icon: '⚙️' },
+		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', color: '#007ACC', icon: '💻' },
+		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', color: '#2496ED', icon: '🐳' },
+		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', color: '#FF6C37', icon: '📮' },
+		{ name: 'GitHub Desktop', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', color: '#181717', icon: '🐙' },
+		{ name: 'TablePlus', category: 'Developer Tools', price: '$89', rating: 4.7, reviews: '450K', color: '#FF0000', icon: '🗄️' },
 	];
 	
 	const games = [
-		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', color: '#62A35C' },
-		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', color: '#C51111' },
-		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', color: '#8BC34A' },
-		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', color: '#4CAF50' },
-		{ name: 'The Sims 4', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', color: '#00B2A9' },
-		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', color: '#0078F2' },
-		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', color: '#E03C28' },
-		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', color: '#C28F2C' },
-		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', color: '#FF4655' },
-		{ name: 'Genshin Impact', category: 'RPG', price: 'Free', rating: 4.7, reviews: '38M', color: '#FFB800' },
-		{ name: 'Apex Legends', category: 'Action', price: 'Free', rating: 4.4, reviews: '32M', color: '#CD3333' },
-		{ name: 'Rocket League', category: 'Sports', price: 'Free', rating: 4.6, reviews: '22M', color: '#0165C5' },
+		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', color: '#62A35C', icon: '🧱' },
+		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', color: '#C51111', icon: '🚀' },
+		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', color: '#8BC34A', icon: '🌾' },
+		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', color: '#4CAF50', icon: '⛏️' },
+		{ name: 'The Sims 4', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', color: '#00B2A9', icon: '🏠' },
+		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', color: '#0078F2', icon: '🎯' },
+		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', color: '#E03C28', icon: '🎮' },
+		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', color: '#C28F2C', icon: '⚔️' },
+		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', color: '#FF4655', icon: '🔫' },
+		{ name: 'Genshin Impact', category: 'RPG', price: 'Free', rating: 4.7, reviews: '38M', color: '#FFB800', icon: '⚡' },
+		{ name: 'Apex Legends', category: 'Action', price: 'Free', rating: 4.4, reviews: '32M', color: '#CD3333', icon: '🎖️' },
+		{ name: 'Rocket League', category: 'Sports', price: 'Free', rating: 4.6, reviews: '22M', color: '#0165C5', icon: '🚗' },
 	];
 	
 	const categories = [
