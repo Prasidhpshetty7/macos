@@ -179,7 +179,7 @@
 						{#each apps.slice(0, 8) as app}
 							<div class="app-row">
 								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-letter">{app.name[0]}</span>
+									<span class="icon-emoji">{app.icon}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -202,7 +202,7 @@
 						{#each games.slice(0, 6) as game}
 							<div class="app-row">
 								<div class="app-icon-round" style="background: {game.color}">
-									<span class="icon-letter">{game.name[0]}</span>
+									<span class="icon-emoji">{game.icon}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -227,7 +227,7 @@
 						{#each games as game}
 							<div class="app-row">
 								<div class="app-icon-round" style="background: {game.color}">
-									<span class="icon-letter">{game.name[0]}</span>
+									<span class="icon-emoji">{game.icon}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -252,7 +252,7 @@
 						{#each apps.filter(a => a.category === 'Developer Tools') as app}
 							<div class="app-row">
 								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-letter">{app.name[0]}</span>
+									<span class="icon-emoji">{app.icon}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -289,7 +289,7 @@
 						{#each apps.slice(0, 10) as app}
 							<div class="app-row">
 								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-letter">{app.name[0]}</span>
+									<span class="icon-emoji">{app.icon}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -475,6 +475,7 @@
 	.app-icon-large {
 		width: 110px;
 		height: 110px;
+		background: rgba(255, 255, 255, 0.95);
 		border-radius: 24px;
 		display: flex;
 		align-items: center;
@@ -482,11 +483,8 @@
 		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
 	}
 	
-	.icon-text {
-		font-size: 42px;
-		font-weight: 700;
-		color: white;
-		letter-spacing: -2px;
+	.icon-emoji {
+		font-size: 56px;
 	}
 	
 	.featured-info {
@@ -583,10 +581,8 @@
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 	}
 	
-	.icon-letter {
-		font-size: 28px;
-		font-weight: 700;
-		color: white;
+	.app-icon-round .icon-emoji {
+		font-size: 32px;
 	}
 	
 	.app-info-row {
