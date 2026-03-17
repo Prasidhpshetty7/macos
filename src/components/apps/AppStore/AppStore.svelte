@@ -13,7 +13,7 @@
 			rating: 4.5, 
 			description: 'Revolutionary video editing',
 			gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-			icon: 'https://logo.clearbit.com/apple.com'
+			color: '#667eea'
 		},
 		{ 
 			name: 'Logic Pro', 
@@ -22,7 +22,7 @@
 			rating: 4.8,
 			description: 'Professional music production',
 			gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-			icon: 'https://logo.clearbit.com/apple.com'
+			color: '#f093fb'
 		},
 		{ 
 			name: 'Affinity Photo', 
@@ -31,42 +31,42 @@
 			rating: 4.7,
 			description: 'Professional photo editing',
 			gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-			icon: 'https://logo.clearbit.com/affinity.serif.com'
+			color: '#4facfe'
 		},
 	];
 	
 	const apps = [
-		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', icon: 'https://logo.clearbit.com/slack.com' },
-		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', icon: 'https://logo.clearbit.com/notion.so' },
-		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', icon: 'https://logo.clearbit.com/figma.com' },
-		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', icon: 'https://logo.clearbit.com/discord.com' },
-		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', icon: 'https://logo.clearbit.com/spotify.com' },
-		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', icon: 'https://logo.clearbit.com/adobe.com' },
-		{ name: 'Microsoft Office', category: 'Productivity', price: 'Free', rating: 4.3, reviews: '8.5M', icon: 'https://logo.clearbit.com/microsoft.com' },
-		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', icon: 'https://logo.clearbit.com/zoom.us' },
-		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', icon: 'https://logo.clearbit.com/telegram.org' },
-		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', icon: 'https://logo.clearbit.com/videolan.org' },
-		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', icon: 'https://logo.clearbit.com/apple.com' },
-		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', icon: 'https://logo.clearbit.com/code.visualstudio.com' },
-		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', icon: 'https://logo.clearbit.com/docker.com' },
-		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', icon: 'https://logo.clearbit.com/postman.com' },
-		{ name: 'GitHub', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', icon: 'https://logo.clearbit.com/github.com' },
-		{ name: 'MongoDB', category: 'Developer Tools', price: 'Free', rating: 4.7, reviews: '450K', icon: 'https://logo.clearbit.com/mongodb.com' },
+		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', color: '#4A154B' },
+		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', color: '#000000' },
+		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', color: '#F24E1E' },
+		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', color: '#5865F2' },
+		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', color: '#1DB954' },
+		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', color: '#31A8FF' },
+		{ name: 'Microsoft Office', category: 'Productivity', price: 'Free', rating: 4.3, reviews: '8.5M', color: '#D83B01' },
+		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', color: '#2D8CFF' },
+		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', color: '#0088CC' },
+		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', color: '#FF8800' },
+		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', color: '#147EFB' },
+		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', color: '#007ACC' },
+		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', color: '#2496ED' },
+		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', color: '#FF6C37' },
+		{ name: 'GitHub', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', color: '#181717' },
+		{ name: 'MongoDB', category: 'Developer Tools', price: 'Free', rating: 4.7, reviews: '450K', color: '#47A248' },
 	];
 	
 	const games = [
-		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', icon: 'https://logo.clearbit.com/minecraft.net' },
-		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', icon: 'https://logo.clearbit.com/innersloth.com' },
-		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', icon: 'https://logo.clearbit.com/stardewvalley.net' },
-		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', icon: 'https://logo.clearbit.com/terraria.org' },
-		{ name: 'The Sims', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', icon: 'https://logo.clearbit.com/ea.com' },
-		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', icon: 'https://logo.clearbit.com/epicgames.com' },
-		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', icon: 'https://logo.clearbit.com/roblox.com' },
-		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', icon: 'https://logo.clearbit.com/leagueoflegends.com' },
-		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', icon: 'https://logo.clearbit.com/playvalorant.com' },
-		{ name: 'Steam', category: 'Platform', price: 'Free', rating: 4.7, reviews: '38M', icon: 'https://logo.clearbit.com/steampowered.com' },
-		{ name: 'Epic Games', category: 'Platform', price: 'Free', rating: 4.4, reviews: '32M', icon: 'https://logo.clearbit.com/epicgames.com' },
-		{ name: 'Unity', category: 'Game Engine', price: 'Free', rating: 4.6, reviews: '22M', icon: 'https://logo.clearbit.com/unity.com' },
+		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', color: '#62A35C' },
+		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', color: '#C51111' },
+		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', color: '#8BC34A' },
+		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', color: '#4CAF50' },
+		{ name: 'The Sims', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', color: '#00B2A9' },
+		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', color: '#0078F2' },
+		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', color: '#E03C28' },
+		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', color: '#C28F2C' },
+		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', color: '#FF4655' },
+		{ name: 'Steam', category: 'Platform', price: 'Free', rating: 4.7, reviews: '38M', color: '#171A21' },
+		{ name: 'Epic Games', category: 'Platform', price: 'Free', rating: 4.4, reviews: '32M', color: '#313131' },
+		{ name: 'Unity', category: 'Game Engine', price: 'Free', rating: 4.6, reviews: '22M', color: '#000000' },
 	];
 	
 	const categories = [
@@ -153,8 +153,8 @@
 						{#each featuredApps as app}
 							<div class="featured-card">
 								<div class="featured-image" style="background: {app.gradient}">
-									<div class="app-icon-large">
-										<img src={app.icon} alt={app.name} class="featured-icon-img" />
+									<div class="app-icon-large" style="background: {app.color}">
+										<span class="icon-letter-large">{app.name.charAt(0)}</span>
 									</div>
 								</div>
 								<div class="featured-info">
@@ -178,8 +178,8 @@
 					<div class="apps-list">
 						{#each apps.slice(0, 8) as app}
 							<div class="app-row">
-								<div class="app-icon-round">
-									<img src={app.icon} alt={app.name} class="app-icon-img" />
+								<div class="app-icon-round" style="background: {app.color}">
+									<span class="icon-letter">{app.name.charAt(0)}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -201,8 +201,8 @@
 					<div class="apps-list">
 						{#each games.slice(0, 6) as game}
 							<div class="app-row">
-								<div class="app-icon-round">
-									<img src={game.icon} alt={game.name} class="app-icon-img" />
+								<div class="app-icon-round" style="background: {game.color}">
+									<span class="icon-letter">{game.name.charAt(0)}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -226,8 +226,8 @@
 					<div class="apps-list">
 						{#each games as game}
 							<div class="app-row">
-								<div class="app-icon-round">
-									<img src={game.icon} alt={game.name} class="app-icon-img" />
+								<div class="app-icon-round" style="background: {game.color}">
+									<span class="icon-letter">{game.name.charAt(0)}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -251,8 +251,8 @@
 					<div class="apps-list">
 						{#each apps.filter(a => a.category === 'Developer Tools') as app}
 							<div class="app-row">
-								<div class="app-icon-round">
-									<img src={app.icon} alt={app.name} class="app-icon-img" />
+								<div class="app-icon-round" style="background: {app.color}">
+									<span class="icon-letter">{app.name.charAt(0)}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -287,8 +287,8 @@
 					<div class="apps-list">
 						{#each apps.slice(0, 10) as app}
 							<div class="app-row">
-								<div class="app-icon-round">
-									<img src={app.icon} alt={app.name} class="app-icon-img" />
+								<div class="app-icon-round" style="background: {app.color}">
+									<span class="icon-letter">{app.name.charAt(0)}</span>
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -481,13 +481,17 @@
 	.app-icon-large {
 		width: 110px;
 		height: 110px;
-		background: rgba(255, 255, 255, 0.95);
 		border-radius: 24px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-		padding: 20px;
+	}
+	
+	.icon-letter-large {
+		font-size: 52px;
+		font-weight: 700;
+		color: white;
 	}
 	
 	.featured-icon-img {
@@ -586,14 +590,18 @@
 	.app-icon-round {
 		width: 64px;
 		height: 64px;
-		background: white;
 		border-radius: 14px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-		padding: 12px;
+	}
+	
+	.icon-letter {
+		font-size: 28px;
+		font-weight: 700;
+		color: white;
 	}
 	
 	.app-icon-img {
