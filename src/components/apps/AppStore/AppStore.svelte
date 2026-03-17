@@ -70,18 +70,18 @@
 	];
 	
 	const categories = [
-		{ name: 'Productivity', icon: '📊', count: 1250 },
-		{ name: 'Graphics & Design', icon: '🎨', count: 890 },
-		{ name: 'Developer Tools', icon: '⚙️', count: 650 },
-		{ name: 'Business', icon: '💼', count: 980 },
-		{ name: 'Entertainment', icon: '🎬', count: 1500 },
-		{ name: 'Music', icon: '🎵', count: 450 },
-		{ name: 'Photo & Video', icon: '📷', count: 720 },
-		{ name: 'Games', icon: '🎮', count: 2100 },
-		{ name: 'Social Networking', icon: '👥', count: 340 },
-		{ name: 'Education', icon: '📚', count: 890 },
-		{ name: 'Health & Fitness', icon: '💪', count: 560 },
-		{ name: 'Utilities', icon: '🔧', count: 1100 },
+		{ name: 'Productivity', count: 1250 },
+		{ name: 'Graphics & Design', count: 890 },
+		{ name: 'Developer Tools', count: 650 },
+		{ name: 'Business', count: 980 },
+		{ name: 'Entertainment', count: 1500 },
+		{ name: 'Music', count: 450 },
+		{ name: 'Photo & Video', count: 720 },
+		{ name: 'Games', count: 2100 },
+		{ name: 'Social Networking', count: 340 },
+		{ name: 'Education', count: 890 },
+		{ name: 'Health & Fitness', count: 560 },
+		{ name: 'Utilities', count: 1100 },
 	];
 </script>
 
@@ -94,31 +94,31 @@
 	<div class="sidebar">
 		<div class="sidebar-section">
 			<button class="sidebar-item" class:active={selectedTab === 'discover'} onclick={() => selectedTab = 'discover'}>
-				<span class="sidebar-icon">✨</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
 				<span>Discover</span>
 			</button>
 			<button class="sidebar-item" class:active={selectedTab === 'arcade'} onclick={() => selectedTab = 'arcade'}>
-				<span class="sidebar-icon">🎮</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M6 9h4v2H6V9m14 0v2h-4V9m-2 3h-4v2h4v-2m-6 3H6v2h4v-2m8 0v2h4v-2m-2 3h-4v2h4v-2m-6 3H6v2h4v-2m8 0v2h4v-2M4 2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/></svg>
 				<span>Arcade</span>
 			</button>
 			<button class="sidebar-item" class:active={selectedTab === 'create'} onclick={() => selectedTab = 'create'}>
-				<span class="sidebar-icon">🎨</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71 4.63l-1.34-1.34c-.39-.39-1.02-.39-1.41 0L9 12.25 11.75 15l8.96-8.96c.39-.39.39-1.02 0-1.41zM7 14a3 3 0 0 0-3 3c0 1.31-1.16 2-2 2 .92 1.22 2.49 2 4 2 2.21 0 4-1.79 4-4a3 3 0 0 0-3-3z"/></svg>
 				<span>Create</span>
 			</button>
 			<button class="sidebar-item" class:active={selectedTab === 'work'} onclick={() => selectedTab = 'work'}>
-				<span class="sidebar-icon">💼</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2h4a2 2 0 0 1 2 2v2h4a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8c0-1.11.89-2 2-2h4V4c0-1.11.89-2 2-2m4 4V4h-4v2h4z"/></svg>
 				<span>Work</span>
 			</button>
 			<button class="sidebar-item" class:active={selectedTab === 'play'} onclick={() => selectedTab = 'play'}>
-				<span class="sidebar-icon">🎯</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
 				<span>Play</span>
 			</button>
 			<button class="sidebar-item" class:active={selectedTab === 'develop'} onclick={() => selectedTab = 'develop'}>
-				<span class="sidebar-icon">⚙️</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.06-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.63.25-1.17.59-1.69.98l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.25.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.06.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.63-.26 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z"/></svg>
 				<span>Develop</span>
 			</button>
 			<button class="sidebar-item" class:active={selectedTab === 'categories'} onclick={() => selectedTab = 'categories'}>
-				<span class="sidebar-icon">📂</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4H4c-1.11 0-2 .89-2 2v6c0 1.11.89 2 2 2h6c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm10 0h-6c-1.11 0-2 .89-2 2v6c0 1.11.89 2 2 2h6c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zM10 14H4c-1.11 0-2 .89-2 2v6c0 1.11.89 2 2 2h6c1.11 0 2-.89 2-2v-6c0-1.11-.89-2-2-2zm10 0h-6c-1.11 0-2 .89-2 2v6c0 1.11.89 2 2 2h6c1.11 0 2-.89 2-2v-6c0-1.11-.89-2-2-2z"/></svg>
 				<span>Categories</span>
 			</button>
 		</div>
@@ -127,7 +127,7 @@
 		
 		<div class="sidebar-section">
 			<button class="sidebar-item" class:active={selectedTab === 'updates'} onclick={() => selectedTab = 'updates'}>
-				<span class="sidebar-icon">⬇️</span>
+				<svg class="sidebar-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
 				<span>Updates</span>
 			</button>
 		</div>
@@ -137,7 +137,7 @@
 	<div class="main-content">
 		<!-- Search Bar -->
 		<div class="search-bar">
-			<span class="search-icon">🔍</span>
+			<svg class="search-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
 			<input type="text" placeholder="Search for apps and games" />
 		</div>
 		
@@ -274,7 +274,6 @@
 				<div class="categories-grid">
 					{#each categories as category}
 						<button class="category-card">
-							<span class="category-icon">{category.icon}</span>
 							<span class="category-name">{category.name}</span>
 							<span class="category-count">{category.count} apps</span>
 						</button>
@@ -378,7 +377,13 @@
 	}
 	
 	.sidebar-icon {
-		font-size: 18px;
+		width: 18px;
+		height: 18px;
+		opacity: 0.7;
+	}
+	
+	.sidebar-item.active .sidebar-icon {
+		opacity: 1;
 	}
 	
 	/* Main Content */
@@ -402,7 +407,8 @@
 		left: 36px;
 		top: 50%;
 		transform: translateY(-50%);
-		font-size: 16px;
+		width: 16px;
+		height: 16px;
 		opacity: 0.5;
 	}
 	
@@ -663,13 +669,15 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		justify-content: center;
 		gap: 8px;
-		padding: 24px;
+		padding: 32px 24px;
 		background: #f5f5f7;
 		border: none;
 		border-radius: 12px;
 		cursor: pointer;
 		transition: all 0.2s;
+		min-height: 120px;
 	}
 	
 	.category-card:hover {
@@ -677,18 +685,15 @@
 		transform: translateY(-2px);
 	}
 	
-	.category-icon {
-		font-size: 48px;
-	}
-	
 	.category-name {
-		font-size: 15px;
+		font-size: 16px;
 		font-weight: 600;
 		color: #1d1d1f;
+		text-align: center;
 	}
 	
 	.category-count {
-		font-size: 12px;
+		font-size: 13px;
 		color: #86868b;
 	}
 </style>
