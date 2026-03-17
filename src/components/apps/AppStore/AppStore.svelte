@@ -13,7 +13,7 @@
 			rating: 4.5, 
 			description: 'Revolutionary video editing',
 			gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-			icon: '🎬'
+			icon: 'https://logo.clearbit.com/apple.com'
 		},
 		{ 
 			name: 'Logic Pro', 
@@ -22,7 +22,7 @@
 			rating: 4.8,
 			description: 'Professional music production',
 			gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-			icon: '🎵'
+			icon: 'https://logo.clearbit.com/apple.com'
 		},
 		{ 
 			name: 'Affinity Photo', 
@@ -31,7 +31,7 @@
 			rating: 4.7,
 			description: 'Professional photo editing',
 			gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-			icon: '🖼️'
+			icon: 'https://logo.clearbit.com/affinity.serif.com'
 		},
 	];
 	
@@ -154,7 +154,7 @@
 							<div class="featured-card">
 								<div class="featured-image" style="background: {app.gradient}">
 									<div class="app-icon-large">
-										<span class="icon-emoji">{app.icon}</span>
+										<img src={app.icon} alt={app.name} class="featured-icon-img" />
 									</div>
 								</div>
 								<div class="featured-info">
@@ -481,6 +481,13 @@
 		align-items: center;
 		justify-content: center;
 		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+		padding: 20px;
+	}
+	
+	.featured-icon-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
 	}
 	
 	.icon-emoji {
