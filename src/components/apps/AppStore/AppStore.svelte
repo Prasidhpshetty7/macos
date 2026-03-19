@@ -13,7 +13,7 @@
 			rating: 4.5, 
 			description: 'Revolutionary video editing',
 			gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-			color: '#667eea'
+			icon: 'https://img.icons8.com/color/512/final-cut-pro.png'
 		},
 		{ 
 			name: 'Logic Pro', 
@@ -22,7 +22,7 @@
 			rating: 4.8,
 			description: 'Professional music production',
 			gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-			color: '#f093fb'
+			icon: 'https://img.icons8.com/color/512/logic-pro.png'
 		},
 		{ 
 			name: 'Affinity Photo', 
@@ -31,7 +31,7 @@
 			rating: 4.7,
 			description: 'Professional photo editing',
 			gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-			color: '#4facfe'
+			icon: 'https://img.icons8.com/color/512/affinity-photo.png'
 		},
 	];
 	
