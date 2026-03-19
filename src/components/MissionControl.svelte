@@ -8,6 +8,29 @@
 	
 	let draggedWindow: string | null = $state(null);
 	let dragOverSpace: number | null = $state(null);
+	let scrollOffset = $state(0);
+	
+	// Max visible spaces (8 can fit comfortably)
+	const maxVisibleSpaces = 8;
+	const canScrollLeft = $derived(scrollOffset > 0);
+	const canScrollRight = $derived(scrollOffset + maxVisibleSpaces < spacesManager.spaces.length);
+	
+	function scrollLeft() {
+		if (scrollOffset > 0) {
+			scrollOffset--;
+		}
+	}
+	
+	function scrollRight() {
+		if (scrollOffset + maxVisibleSpaces < spacesManager.spaces.length) {
+			scrollOffset++;
+		}
+	}
+	
+	// Get visible spaces based on scroll offset
+	const visibleSpaces = $derived(
+		spacesManager.spaces.slice(scrollOffset, scrollOffset + maxVisibleSpaces)
+	);
 	
 	// Get windows for current active space
 	const currentSpaceWindows = $derived(
@@ -213,8 +236,16 @@
 	<div class="mc-overlay" onclick={clickOverlay}>
 		<!-- Desktop spaces bar at top -->
 		<div class="mc-spaces-bar">
+			{#if canScrollLeft}
+				<button class="mc-scroll-btn left" onclick={scrollLeft}>
+					<svg viewBox="0 0 24 24" fill="currentColor">
+						<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+					</svg>
+				</button>
+			{/if}
+			
 			<div class="mc-spaces-container">
-				{#each spacesManager.spaces as space, i}
+				{#each visibleSpaces as space, i}
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<div 
 						class="mc-space-thumb"
@@ -236,7 +267,7 @@
 								{/each}
 							</div>
 						</div>
-						<span class="mc-space-label">Desktop {i + 1}</span>
+						<span class="mc-space-label">Desktop {scrollOffset + i + 1}</span>
 						{#if spacesManager.spaces.length > 1}
 							<button class="mc-remove-btn" onclick={(e) => removeSpace(e, space.id)}>×</button>
 						{/if}
@@ -249,6 +280,14 @@
 					</button>
 				{/if}
 			</div>
+			
+			{#if canScrollRight}
+				<button class="mc-scroll-btn right" onclick={scrollRight}>
+					<svg viewBox="0 0 24 24" fill="currentColor">
+						<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+					</svg>
+				</button>
+			{/if}
 		</div>
 		
 		<!-- Windows area -->
@@ -318,6 +357,40 @@
 	background: rgba(0, 0, 0, 0.4);
 	display: flex;
 	justify-content: center;
+	align-items: center;
+	gap: 16px;
+	position: relative;
+}
+
+.mc-scroll-btn {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	color: rgba(255, 255, 255, 0.8);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s ease;
+	flex-shrink: 0;
+}
+
+.mc-scroll-btn:hover {
+	background: rgba(255, 255, 255, 0.2);
+	border-color: rgba(255, 255, 255, 0.4);
+	color: rgba(255, 255, 255, 1);
+	transform: scale(1.1);
+}
+
+.mc-scroll-btn:active {
+	transform: scale(0.95);
+}
+
+.mc-scroll-btn svg {
+	width: 24px;
+	height: 24px;
 }
 
 .mc-spaces-container {
