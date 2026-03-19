@@ -21,36 +21,6 @@
 	
 	let filteredApps = $state([]);
 	
-	const featuredApps = [
-		{ 
-			name: 'Final Cut Pro', 
-			category: 'Photo & Video', 
-			price: '$299.99', 
-			rating: 4.5, 
-			description: 'Revolutionary video editing',
-			gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-			icon: 'https://img.icons8.com/color/96/final-cut-pro.png'
-		},
-		{ 
-			name: 'Logic Pro', 
-			category: 'Music', 
-			price: '$199.99', 
-			rating: 4.8,
-			description: 'Professional music production',
-			gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-			icon: 'https://img.icons8.com/color/96/logic-pro.png'
-		},
-		{ 
-			name: 'Affinity Photo', 
-			category: 'Photo & Video', 
-			price: '$69.99', 
-			rating: 4.7,
-			description: 'Professional photo editing',
-			gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-			icon: 'https://img.icons8.com/color/96/affinity-photo.png'
-		},
-	];
-	
 	const apps = [
 		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', icon: 'https://img.icons8.com/color/96/slack-new.png' },
 		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', icon: 'https://img.icons8.com/color/96/notion.png' },
@@ -191,32 +161,6 @@
 				{/if}
 			{:else if selectedTab === 'discover'}
 				<h1 class="page-title">Discover</h1>
-				
-				<!-- Featured Apps -->
-				<section class="section">
-					<h2 class="section-title">Featured Apps</h2>
-					<div class="featured-grid">
-						{#each featuredApps as app}
-							<div class="featured-card">
-								<div class="featured-image" style="background: {app.gradient}">
-									<div class="app-icon-large">
-										<img src={app.icon} alt={app.name} class="featured-icon-img" />
-									</div>
-								</div>
-								<div class="featured-info">
-									<h3>{app.name}</h3>
-									<p class="category">{app.category}</p>
-									<p class="description">{app.description}</p>
-									<div class="rating">
-										<span class="stars">{'★'.repeat(Math.floor(app.rating))}</span>
-										<span class="rating-text">{app.rating}</span>
-									</div>
-									<button class="get-btn">{app.price}</button>
-								</div>
-							</div>
-						{/each}
-					</div>
-				</section>
 				
 				<!-- Popular Apps -->
 				<section class="section">
