@@ -4,6 +4,7 @@
 	const { app_id }: { app_id: AppID } = $props();
 	
 	let selectedTab = $state('discover');
+	let searchQuery = $state('');
 	
 	const featuredApps = [
 		{ 
