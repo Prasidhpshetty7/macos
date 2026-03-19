@@ -6,6 +6,21 @@
 	let selectedTab = $state('discover');
 	let searchQuery = $state('');
 	
+	$effect(() => {
+		// Filter apps and games based on search query
+		const query = searchQuery.toLowerCase().trim();
+		if (query) {
+			filteredApps = [...apps, ...games].filter(item => 
+				item.name.toLowerCase().includes(query) || 
+				item.category.toLowerCase().includes(query)
+			);
+		} else {
+			filteredApps = [];
+		}
+	});
+	
+	let filteredApps = $state([]);
+	
 	const featuredApps = [
 		{ 
 			name: 'Final Cut Pro', 
