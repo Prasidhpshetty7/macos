@@ -159,7 +159,37 @@
 		
 		<!-- Content Area -->
 		<div class="content-area">
-			{#if selectedTab === 'discover'}
+			{#if searchQuery.trim()}
+				<h1 class="page-title">Search Results for "{searchQuery}"</h1>
+				
+				{#if filteredApps.length > 0}
+					<section class="section">
+						<div class="apps-list">
+							{#each filteredApps as app}
+								<div class="app-row">
+									<div class="app-icon-round">
+										<img src={app.icon} alt={app.name} class="app-icon-img" />
+									</div>
+									<div class="app-info-row">
+										<h4>{app.name}</h4>
+										<p class="app-category">{app.category}</p>
+										<div class="app-meta">
+											<span class="rating-small">★ {app.rating}</span>
+											<span class="reviews">{app.reviews} Ratings</span>
+										</div>
+									</div>
+									<button class="get-btn-small">{app.price}</button>
+								</div>
+							{/each}
+						</div>
+					</section>
+				{:else}
+					<div class="no-results">
+						<p>No results found for "{searchQuery}"</p>
+						<p class="no-results-hint">Try searching for apps like Slack, Discord, Minecraft, or Spotify</p>
+					</div>
+				{/if}
+			{:else if selectedTab === 'discover'}
 				<h1 class="page-title">Discover</h1>
 				
 				<!-- Featured Apps -->
