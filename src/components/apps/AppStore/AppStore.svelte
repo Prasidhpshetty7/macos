@@ -153,8 +153,8 @@
 						{#each featuredApps as app}
 							<div class="featured-card">
 								<div class="featured-image" style="background: {app.gradient}">
-									<div class="app-icon-large" style="background: {app.color}">
-										<span class="icon-letter-large">{app.name.charAt(0)}</span>
+									<div class="app-icon-large">
+										<img src={app.icon} alt={app.name} class="featured-icon-img" />
 									</div>
 								</div>
 								<div class="featured-info">
