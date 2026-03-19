@@ -178,8 +178,8 @@
 					<div class="apps-list">
 						{#each apps.slice(0, 8) as app}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-letter">{app.name.charAt(0)}</span>
+								<div class="app-icon-round">
+									<img src={app.icon} alt={app.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -201,8 +201,8 @@
 					<div class="apps-list">
 						{#each games.slice(0, 6) as game}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {game.color}">
-									<span class="icon-letter">{game.name.charAt(0)}</span>
+								<div class="app-icon-round">
+									<img src={game.icon} alt={game.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -226,8 +226,8 @@
 					<div class="apps-list">
 						{#each games as game}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {game.color}">
-									<span class="icon-letter">{game.name.charAt(0)}</span>
+								<div class="app-icon-round">
+									<img src={game.icon} alt={game.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{game.name}</h4>
@@ -251,8 +251,8 @@
 					<div class="apps-list">
 						{#each apps.filter(a => a.category === 'Developer Tools') as app}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-letter">{app.name.charAt(0)}</span>
+								<div class="app-icon-round">
+									<img src={app.icon} alt={app.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -287,8 +287,8 @@
 					<div class="apps-list">
 						{#each apps.slice(0, 10) as app}
 							<div class="app-row">
-								<div class="app-icon-round" style="background: {app.color}">
-									<span class="icon-letter">{app.name.charAt(0)}</span>
+								<div class="app-icon-round">
+									<img src={app.icon} alt={app.name} class="app-icon-img" />
 								</div>
 								<div class="app-info-row">
 									<h4>{app.name}</h4>
@@ -481,27 +481,19 @@
 	.app-icon-large {
 		width: 110px;
 		height: 110px;
+		background: rgba(255, 255, 255, 0.95);
 		border-radius: 24px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
-	}
-	
-	.icon-letter-large {
-		font-size: 52px;
-		font-weight: 700;
-		color: white;
+		padding: 16px;
 	}
 	
 	.featured-icon-img {
 		width: 100%;
 		height: 100%;
 		object-fit: contain;
-	}
-	
-	.icon-emoji {
-		font-size: 56px;
 	}
 	
 	.featured-info {
