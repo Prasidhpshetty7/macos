@@ -741,4 +741,20 @@
 		font-size: 13px;
 		color: #86868b;
 	}
+	
+	.no-results {
+		text-align: center;
+		padding: 60px 24px;
+	}
+	
+	.no-results p {
+		font-size: 18px;
+		color: #1d1d1f;
+		margin: 0 0 12px 0;
+	}
+	
+	.no-results-hint {
+		font-size: 14px;
+		color: #86868b;
+	}
 </style>
