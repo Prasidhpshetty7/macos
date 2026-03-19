@@ -234,23 +234,38 @@
 	>
 		{#if contextMenu.file.type === 'app'}
 			<button onclick={() => openApp(contextMenu.file)}>
-				<span class="ctx-icon">🚀</span> Open
+				<svg class="ctx-icon" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+				</svg>
+				Open
 			</button>
 		{:else}
 			<button onclick={() => openInVSCode(contextMenu.file)}>
-				<span class="ctx-icon">📝</span> Open
+				<svg class="ctx-icon" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+				</svg>
+				Open
 			</button>
 		{/if}
 		<button onclick={() => { selectedFile = contextMenu.file.id; contextMenu = null; }}>
-			<span class="ctx-icon">ℹ️</span> Get Info
+			<svg class="ctx-icon" viewBox="0 0 24 24" fill="currentColor">
+				<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+			</svg>
+			Get Info
 		</button>
 		{#if contextMenu.file.type !== 'app'}
 			<div class="ctx-divider"></div>
 			<button onclick={() => handleRename(contextMenu.file)}>
-				<span class="ctx-icon">✏️</span> Rename
+				<svg class="ctx-icon" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+				</svg>
+				Rename
 			</button>
 			<button onclick={() => handleDelete(contextMenu.file)} class="delete-btn">
-				<span class="ctx-icon">🗑️</span> Move to Trash
+				<svg class="ctx-icon" viewBox="0 0 24 24" fill="currentColor">
+					<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+				</svg>
+				Move to Trash
 			</button>
 		{/if}
 	</div>
@@ -442,7 +457,9 @@
 	}
 	
 	.ctx-icon {
-		font-size: 14px;
+		width: 16px;
+		height: 16px;
+		flex-shrink: 0;
 	}
 	
 	.ctx-divider {
