@@ -36,22 +36,22 @@
 	];
 	
 	const apps = [
-		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', color: '#4A154B' },
-		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', color: '#000000' },
-		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', color: '#F24E1E' },
-		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', color: '#5865F2' },
-		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', color: '#1DB954' },
-		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', color: '#31A8FF' },
-		{ name: 'Microsoft Office', category: 'Productivity', price: 'Free', rating: 4.3, reviews: '8.5M', color: '#D83B01' },
-		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', color: '#2D8CFF' },
-		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', color: '#0088CC' },
-		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', color: '#FF8800' },
-		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', color: '#147EFB' },
-		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', color: '#007ACC' },
-		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', color: '#2496ED' },
-		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', color: '#FF6C37' },
-		{ name: 'GitHub', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', color: '#181717' },
-		{ name: 'MongoDB', category: 'Developer Tools', price: 'Free', rating: 4.7, reviews: '450K', color: '#47A248' },
+		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', icon: 'https://img.icons8.com/color/512/slack-new.png' },
+		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', icon: 'https://img.icons8.com/color/512/notion.png' },
+		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', icon: 'https://img.icons8.com/color/512/figma.png' },
+		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', icon: 'https://img.icons8.com/color/512/discord-logo.png' },
+		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', icon: 'https://img.icons8.com/color/512/spotify.png' },
+		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', icon: 'https://img.icons8.com/color/512/adobe-photoshop.png' },
+		{ name: 'Microsoft Office', category: 'Productivity', price: 'Free', rating: 4.3, reviews: '8.5M', icon: 'https://img.icons8.com/color/512/microsoft-office-2019.png' },
+		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', icon: 'https://img.icons8.com/color/512/zoom.png' },
+		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', icon: 'https://img.icons8.com/color/512/telegram-app.png' },
+		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', icon: 'https://img.icons8.com/color/512/vlc.png' },
+		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', icon: 'https://img.icons8.com/color/512/xcode.png' },
+		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', icon: 'https://img.icons8.com/color/512/visual-studio-code-2019.png' },
+		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', icon: 'https://img.icons8.com/color/512/docker.png' },
+		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', icon: 'https://img.icons8.com/dusk/512/postman-api.png' },
+		{ name: 'GitHub', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', icon: 'https://img.icons8.com/color/512/github.png' },
+		{ name: 'MongoDB', category: 'Developer Tools', price: 'Free', rating: 4.7, reviews: '450K', icon: 'https://img.icons8.com/color/512/mongodb.png' },
 	];
 	
 	const games = [
