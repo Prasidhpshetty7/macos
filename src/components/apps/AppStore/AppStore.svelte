@@ -29,7 +29,7 @@
 			rating: 4.5, 
 			description: 'Revolutionary video editing',
 			gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-			icon: 'https://img.icons8.com/color/512/final-cut-pro.png'
+			icon: 'https://img.icons8.com/color/96/final-cut-pro.png'
 		},
 		{ 
 			name: 'Logic Pro', 
@@ -38,7 +38,7 @@
 			rating: 4.8,
 			description: 'Professional music production',
 			gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-			icon: 'https://img.icons8.com/color/512/logic-pro.png'
+			icon: 'https://img.icons8.com/color/96/logic-pro.png'
 		},
 		{ 
 			name: 'Affinity Photo', 
@@ -47,42 +47,42 @@
 			rating: 4.7,
 			description: 'Professional photo editing',
 			gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-			icon: 'https://img.icons8.com/color/512/affinity-photo.png'
+			icon: 'https://img.icons8.com/color/96/affinity-photo.png'
 		},
 	];
 	
 	const apps = [
-		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', icon: 'https://img.icons8.com/color/512/slack-new.png' },
-		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', icon: 'https://img.icons8.com/color/512/notion.png' },
-		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', icon: 'https://img.icons8.com/color/512/figma.png' },
-		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', icon: 'https://img.icons8.com/color/512/discord-logo.png' },
-		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', icon: 'https://img.icons8.com/color/512/spotify.png' },
-		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', icon: 'https://img.icons8.com/color/512/adobe-photoshop.png' },
-		{ name: 'Microsoft Office', category: 'Productivity', price: 'Free', rating: 4.3, reviews: '8.5M', icon: 'https://img.icons8.com/color/512/microsoft-office-2019.png' },
-		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', icon: 'https://img.icons8.com/color/512/zoom.png' },
-		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', icon: 'https://img.icons8.com/color/512/telegram-app.png' },
-		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', icon: 'https://img.icons8.com/color/512/vlc.png' },
-		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', icon: 'https://img.icons8.com/color/512/xcode.png' },
-		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', icon: 'https://img.icons8.com/color/512/visual-studio-code-2019.png' },
-		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', icon: 'https://img.icons8.com/color/512/docker.png' },
-		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', icon: 'https://img.icons8.com/dusk/512/postman-api.png' },
-		{ name: 'GitHub', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', icon: 'https://img.icons8.com/color/512/github.png' },
-		{ name: 'MongoDB', category: 'Developer Tools', price: 'Free', rating: 4.7, reviews: '450K', icon: 'https://img.icons8.com/color/512/mongodb.png' },
+		{ name: 'Slack', category: 'Business', price: 'Free', rating: 4.4, reviews: '2.5M', icon: 'https://img.icons8.com/color/96/slack-new.png' },
+		{ name: 'Notion', category: 'Productivity', price: 'Free', rating: 4.7, reviews: '890K', icon: 'https://img.icons8.com/color/96/notion.png' },
+		{ name: 'Figma', category: 'Graphics & Design', price: 'Free', rating: 4.6, reviews: '1.2M', icon: 'https://img.icons8.com/color/96/figma.png' },
+		{ name: 'Discord', category: 'Social Networking', price: 'Free', rating: 4.5, reviews: '5.8M', icon: 'https://img.icons8.com/color/96/discord-logo.png' },
+		{ name: 'Spotify', category: 'Music', price: 'Free', rating: 4.8, reviews: '12M', icon: 'https://img.icons8.com/color/96/spotify.png' },
+		{ name: 'Adobe Photoshop', category: 'Photo & Video', price: '$20.99/mo', rating: 4.5, reviews: '3.2M', icon: 'https://img.icons8.com/color/96/adobe-photoshop.png' },
+		{ name: 'Microsoft Office', category: 'Productivity', price: 'Free', rating: 4.3, reviews: '8.5M', icon: 'https://img.icons8.com/color/96/microsoft-office-2019.png' },
+		{ name: 'Zoom', category: 'Business', price: 'Free', rating: 4.4, reviews: '15M', icon: 'https://img.icons8.com/color/96/zoom.png' },
+		{ name: 'Telegram', category: 'Social Networking', price: 'Free', rating: 4.6, reviews: '4.2M', icon: 'https://img.icons8.com/color/96/telegram-app.png' },
+		{ name: 'VLC', category: 'Entertainment', price: 'Free', rating: 4.7, reviews: '6.8M', icon: 'https://img.icons8.com/color/96/vlc.png' },
+		{ name: 'Xcode', category: 'Developer Tools', price: 'Free', rating: 4.2, reviews: '1.8M', icon: 'https://img.icons8.com/color/96/xcode.png' },
+		{ name: 'Visual Studio Code', category: 'Developer Tools', price: 'Free', rating: 4.8, reviews: '9.2M', icon: 'https://img.icons8.com/color/96/visual-studio-code-2019.png' },
+		{ name: 'Docker', category: 'Developer Tools', price: 'Free', rating: 4.5, reviews: '2.1M', icon: 'https://img.icons8.com/color/96/docker.png' },
+		{ name: 'Postman', category: 'Developer Tools', price: 'Free', rating: 4.6, reviews: '1.5M', icon: 'https://img.icons8.com/dusk/96/postman-api.png' },
+		{ name: 'GitHub', category: 'Developer Tools', price: 'Free', rating: 4.4, reviews: '3.4M', icon: 'https://img.icons8.com/color/96/github.png' },
+		{ name: 'MongoDB', category: 'Developer Tools', price: 'Free', rating: 4.7, reviews: '450K', icon: 'https://img.icons8.com/color/96/mongodb.png' },
 	];
 	
 	const games = [
-		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', icon: 'https://img.icons8.com/color/512/minecraft-logo.png' },
-		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', icon: 'https://img.icons8.com/color/512/among-us.png' },
-		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', icon: 'https://img.icons8.com/color/512/stardew-valley.png' },
-		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', icon: 'https://img.icons8.com/color/512/terraria.png' },
-		{ name: 'The Sims', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', icon: 'https://img.icons8.com/color/512/the-sims.png' },
-		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', icon: 'https://img.icons8.com/color/512/fortnite.png' },
-		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', icon: 'https://img.icons8.com/color/512/roblox.png' },
-		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', icon: 'https://img.icons8.com/color/512/league-of-legends.png' },
-		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', icon: 'https://img.icons8.com/color/512/valorant.png' },
-		{ name: 'Steam', category: 'Platform', price: 'Free', rating: 4.7, reviews: '38M', icon: 'https://img.icons8.com/color/512/steam.png' },
-		{ name: 'Epic Games', category: 'Platform', price: 'Free', rating: 4.4, reviews: '32M', icon: 'https://img.icons8.com/color/512/epic-games.png' },
-		{ name: 'Unity', category: 'Game Engine', price: 'Free', rating: 4.6, reviews: '22M', icon: 'https://img.icons8.com/color/512/unity.png' },
+		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', icon: 'https://img.icons8.com/color/96/minecraft-logo.png' },
+		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', icon: 'https://img.icons8.com/color/96/among-us.png' },
+		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', icon: 'https://img.icons8.com/color/96/stardew-valley.png' },
+		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', icon: 'https://img.icons8.com/color/96/terraria.png' },
+		{ name: 'The Sims', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', icon: 'https://img.icons8.com/color/96/the-sims.png' },
+		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', icon: 'https://img.icons8.com/color/96/fortnite.png' },
+		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', icon: 'https://img.icons8.com/color/96/roblox.png' },
+		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', icon: 'https://img.icons8.com/color/96/league-of-legends.png' },
+		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', icon: 'https://img.icons8.com/color/96/valorant.png' },
+		{ name: 'Steam', category: 'Platform', price: 'Free', rating: 4.7, reviews: '38M', icon: 'https://img.icons8.com/color/96/steam.png' },
+		{ name: 'Epic Games', category: 'Platform', price: 'Free', rating: 4.4, reviews: '32M', icon: 'https://img.icons8.com/color/96/epic-games.png' },
+		{ name: 'Unity', category: 'Game Engine', price: 'Free', rating: 4.6, reviews: '22M', icon: 'https://img.icons8.com/color/96/unity.png' },
 	];
 	
 	const categories = [
