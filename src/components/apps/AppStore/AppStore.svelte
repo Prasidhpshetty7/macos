@@ -400,6 +400,8 @@
 		padding-top: 68px;
 		border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 		position: relative;
+		display: flex;
+		align-items: center;
 	}
 	
 	.search-icon {
@@ -407,6 +409,7 @@
 		left: 36px;
 		top: 50%;
 		transform: translateY(-50%);
+		margin-top: 26px;
 		width: 16px;
 		height: 16px;
 		opacity: 0.5;
