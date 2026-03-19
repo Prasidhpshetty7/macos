@@ -55,18 +55,18 @@
 	];
 	
 	const games = [
-		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', color: '#62A35C' },
-		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', color: '#C51111' },
-		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', color: '#8BC34A' },
-		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', color: '#4CAF50' },
-		{ name: 'The Sims', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', color: '#00B2A9' },
-		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', color: '#0078F2' },
-		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', color: '#E03C28' },
-		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', color: '#C28F2C' },
-		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', color: '#FF4655' },
-		{ name: 'Steam', category: 'Platform', price: 'Free', rating: 4.7, reviews: '38M', color: '#171A21' },
-		{ name: 'Epic Games', category: 'Platform', price: 'Free', rating: 4.4, reviews: '32M', color: '#313131' },
-		{ name: 'Unity', category: 'Game Engine', price: 'Free', rating: 4.6, reviews: '22M', color: '#000000' },
+		{ name: 'Minecraft', category: 'Adventure', price: '$26.95', rating: 4.6, reviews: '45M', icon: 'https://img.icons8.com/color/512/minecraft-logo.png' },
+		{ name: 'Among Us', category: 'Strategy', price: 'Free', rating: 4.3, reviews: '28M', icon: 'https://img.icons8.com/color/512/among-us.png' },
+		{ name: 'Stardew Valley', category: 'Simulation', price: '$14.99', rating: 4.8, reviews: '12M', icon: 'https://img.icons8.com/color/512/stardew-valley.png' },
+		{ name: 'Terraria', category: 'Adventure', price: '$9.99', rating: 4.7, reviews: '18M', icon: 'https://img.icons8.com/color/512/terraria.png' },
+		{ name: 'The Sims', category: 'Simulation', price: 'Free', rating: 4.2, reviews: '35M', icon: 'https://img.icons8.com/color/512/the-sims.png' },
+		{ name: 'Fortnite', category: 'Action', price: 'Free', rating: 4.5, reviews: '52M', icon: 'https://img.icons8.com/color/512/fortnite.png' },
+		{ name: 'Roblox', category: 'Adventure', price: 'Free', rating: 4.4, reviews: '68M', icon: 'https://img.icons8.com/color/512/roblox.png' },
+		{ name: 'League of Legends', category: 'Strategy', price: 'Free', rating: 4.6, reviews: '42M', icon: 'https://img.icons8.com/color/512/league-of-legends.png' },
+		{ name: 'Valorant', category: 'Action', price: 'Free', rating: 4.5, reviews: '25M', icon: 'https://img.icons8.com/color/512/valorant.png' },
+		{ name: 'Steam', category: 'Platform', price: 'Free', rating: 4.7, reviews: '38M', icon: 'https://img.icons8.com/color/512/steam.png' },
+		{ name: 'Epic Games', category: 'Platform', price: 'Free', rating: 4.4, reviews: '32M', icon: 'https://img.icons8.com/color/512/epic-games.png' },
+		{ name: 'Unity', category: 'Game Engine', price: 'Free', rating: 4.6, reviews: '22M', icon: 'https://img.icons8.com/color/512/unity.png' },
 	];
 	
 	const categories = [
