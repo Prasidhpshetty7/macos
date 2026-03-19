@@ -582,18 +582,14 @@
 	.app-icon-round {
 		width: 64px;
 		height: 64px;
+		background: white;
 		border-radius: 14px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-	}
-	
-	.icon-letter {
-		font-size: 28px;
-		font-weight: 700;
-		color: white;
+		padding: 8px;
 	}
 	
 	.app-icon-img {
