@@ -323,7 +323,7 @@
 	.drag-handle {
 		position: absolute;
 		top: 0;
-		left: 0;
+		left: 80px;
 		right: 0;
 		height: 52px;
 		z-index: 100;
