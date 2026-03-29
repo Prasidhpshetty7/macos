@@ -13,6 +13,9 @@
 	import MenuBar from './MenuBar.svelte';
 	import TopBarTime from './TopBarTime.svelte';
 	import MusicControl from './MusicControl.svelte';
+	import Spotlight from './Spotlight.svelte';
+	import ControlCenter from './ControlCenter.svelte';
+	import NotificationCenter from './NotificationCenter.svelte';
 	
 	// Count running apps (open or minimized - just need to have been opened)
 	const runningAppCount = $derived(
