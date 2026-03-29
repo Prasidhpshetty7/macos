@@ -201,4 +201,34 @@
 		width: 14px;
 		height: 14px;
 	}
+	
+	:global(.spotlight-btn),
+	:global(.control-center-btn),
+	:global(.notification-btn) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 8px;
+		height: 100%;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		color: inherit;
+		opacity: 0.9;
+		transition: opacity 0.2s;
+	}
+	
+	:global(.spotlight-btn:hover),
+	:global(.control-center-btn:hover),
+	:global(.notification-btn:hover) {
+		opacity: 1;
+		background: rgba(255, 255, 255, 0.1);
+	}
+	
+	:global(.spotlight-btn svg),
+	:global(.control-center-btn svg),
+	:global(.notification-btn svg) {
+		width: 16px;
+		height: 16px;
+	}
 </style>
