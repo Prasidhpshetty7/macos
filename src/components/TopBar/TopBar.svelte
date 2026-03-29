@@ -56,7 +56,13 @@
 	</button>
 	{/if}
 
+	<Spotlight />
+
 	<MusicControl />
+	
+	<ControlCenter />
+	
+	<NotificationCenter />
 
 	<ActionCenterToggle />
 
