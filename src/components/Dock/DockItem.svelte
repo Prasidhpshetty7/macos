@@ -251,6 +251,50 @@
 	{/if}
 </button>
 
+{#if showContextMenu}
+	<div 
+		class="dock-context-menu"
+		style:left="{contextMenuPos.x - 90}px"
+		style:top="{contextMenuPos.y - (apps.running[app_id] ? 140 : 80)}px"
+		onclick={(e) => e.stopPropagation()}
+	>
+		<div class="context-menu-header">{title}</div>
+		<div class="context-divider"></div>
+		
+		{#if apps.running[app_id]}
+			{#if apps.minimized[app_id]}
+				<button onclick={handleShowAllWindows}>
+					<svg viewBox="0 0 24 24" fill="currentColor">
+						<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+					</svg>
+					Show
+				</button>
+			{:else}
+				<button onclick={handleHide}>
+					<svg viewBox="0 0 24 24" fill="currentColor">
+						<path d="M19 13H5v-2h14v2z"/>
+					</svg>
+					Hide
+				</button>
+			{/if}
+			<div class="context-divider"></div>
+			<button onclick={handleQuit} class="quit-btn">
+				<svg viewBox="0 0 24 24" fill="currentColor">
+					<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+				</svg>
+				Quit
+			</button>
+		{:else}
+			<button onclick={openApp}>
+				<svg viewBox="0 0 24 24" fill="currentColor">
+					<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+				</svg>
+				Open
+			</button>
+		{/if}
+	</div>
+{/if}
+
 <style>
 	img {
 		will-change: width;
