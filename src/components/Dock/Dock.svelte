@@ -8,6 +8,7 @@
 	import { is_dock_hidden } from '🍎/state/dock.svelte';
 	import DockItem from './DockItem.svelte';
 	import TrashBin from './TrashBin.svelte';
+	import Downloads from './Downloads.svelte';
 	import { untrack } from 'svelte';
 
 	// Get apps that are hidden from dock but currently running (open or minimized)
@@ -126,6 +127,7 @@
 		
 		<!-- Trash Bin - always at the end -->
 		<div class="divider" aria-hidden="true"></div>
+		<Downloads />
 		<TrashBin />
 	</div>
 </section>
