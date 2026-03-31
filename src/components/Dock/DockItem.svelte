@@ -158,7 +158,42 @@
 	$effect(() => {
 		if (show_pwa_badge) bounceEffect();
 	});
+	
+	// Context menu state
+	let showContextMenu = $state(false);
+	let contextMenuPos = $state({ x: 0, y: 0 });
+	
+	function handleContextMenu(e: MouseEvent) {
+		e.preventDefault();
+		e.stopPropagation();
+		showContextMenu = true;
+		contextMenuPos = { x: e.clientX, y: e.clientY };
+	}
+	
+	function closeContextMenu() {
+		showContextMenu = false;
+	}
+	
+	function handleQuit() {
+		apps.open[app_id] = false;
+		apps.running[app_id] = false;
+		apps.minimized[app_id] = false;
+		closeContextMenu();
+	}
+	
+	function handleHide() {
+		apps.minimized[app_id] = true;
+		closeContextMenu();
+	}
+	
+	function handleShowAllWindows() {
+		apps.minimized[app_id] = false;
+		apps.active = app_id;
+		closeContextMenu();
+	}
 </script>
+
+<svelte:window onclick={closeContextMenu} />
 
 <button onclick={openApp} aria-label="Launch {title} app" class="dock-open-app-button {app_id}">
 	<p
