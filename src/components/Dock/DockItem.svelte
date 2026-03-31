@@ -444,4 +444,58 @@
 		font-size: 1rem;
 		line-height: 1.5;
 	}
+	
+	.dock-context-menu {
+		position: fixed;
+		background: rgba(40, 40, 40, 0.95);
+		backdrop-filter: blur(20px);
+		border-radius: 8px;
+		padding: 4px;
+		min-width: 180px;
+		box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+		z-index: 99999;
+		border: 1px solid rgba(255,255,255,0.1);
+	}
+	
+	.context-menu-header {
+		padding: 8px 12px;
+		font-size: 12px;
+		font-weight: 600;
+		color: rgba(255, 255, 255, 0.5);
+		text-align: center;
+	}
+	
+	.dock-context-menu button {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		width: 100%;
+		padding: 8px 12px;
+		background: transparent;
+		border: none;
+		color: #fff;
+		font-size: 13px;
+		cursor: pointer;
+		border-radius: 4px;
+		text-align: left;
+	}
+	
+	.dock-context-menu button:hover {
+		background: #007aff;
+	}
+	
+	.dock-context-menu button.quit-btn:hover {
+		background: #ff3b30;
+	}
+	
+	.dock-context-menu button svg {
+		width: 16px;
+		height: 16px;
+	}
+	
+	.context-divider {
+		height: 1px;
+		background: rgba(255, 255, 255, 0.1);
+		margin: 4px 0;
+	}
 </style>
