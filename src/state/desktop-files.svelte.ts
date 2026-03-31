@@ -199,8 +199,15 @@ export function renameFile(id: string, newName: string) {
 	desktopFilesState.newlyCreatedId = null;
 }
 
-// Delete a file/folder
+// Delete a file/folder (move to trash)
 export function deleteFile(id: string) {
+	const file = desktopFilesState.files.find(f => f.id === id);
+	if (file) {
+		// Import trash functions
+		import('./trash.svelte').then(({ moveToTrash }) => {
+			moveToTrash(file);
+		});
+	}
 	desktopFilesState.files = desktopFilesState.files.filter(f => f.id !== id);
 }
 
