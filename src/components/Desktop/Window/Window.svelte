@@ -181,6 +181,11 @@
 		}
 		focusApp();
 		apps.is_being_dragged = true;
+		
+		// Initialize shake detection
+		shakeStartX = 0;
+		shakeCount = 0;
+		clearTimeout(shakeTimer);
 	}
 
 	function onAppDrag(data: { offsetX: number; offsetY: number }) {
@@ -196,6 +201,45 @@
 		} else {
 			showSnapPreview = null;
 		}
+		
+		// Detect shake gesture (rapid left-right movement)
+		const now = Date.now();
+		if (shakeStartX === 0) {
+			shakeStartX = x;
+			lastShakeTime = now;
+		} else {
+			const deltaX = Math.abs(x - shakeStartX);
+			const deltaTime = now - lastShakeTime;
+			
+			// If moved more than 100px in less than 150ms
+			if (deltaX > 100 && deltaTime < 150) {
+				shakeCount++;
+				shakeStartX = x;
+				lastShakeTime = now;
+				
+				// If shaken 3 times, minimize all other windows
+				if (shakeCount >= 3) {
+					minimizeAllOthers();
+					shakeCount = 0;
+				}
+				
+				// Reset shake count after 500ms of no shaking
+				clearTimeout(shakeTimer);
+				shakeTimer = setTimeout(() => {
+					shakeCount = 0;
+				}, 500);
+			}
+		}
+	}
+	
+	function minimizeAllOthers() {
+		// Minimize all windows except this one
+		Object.keys(apps.open).forEach((id) => {
+			if (id !== app_id && apps.open[id as AppID] && !apps.minimized[id as AppID]) {
+				apps.minimized[id as AppID] = true;
+				apps.open[id as AppID] = false;
+			}
+		});
 	}
 
 	function onAppDragEnd(data: { offsetX: number; offsetY: number }) {
