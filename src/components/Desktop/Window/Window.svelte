@@ -304,6 +304,11 @@
 	<AppNexus {app_id} is_being_dragged={apps.is_being_dragged} />
 </section>
 
+<!-- Snap Preview Overlays -->
+{#if showSnapPreview}
+	<div class="snap-preview {showSnapPreview}"></div>
+{/if}
+
 <style>
 	.container {
 		--elevated-shadow: 0px 8.5px 10px rgba(0, 0, 0, 0.115), 0px 68px 80px rgba(0, 0, 0, 0.23);
