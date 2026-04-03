@@ -169,12 +169,92 @@
 		if (is_maximized) {
 			maximizeApp(); // This will restore it
 		}
+		// If snapped, restore window
+		if (is_snapped) {
+			restoreFromSnap();
+		}
 		focusApp();
 		apps.is_being_dragged = true;
 	}
 
-	function onAppDragEnd() {
+	function onAppDrag(data: { offsetX: number; offsetY: number }) {
+		// Check if near edges for snap preview
+		const x = data.offsetX;
+		const screenWidth = window.innerWidth;
+		const snapThreshold = 50; // pixels from edge
+		
+		if (x < snapThreshold) {
+			showSnapPreview = 'left';
+		} else if (x > screenWidth - snapThreshold) {
+			showSnapPreview = 'right';
+		} else {
+			showSnapPreview = null;
+		}
+	}
+
+	function onAppDragEnd(data: { offsetX: number; offsetY: number }) {
 		apps.is_being_dragged = false;
+		
+		// Check if should snap to edge
+		const x = data.offsetX;
+		const screenWidth = window.innerWidth;
+		const snapThreshold = 50;
+		
+		if (x < snapThreshold) {
+			snapWindow('left');
+		} else if (x > screenWidth - snapThreshold) {
+			snapWindow('right');
+		}
+		
+		showSnapPreview = null;
+	}
+	
+	function snapWindow(side: 'left' | 'right') {
+		if (!windowEl) return;
+		
+		// Save current state
+		pre_snap_transform = windowEl.style.transform;
+		pre_snap_size = {
+			width: windowEl.style.width,
+			height: windowEl.style.height
+		};
+		
+		dragging_enabled = false;
+		is_snapped = side;
+		
+		// Snap to half screen
+		const topOffset = 29; // Below menu bar
+		const bottomOffset = 5; // Above dock
+		const height = window.innerHeight - topOffset - bottomOffset;
+		const width = window.innerWidth / 2;
+		
+		windowEl.setAttribute('style', `
+			position: fixed;
+			top: ${topOffset}px;
+			left: ${side === 'left' ? 0 : width}px;
+			width: ${width}px;
+			height: ${height}px;
+			z-index: ${apps.z_indices[app_id]};
+			border-radius: ${side === 'left' ? '0 0.75rem 0.75rem 0' : '0.75rem 0 0 0.75rem'};
+			transition: all 0.3s ease;
+		`);
+	}
+	
+	function restoreFromSnap() {
+		if (!windowEl || !is_snapped) return;
+		
+		dragging_enabled = true;
+		is_snapped = null;
+		
+		// Restore previous size and position
+		windowEl.setAttribute('style', `
+			position: absolute;
+			transform: ${pre_snap_transform || 'none'};
+			width: ${pre_snap_size?.width || `${+width / remModifier}rem`};
+			height: ${pre_snap_size?.height || `${+height / remModifier}rem`};
+			z-index: ${apps.z_indices[app_id]};
+			border-radius: 0.75rem;
+		`);
 	}
 
 	onMount(() => {
