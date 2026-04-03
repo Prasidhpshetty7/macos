@@ -354,4 +354,39 @@
 		/* Don't hide immediately - let animation play */
 		pointer-events: none;
 	}
+	
+	:global(.snap-preview) {
+		position: fixed;
+		top: 29px;
+		width: 50%;
+		height: calc(100vh - 34px);
+		background: rgba(0, 122, 255, 0.2);
+		border: 3px solid rgba(0, 122, 255, 0.6);
+		pointer-events: none;
+		z-index: 99999;
+		animation: snapFadeIn 0.2s ease;
+	}
+	
+	:global(.snap-preview.left) {
+		left: 0;
+		border-radius: 0 12px 12px 0;
+		border-left: none;
+	}
+	
+	:global(.snap-preview.right) {
+		right: 0;
+		border-radius: 12px 0 0 12px;
+		border-right: none;
+	}
+	
+	@keyframes snapFadeIn {
+		from {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
 </style>
