@@ -38,6 +38,12 @@
 	
 	// Show snap preview zones
 	let showSnapPreview = $state<'left' | 'right' | null>(null);
+	
+	// Shake detection for minimize others
+	let shakeStartX = 0;
+	let shakeCount = 0;
+	let shakeTimer: number;
+	let lastShakeTime = 0;
 
 	const { height, width } = apps_config[app_id];
 
