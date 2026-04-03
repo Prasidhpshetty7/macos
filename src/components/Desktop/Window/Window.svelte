@@ -30,8 +30,14 @@
 
 	let is_maximized = $state(false);
 	let minimized_transform = $state<string>();
+	let is_snapped = $state<'left' | 'right' | null>(null);
+	let pre_snap_transform = $state<string>();
+	let pre_snap_size = $state<{ width: string; height: string }>();
 
 	let windowEl = $state<HTMLElement>();
+	
+	// Show snap preview zones
+	let showSnapPreview = $state<'left' | 'right' | null>(null);
 
 	const { height, width } = apps_config[app_id];
 
