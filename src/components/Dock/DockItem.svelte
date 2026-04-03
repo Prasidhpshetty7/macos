@@ -134,6 +134,7 @@
 
 		// For the bounce animation
 		const isAppAlreadyOpen = apps.open[app_id];
+		const wasMinimized = apps.minimized[app_id];
 
 		apps.open[app_id] = true;
 		apps.running[app_id] = true;
@@ -142,6 +143,46 @@
 		
 		// Assign window to current space when opening
 		spacesManager.assignWindowToCurrentSpace(app_id);
+
+		// If restoring from minimized, trigger genie restore animation
+		if (wasMinimized) {
+			// Wait for window to be visible, then animate
+			await new Promise(resolve => setTimeout(resolve, 50));
+			const windowEl = document.querySelector(`[data-app-id="${app_id}"]`) as HTMLElement;
+			const dockIcon = document.querySelector(`.dock-open-app-button.${app_id}`);
+			
+			if (windowEl && dockIcon) {
+				const iconRect = dockIcon.getBoundingClientRect();
+				const finalRect = windowEl.getBoundingClientRect();
+				
+				// Start from dock icon position
+				const scaleX = iconRect.width / finalRect.width;
+				const scaleY = iconRect.height / finalRect.height;
+				const translateX = iconRect.left - finalRect.left + (iconRect.width - finalRect.width) / 2;
+				const translateY = iconRect.top - finalRect.top + (iconRect.height - finalRect.height) / 2;
+				
+				// Set initial state (at dock icon)
+				windowEl.style.transition = 'none';
+				windowEl.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+				windowEl.style.opacity = '0';
+				
+				// Force reflow
+				windowEl.offsetHeight;
+				
+				// Animate to normal position
+				windowEl.style.transition = 'all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)';
+				windowEl.style.transform = '';
+				windowEl.style.opacity = '1';
+				
+				// Clean up after animation
+				setTimeout(() => {
+					if (windowEl) {
+						windowEl.style.transition = '';
+					}
+				}, 500);
+			}
+			return;
+		}
 
 		if (isAppAlreadyOpen) return;
 

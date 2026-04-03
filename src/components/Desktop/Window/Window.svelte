@@ -120,9 +120,41 @@
 	}
 
 	function minimizeApp() {
-		// Hide the window but keep it mounted (for iframe state preservation)
-		apps.open[app_id] = false;
-		apps.minimized[app_id] = true;
+		// Get dock icon position for genie effect
+		const dockIcon = document.querySelector(`.dock-open-app-button.${app_id}`);
+		
+		if (dockIcon && windowEl) {
+			const windowRect = windowEl.getBoundingClientRect();
+			const iconRect = dockIcon.getBoundingClientRect();
+			
+			// Calculate the transform needed to move window to dock icon
+			const scaleX = iconRect.width / windowRect.width;
+			const scaleY = iconRect.height / windowRect.height;
+			const translateX = iconRect.left - windowRect.left + (iconRect.width - windowRect.width) / 2;
+			const translateY = iconRect.top - windowRect.top + (iconRect.height - windowRect.height) / 2;
+			
+			// Apply genie effect animation
+			windowEl.style.transition = 'all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)';
+			windowEl.style.transformOrigin = 'bottom center';
+			windowEl.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
+			windowEl.style.opacity = '0';
+			
+			// After animation, hide the window
+			setTimeout(() => {
+				apps.open[app_id] = false;
+				apps.minimized[app_id] = true;
+				// Reset styles
+				if (windowEl) {
+					windowEl.style.transition = '';
+					windowEl.style.transform = minimized_transform || '';
+					windowEl.style.opacity = '1';
+				}
+			}, 500);
+		} else {
+			// Fallback if dock icon not found
+			apps.open[app_id] = false;
+			apps.minimized[app_id] = true;
+		}
 		// apps.running stays true
 	}
 
@@ -224,8 +256,7 @@
 	}
 
 	.container.minimized {
-		visibility: hidden;
+		/* Don't hide immediately - let animation play */
 		pointer-events: none;
-		opacity: 0;
 	}
 </style>
