@@ -287,7 +287,11 @@
 		bounds(BoundsFrom.viewport({ bottom: -6000, top: 27.2, left: -6000, right: -6000 })),
 		disabledComp,
 		position({ default: defaultPosition }),
-		events({ onDragStart: onAppDragStart, onDragEnd: onAppDragEnd }),
+		events({ 
+			onDragStart: onAppDragStart, 
+			onDrag: onAppDrag,
+			onDragEnd: onAppDragEnd 
+		}),
 	])}
 	onclick={focusApp}
 	onkeydown={() => {}}
