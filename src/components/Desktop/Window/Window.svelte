@@ -317,7 +317,28 @@
 		if (apps.fullscreen[app_id] && !is_maximized) {
 			setTimeout(() => maximizeApp(), 50);
 		}
+		
+		// Add double-click handler to drag handle for maximize/restore
+		const dragHandle = windowEl?.querySelector('.app-window-drag-handle');
+		if (dragHandle) {
+			dragHandle.addEventListener('dblclick', handleTitleBarDoubleClick);
+		}
+		
+		return () => {
+			const dragHandle = windowEl?.querySelector('.app-window-drag-handle');
+			if (dragHandle) {
+				dragHandle.removeEventListener('dblclick', handleTitleBarDoubleClick);
+			}
+		};
 	});
+	
+	function handleTitleBarDoubleClick() {
+		if (is_snapped) {
+			restoreFromSnap();
+		} else {
+			maximizeApp();
+		}
+	}
 </script>
 
 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
