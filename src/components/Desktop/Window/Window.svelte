@@ -145,6 +145,9 @@
 			const translateX = iconRect.left - windowRect.left + (iconRect.width - windowRect.width) / 2;
 			const translateY = iconRect.top - windowRect.top + (iconRect.height - windowRect.height) / 2;
 			
+			// Mark as minimized first but keep open for animation
+			apps.minimized[app_id] = true;
+			
 			// Apply genie effect animation
 			windowEl.style.transition = 'all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)';
 			windowEl.style.transformOrigin = 'bottom center';
@@ -154,8 +157,7 @@
 			// After animation, hide the window
 			setTimeout(() => {
 				apps.open[app_id] = false;
-				apps.minimized[app_id] = true;
-				// Reset styles
+				// Reset styles for next time
 				if (windowEl) {
 					windowEl.style.transition = '';
 					windowEl.style.transform = minimized_transform || '';
@@ -422,9 +424,15 @@
 	}
 
 	.container.minimized {
-		/* Don't hide immediately - let animation play */
+		/* Keep visible during animation */
 		pointer-events: none;
 	}
+	
+	.container.minimized:not([style*="opacity: 0"]) {
+		/* Only hide after animation completes */
+		visibility: visible;
+	}
+
 	
 	:global(.snap-preview) {
 		position: fixed;
