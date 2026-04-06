@@ -428,6 +428,23 @@
 		/* Only hide after animation completes */
 		visibility: visible;
 	}
+	
+	.container.minimizing {
+		animation: minimizeToIcon 0.5s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+		transform-origin: bottom center;
+	}
+	
+	@keyframes minimizeToIcon {
+		from {
+			transform: translate(0, 0) scale(1, 1);
+			opacity: 1;
+		}
+		to {
+			transform: translate(var(--minimize-x), var(--minimize-y)) scale(var(--minimize-scale-x), var(--minimize-scale-y));
+			opacity: 0;
+		}
+	}
+
 
 	
 	:global(.snap-preview) {
