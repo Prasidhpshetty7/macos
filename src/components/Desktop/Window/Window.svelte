@@ -145,24 +145,20 @@
 			const translateX = iconRect.left - windowRect.left + (iconRect.width - windowRect.width) / 2;
 			const translateY = iconRect.top - windowRect.top + (iconRect.height - windowRect.height) / 2;
 			
-			// Mark as minimized first but keep open for animation
-			apps.minimized[app_id] = true;
+			// Set CSS variables for animation
+			windowEl.style.setProperty('--minimize-x', `${translateX}px`);
+			windowEl.style.setProperty('--minimize-y', `${translateY}px`);
+			windowEl.style.setProperty('--minimize-scale-x', `${scaleX}`);
+			windowEl.style.setProperty('--minimize-scale-y', `${scaleY}`);
 			
-			// Apply genie effect animation
-			windowEl.style.transition = 'all 0.5s cubic-bezier(0.4, 0.0, 0.2, 1)';
-			windowEl.style.transformOrigin = 'bottom center';
-			windowEl.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scaleX}, ${scaleY})`;
-			windowEl.style.opacity = '0';
+			// Add minimizing class to trigger animation
+			windowEl.classList.add('minimizing');
 			
 			// After animation, hide the window
 			setTimeout(() => {
+				apps.minimized[app_id] = true;
 				apps.open[app_id] = false;
-				// Reset styles for next time
-				if (windowEl) {
-					windowEl.style.transition = '';
-					windowEl.style.transform = minimized_transform || '';
-					windowEl.style.opacity = '1';
-				}
+				windowEl?.classList.remove('minimizing');
 			}, 500);
 		} else {
 			// Fallback if dock icon not found
