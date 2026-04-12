@@ -44,6 +44,7 @@
 	<AboutFinder />
 	<Launchpad />
 	<MissionControl />
+	<HotCorners />
 
 	<ContextMenu target_element={mainEl} />
 </div>
