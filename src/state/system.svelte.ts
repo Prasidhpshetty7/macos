@@ -147,3 +147,28 @@ export function boot() {
 		systemState.state = 'running';
 	}, 5000);
 }
+
+// System appearance (dark mode)
+export const system = persisted('macos:appearance', {
+	darkMode: false,
+	wifi: true,
+	bluetooth: true,
+});
+
+export function toggleDarkMode() {
+	system.darkMode = !system.darkMode;
+	
+	// Apply dark mode class to body
+	if (system.darkMode) {
+		document.documentElement.classList.add('dark-mode');
+	} else {
+		document.documentElement.classList.remove('dark-mode');
+	}
+}
+
+// Initialize dark mode on load
+if (typeof window !== 'undefined') {
+	if (system.darkMode) {
+		document.documentElement.classList.add('dark-mode');
+	}
+}
