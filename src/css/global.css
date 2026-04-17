@@ -25,6 +25,25 @@ body {
 		background 150ms ease-in;
 }
 
+/* Dark Mode Styles */
+html.dark-mode {
+	color-scheme: dark;
+}
+
+html.dark-mode body {
+	background: #1a1a1a;
+	color: #e0e0e0;
+}
+
+html.dark-mode * {
+	transition:
+		background-color 300ms ease-in-out,
+		background 300ms ease-in-out,
+		color 300ms ease-in-out,
+		border-color 300ms ease-in-out;
+}
+
+
 *:focus {
 	outline: none;
 }
