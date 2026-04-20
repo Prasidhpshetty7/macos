@@ -1,9 +1,6 @@
 <script lang="ts">
-	import html2canvas from 'html2canvas';
-	
 	let showScreenshotUI = $state(false);
-	let screenshotMode = $state<'full' | 'selection' | 'window' | null>(null);
-	let isCapturing = $state(false);
+	let screenshotMode = $state<'full' | 'selection' | null>(null);
 	let selectionStart = $state<{ x: number; y: number } | null>(null);
 	let selectionEnd = $state<{ x: number; y: number } | null>(null);
 	let isSelecting = $state(false);
@@ -22,10 +19,10 @@
 		const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
 		const cmdKey = isMac ? e.metaKey : e.ctrlKey;
 		
-		// Cmd+Shift+3 - Full screen screenshot
+		// Cmd+Shift+3 - Full screen screenshot (simulated)
 		if (cmdKey && e.shiftKey && e.key === '3') {
 			e.preventDefault();
-			captureFullScreen();
+			simulateScreenshot('full');
 		}
 		
 		// Cmd+Shift+4 - Selection screenshot
@@ -46,26 +43,44 @@
 		}
 	}
 	
-	async function captureFullScreen() {
-		isCapturing = true;
-		showScreenshotUI = false;
+	function simulateScreenshot(type: 'full' | 'selection') {
+		// Show camera flash effect
+		const flash = document.createElement('div');
+		flash.style.cssText = `
+			position: fixed;
+			inset: 0;
+			background: white;
+			z-index: 99999;
+			animation: cameraFlash 0.3s ease;
+			pointer-events: none;
+		`;
+		document.body.appendChild(flash);
 		
-		try {
-			// Wait a moment for UI to hide
-			await new Promise(resolve => setTimeout(resolve, 100));
-			
-			const canvas = await html2canvas(document.body, {
-				allowTaint: true,
-				useCORS: true,
-				logging: false,
-			});
-			
-			downloadScreenshot(canvas);
-		} catch (error) {
-			console.error('Screenshot failed:', error);
-		} finally {
-			isCapturing = false;
+		// Add animation keyframes if not exists
+		if (!document.getElementById('camera-flash-style')) {
+			const style = document.createElement('style');
+			style.id = 'camera-flash-style';
+			style.textContent = `
+				@keyframes cameraFlash {
+					0% { opacity: 0; }
+					50% { opacity: 0.8; }
+					100% { opacity: 0; }
+				}
+			`;
+			document.head.appendChild(style);
 		}
+		
+		setTimeout(() => flash.remove(), 300);
+		
+		// Play camera sound (if available)
+		try {
+			const audio = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGGS57OihUBELTKXh8bllHAU2jdXvzn0vBSh+zPDajzsKElyx6OyrWBUIQ5zd8sFuJAUuhM/z2Ik2CBdju+zooVARC0yl4fG5ZRwFNo3V7859LwUofszw2o87ChJcsejsq1gVCEOc3fLBbiQFL4TP89iJNggXY7vs6KFQEQtMpeHxuWUcBTaN1e/OfS8FKH7M8NqPOwsSXLHo7KtYFQhDnN3ywW4kBS+Ez/PYiTYIF2O77OihUBELTKXh8bllHAU2jdXvzn0vBSh+zPDajzsKElyx6OyrWBUIQ5zd8sFuJAUvhM/z2Ik2CBdju+zooVARC0yl4fG5ZRwFNo3V7859LwUofszw2o87ChJcsejsq1gVCEOc3fLBbiQFL4TP89iJNggXY7vs6KFQEQtMpeHxuWUcBTaN1e/OfS8FKH7M8NqPOwsSXLHo7KtYFQhDnN3ywW4kBS+Ez/PYiTYIF2O77OihUBELTKXh8bllHAU2jdXvzn0vBSh+zPDajzsKElyx6OyrWBUIQ5zd8sFuJAUvhM/z2Ik2CBdju+zooVARC0yl4fG5ZRwFNo3V7859LwUofszw2o87ChJcsejsq1gVCEOc3fLBbiQFL4TP89iJNggXY7vs6KFQEQtMpeHxuWUcBTaN1e/OfS8FKH7M8NqPOwsSXLHo7KtYFQhDnN3ywW4kBS+Ez/PYiTYIF2O77OihUBELTKXh8bllHAU2jdXvzn0vBSh+zPDajzsKElyx6OyrWBUIQ5zd8sFuJAUvhM/z2Ik2CBdju+zooVARC0yl4fG5ZRwFNo3V7859LwUofszw2o87ChJcsejsq1gVCEOc3fLBbiQFL4TP89iJNggXY7vs6KFQEQtMpeHxuWUcBTaN1e/OfS8FKH7M8NqPOwsSXLHo7KtYFQhDnN3ywW4kBS+Ez/PYiTYIF2O77OihUBELTKXh8bllHAU2jdXvzn0vBSh+zPDajzsKElyx6OyrWBUIQ5zd8sFuJAUvhM/z2Ik2CBdju+zooVARC0yl4fG5ZRwFNo3V7859LwUofszw2o87ChJcsejsq1gVCEOc3fLBbiQFL4TP8w==');
+			audio.volume = 0.3;
+			audio.play().catch(() => {});
+		} catch (e) {}
+		
+		showNotification(type);
+		cancelScreenshot();
 	}
 	
 	function startSelectionMode() {
@@ -87,7 +102,7 @@
 		selectionEnd = { x: e.clientX, y: e.clientY };
 	}
 	
-	async function handleMouseUp(e: MouseEvent) {
+	function handleMouseUp(e: MouseEvent) {
 		if (!isSelecting || screenshotMode !== 'selection') return;
 		isSelecting = false;
 		
@@ -97,69 +112,27 @@
 			return;
 		}
 		
-		isCapturing = true;
-		
-		try {
-			// Capture the full screen first
-			const canvas = await html2canvas(document.body, {
-				allowTaint: true,
-				useCORS: true,
-				logging: false,
-			});
-			
-			// Create a new canvas with just the selected area
-			const croppedCanvas = document.createElement('canvas');
-			croppedCanvas.width = rect.width;
-			croppedCanvas.height = rect.height;
-			const ctx = croppedCanvas.getContext('2d');
-			
-			if (ctx) {
-				ctx.drawImage(
-					canvas,
-					rect.left, rect.top, rect.width, rect.height,
-					0, 0, rect.width, rect.height
-				);
-			}
-			
-			downloadScreenshot(croppedCanvas);
-		} catch (error) {
-			console.error('Screenshot failed:', error);
-		} finally {
-			cancelScreenshot();
-			isCapturing = false;
-		}
+		simulateScreenshot('selection');
 	}
 	
-	function downloadScreenshot(canvas: HTMLCanvasElement) {
-		canvas.toBlob((blob) => {
-			if (!blob) return;
-			
-			const url = URL.createObjectURL(blob);
-			const a = document.createElement('a');
-			a.href = url;
-			a.download = `Screenshot ${new Date().toLocaleString()}.png`;
-			a.click();
-			URL.revokeObjectURL(url);
-			
-			// Show notification
-			showNotification();
-		});
-	}
-	
-	function showNotification() {
-		// Create a simple notification
+	function showNotification(type: 'full' | 'selection') {
 		const notification = document.createElement('div');
-		notification.textContent = 'Screenshot saved to Downloads';
+		const message = type === 'full' 
+			? 'Screenshot saved to Desktop' 
+			: 'Screenshot saved to Desktop';
+		notification.textContent = message;
 		notification.style.cssText = `
 			position: fixed;
 			top: 50px;
 			right: 20px;
-			background: rgba(0, 0, 0, 0.8);
+			background: rgba(0, 0, 0, 0.85);
 			color: white;
-			padding: 12px 20px;
-			border-radius: 8px;
-			font-size: 14px;
+			padding: 14px 24px;
+			border-radius: 10px;
+			font-size: 13px;
+			font-weight: 500;
 			z-index: 99999;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 			animation: slideIn 0.3s ease;
 		`;
 		document.body.appendChild(notification);
@@ -167,7 +140,7 @@
 		setTimeout(() => {
 			notification.style.animation = 'slideOut 0.3s ease';
 			setTimeout(() => notification.remove(), 300);
-		}, 2000);
+		}, 2500);
 	}
 	
 	function cancelScreenshot() {
@@ -211,7 +184,7 @@
 {#if showScreenshotUI}
 	<div class="screenshot-ui">
 		<div class="screenshot-panel">
-			<button class="screenshot-btn" onclick={captureFullScreen}>
+			<button class="screenshot-btn" onclick={() => simulateScreenshot('full')}>
 				<svg viewBox="0 0 24 24" fill="currentColor">
 					<rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" fill="none" stroke-width="2"/>
 				</svg>
@@ -229,12 +202,6 @@
 				<span>Close</span>
 			</button>
 		</div>
-	</div>
-{/if}
-
-{#if isCapturing}
-	<div class="capturing-overlay">
-		<div class="capturing-message">Capturing screenshot...</div>
 	</div>
 {/if}
 
