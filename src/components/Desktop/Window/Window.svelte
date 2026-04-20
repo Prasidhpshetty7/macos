@@ -311,6 +311,24 @@
 		windowEl.style.width = `${+width / remModifier}rem`;
 		windowEl.style.height = `${+height / remModifier}rem`;
 		
+		// Add window open animation
+		windowEl.style.opacity = '0';
+		windowEl.style.transform = 'scale(0.95)';
+		
+		requestAnimationFrame(() => {
+			if (windowEl) {
+				windowEl.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+				windowEl.style.opacity = '1';
+				windowEl.style.transform = 'scale(1)';
+				
+				setTimeout(() => {
+					if (windowEl) {
+						windowEl.style.transition = '';
+					}
+				}, 200);
+			}
+		});
+		
 		// If app should open fullscreen (like Drift), maximize it
 		if (apps.fullscreen[app_id] && !is_maximized) {
 			setTimeout(() => maximizeApp(), 50);
