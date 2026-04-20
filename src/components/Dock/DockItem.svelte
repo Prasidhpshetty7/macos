@@ -184,9 +184,10 @@
 			return;
 		}
 
-		if (isAppAlreadyOpen) return;
-
-		bounceEffect();
+		// Bounce animation when opening app (not already open)
+		if (!isAppAlreadyOpen) {
+			bounceEffect();
+		}
 	}
 
 	onDestroy(() => {
