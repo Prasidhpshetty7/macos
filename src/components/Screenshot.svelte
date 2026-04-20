@@ -337,26 +337,4 @@
 		background: rgba(40, 40, 40, 0.95);
 		color: #fff;
 	}
-	
-	@keyframes slideIn {
-		from {
-			opacity: 0;
-			transform: translateX(100px);
-		}
-		to {
-			opacity: 1;
-			transform: translateX(0);
-		}
-	}
-	
-	@keyframes slideOut {
-		from {
-			opacity: 1;
-			transform: translateX(0);
-		}
-		to {
-			opacity: 0;
-			transform: translateX(100px);
-		}
-	}
 </style>

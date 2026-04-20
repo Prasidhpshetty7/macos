@@ -14,6 +14,7 @@
 	import MissionControl from '../MissionControl.svelte';
 	import HotCorners from '../HotCorners.svelte';
 	import KeyboardShortcuts from '../KeyboardShortcuts.svelte';
+	import Screenshot from '../Screenshot.svelte';
 
 	const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
@@ -47,6 +48,7 @@
 	<MissionControl />
 	<HotCorners />
 	<KeyboardShortcuts />
+	<Screenshot />
 
 	<ContextMenu target_element={mainEl} />
 </div>
