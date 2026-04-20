@@ -54,6 +54,10 @@
 	{#await import('./SystemPreferences/SystemPreferences.svelte') then { default: SystemPreferences }}
 		<SystemPreferences />
 	{/await}
+{:else if app_id === 'terminal'}
+	{#await import('./Terminal/Terminal.svelte') then { default: Terminal }}
+		<Terminal {app_id} />
+	{/await}
 {:else}
 	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}
 		<AppStore {app_id} />
