@@ -136,6 +136,13 @@ const drift = create_app_config({
 	hide_from_dock: true,
 });
 
+const terminal = create_app_config({
+	title: 'Terminal',
+	resizable: true,
+	height: 500,
+	width: 700,
+});
+
 export const apps_config = {
 	finder,
 	launchpad,
@@ -150,6 +157,7 @@ export const apps_config = {
 	music,
 	chess,
 	drift,
+	terminal,
 
 	'purus-twitter': purusTwitter,
 	'view-source': viewSource,
