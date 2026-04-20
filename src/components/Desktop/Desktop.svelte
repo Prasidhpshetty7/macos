@@ -13,6 +13,7 @@
 	import Launchpad from '../Launchpad.svelte';
 	import MissionControl from '../MissionControl.svelte';
 	import HotCorners from '../HotCorners.svelte';
+	import KeyboardShortcuts from '../KeyboardShortcuts.svelte';
 
 	const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 
@@ -45,6 +46,7 @@
 	<Launchpad />
 	<MissionControl />
 	<HotCorners />
+	<KeyboardShortcuts />
 
 	<ContextMenu target_element={mainEl} />
 </div>
