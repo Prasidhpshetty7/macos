@@ -50,6 +50,7 @@
 	<HotCorners />
 	<KeyboardShortcuts />
 	<Screenshot />
+	<QuickLook />
 
 	<ContextMenu target_element={mainEl} />
 </div>
