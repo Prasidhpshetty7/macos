@@ -46,6 +46,7 @@
 	let navigationHistory = $state<string[]>(['desktop']);
 	let historyIndex = $state(0);
 	let currentFolder = $state<DesktopFile | null>(null);
+	let selectedFileId = $state<string | null>(null);
 	
 	// Check if a folder was requested to open
 	$effect(() => {
