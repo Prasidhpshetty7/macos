@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { desktopFiles } from '🍎/state/desktop-files.svelte';
-	
 	let showQuickLook = $state(false);
 	let selectedFile = $state<any>(null);
 	let selectedIndex = $state(0);
