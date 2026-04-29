@@ -693,6 +693,11 @@
 		border-color: rgba(0, 122, 255, 0.3);
 	}
 	
+	.file-item.selected {
+		background: rgba(0, 122, 255, 0.15);
+		border-color: rgba(0, 122, 255, 0.4);
+	}
+	
 	.file-icon {
 		width: 56px;
 		height: 56px;
