@@ -178,7 +178,29 @@
 		const item = [...favorites, ...tags].find(i => i.id === id);
 		return item?.name || 'Finder';
 	}
+	
+	function handleKeyDown(e: KeyboardEvent) {
+		// Quick Look with Space key
+		if (e.key === ' ' && selectedFileId) {
+			e.preventDefault();
+			const file = desktopFilesState.files.find(f => f.id === selectedFileId);
+			if (file) {
+				window.dispatchEvent(new CustomEvent('quicklook', {
+					detail: {
+						file,
+						allFiles: desktopFilesState.files
+					}
+				}));
+			}
+		}
+	}
+	
+	function handleFileClick(fileId: string) {
+		selectedFileId = fileId;
+	}
 </script>
+
+<svelte:window onkeydown={handleKeyDown} />
 
 <section class="finder-app">
 	<!-- Sidebar -->
