@@ -15,6 +15,7 @@
 	import HotCorners from '../HotCorners.svelte';
 	import KeyboardShortcuts from '../KeyboardShortcuts.svelte';
 	import Screenshot from '../Screenshot.svelte';
+	import QuickLook from '../QuickLook.svelte';
 
 	const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform);
 

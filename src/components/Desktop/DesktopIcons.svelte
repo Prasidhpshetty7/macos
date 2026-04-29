@@ -119,9 +119,33 @@
 		}
 		selectedFile = file.id;
 	}
+	
+	function handleKeyDown(e: KeyboardEvent) {
+		// Quick Look with Space key
+		if (e.key === ' ' && selectedFile && !desktopFilesState.editingFileId) {
+			e.preventDefault();
+			const file = desktopFilesState.files.find(f => f.id === selectedFile);
+			if (file) {
+				// Dispatch custom event for Quick Look
+				window.dispatchEvent(new CustomEvent('quicklook', {
+					detail: {
+						file,
+						allFiles: desktopFilesState.files
+					}
+				}));
+			}
+		}
+		// Delete key
+		else if ((e.key === 'Delete' || e.key === 'Backspace') && selectedFile && !desktopFilesState.editingFileId) {
+			const file = desktopFilesState.files.find(f => f.id === selectedFile);
+			if (file && file.type !== 'app') {
+				handleDelete(file);
+			}
+		}
+	}
 </script>
 
-<svelte:window onclick={closeContextMenu} />
+<svelte:window onclick={closeContextMenu} onkeydown={handleKeyDown} />
 
 <div class="desktop-icons">
 	{#each desktopFilesState.files as file}
