@@ -286,7 +286,12 @@
 			{:else if activeSection === 'desktop'}
 				<div class="files-grid" class:list-view={viewMode === 'list'}>
 					{#each desktopFilesState.files as file}
-						<button class="file-item" ondblclick={() => openDesktopFile(file)}>
+						<button 
+							class="file-item" 
+							class:selected={selectedFileId === file.id}
+							onclick={() => handleFileClick(file.id)}
+							ondblclick={() => openDesktopFile(file)}
+						>
 							<div class="file-icon">
 								{#if file.type === 'folder'}
 									<svg viewBox="0 0 80 64" fill="none" class="folder-svg">
