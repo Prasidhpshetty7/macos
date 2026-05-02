@@ -5,6 +5,9 @@
 	let contextMenuPos = $state({ x: 0, y: 0 });
 	let showTrashWindow = $state(false);
 	
+	// Derived value for trash full state
+	const isFull = $derived(isTrashFull());
+	
 	function handleClick() {
 		showTrashWindow = true;
 	}
@@ -50,13 +53,13 @@
 
 <button 
 	class="trash-bin"
-	class:full={isTrashFull}
+	class:full={isFull}
 	onclick={handleClick}
 	oncontextmenu={handleContextMenu}
 	aria-label="Trash"
 >
 	<div class="trash-icon">
-		{#if isTrashFull}
+		{#if isFull}
 			<!-- Full Trash Icon -->
 			<svg viewBox="0 0 64 64" fill="none">
 				<defs>
@@ -114,7 +117,7 @@
 			</svg>
 			Open
 		</button>
-		{#if isTrashFull}
+		{#if isFull}
 			<button onclick={handleEmptyTrash} class="danger">
 				<svg viewBox="0 0 24 24" fill="currentColor">
 					<path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
@@ -135,7 +138,7 @@
 					<button class="dot green"></button>
 				</div>
 				<h3>Trash</h3>
-				{#if isTrashFull}
+				{#if isFull}
 					<button class="empty-btn" onclick={handleEmptyTrash}>Empty</button>
 				{/if}
 			</div>

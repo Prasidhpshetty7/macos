@@ -23,4 +23,6 @@ export function emptyTrash() {
 }
 
 // Check if trash has items
-export const isTrashFull = $derived(trashState.items.length > 0);
+export function isTrashFull() {
+	return trashState.items.length > 0;
+}
