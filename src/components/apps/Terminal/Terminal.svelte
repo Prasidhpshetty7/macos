@@ -119,6 +119,156 @@
 				}
 				break;
 				
+			case 'hostname':
+				output.push({ type: 'output', text: 'MacBook-Pro.local' });
+				break;
+				
+			case 'uptime':
+				const uptime = Math.floor(performance.now() / 1000);
+				const hours = Math.floor(uptime / 3600);
+				const minutes = Math.floor((uptime % 3600) / 60);
+				output.push({ type: 'output', text: `up ${hours}:${minutes.toString().padStart(2, '0')}` });
+				break;
+				
+			case 'df':
+				output.push({ type: 'output', text: 'Filesystem     Size   Used  Avail  Use%' });
+				output.push({ type: 'output', text: '/dev/disk1    500G   250G   250G   50%' });
+				break;
+				
+			case 'top':
+				output.push({ type: 'output', text: 'Processes: 421 total, 3 running' });
+				output.push({ type: 'output', text: 'CPU: 15% user, 5% system, 80% idle' });
+				output.push({ type: 'output', text: 'Memory: 8GB used (16GB total)' });
+				break;
+				
+			case 'history':
+				commandHistory.forEach((cmd, i) => {
+					output.push({ type: 'output', text: `  ${i + 1}  ${cmd}` });
+				});
+				break;
+				
+			case 'mkdir':
+				if (args.length === 0) {
+					output.push({ type: 'error', text: 'mkdir: missing operand' });
+				} else {
+					output.push({ type: 'output', text: `Created directory: ${args[0]}` });
+				}
+				break;
+				
+			case 'touch':
+				if (args.length === 0) {
+					output.push({ type: 'error', text: 'touch: missing file operand' });
+				} else {
+					output.push({ type: 'output', text: `Created file: ${args[0]}` });
+				}
+				break;
+				
+			case 'rm':
+				if (args.length === 0) {
+					output.push({ type: 'error', text: 'rm: missing operand' });
+				} else {
+					output.push({ type: 'output', text: `Removed: ${args[0]}` });
+				}
+				break;
+				
+			case 'cp':
+				if (args.length < 2) {
+					output.push({ type: 'error', text: 'cp: missing destination' });
+				} else {
+					output.push({ type: 'output', text: `Copied ${args[0]} to ${args[1]}` });
+				}
+				break;
+				
+			case 'mv':
+				if (args.length < 2) {
+					output.push({ type: 'error', text: 'mv: missing destination' });
+				} else {
+					output.push({ type: 'output', text: `Moved ${args[0]} to ${args[1]}` });
+				}
+				break;
+				
+			case 'grep':
+				if (args.length === 0) {
+					output.push({ type: 'error', text: 'grep: missing pattern' });
+				} else {
+					output.push({ type: 'output', text: `Searching for: ${args[0]}` });
+				}
+				break;
+				
+			case 'wc':
+				if (args.length === 0) {
+					output.push({ type: 'error', text: 'wc: missing file operand' });
+				} else {
+					output.push({ type: 'output', text: '  5  25  150 ' + args[0] });
+				}
+				break;
+				
+			case 'sort':
+				output.push({ type: 'output', text: 'Sorting...' });
+				break;
+				
+			case 'ping':
+				if (args.length === 0) {
+					output.push({ type: 'error', text: 'ping: missing host operand' });
+				} else {
+					output.push({ type: 'output', text: `PING ${args[0]} (93.184.216.34): 56 data bytes` });
+					output.push({ type: 'output', text: '64 bytes from 93.184.216.34: icmp_seq=0 ttl=56 time=12.3 ms' });
+				}
+				break;
+				
+			case 'curl':
+				if (args.length === 0) {
+					output.push({ type: 'error', text: 'curl: no URL specified' });
+				} else {
+					output.push({ type: 'output', text: `Fetching ${args[0]}...` });
+					output.push({ type: 'output', text: 'HTTP/1.1 200 OK' });
+				}
+				break;
+				
+			case 'ifconfig':
+				output.push({ type: 'output', text: 'en0: flags=8863<UP,BROADCAST,SMART,RUNNING>' });
+				output.push({ type: 'output', text: '\tinet 192.168.1.100 netmask 0xffffff00' });
+				break;
+				
+			case 'cowsay':
+				const message = args.join(' ') || 'Hello!';
+				output.push({ type: 'output', text: ' ' + '_'.repeat(message.length + 2) });
+				output.push({ type: 'output', text: '< ' + message + ' >' });
+				output.push({ type: 'output', text: ' ' + '-'.repeat(message.length + 2) });
+				output.push({ type: 'output', text: '        \\   ^__^' });
+				output.push({ type: 'output', text: '         \\  (oo)\\_______' });
+				output.push({ type: 'output', text: '            (__)\\       )\\/\\' });
+				output.push({ type: 'output', text: '                ||----w |' });
+				output.push({ type: 'output', text: '                ||     ||' });
+				break;
+				
+			case 'figlet':
+				const text = args.join(' ') || 'Hello';
+				output.push({ type: 'output', text: ' _   _      _ _       ' });
+				output.push({ type: 'output', text: '| | | | ___| | | ___  ' });
+				output.push({ type: 'output', text: '| |_| |/ _ \\ | |/ _ \\ ' });
+				output.push({ type: 'output', text: '|  _  |  __/ | | (_) |' });
+				output.push({ type: 'output', text: '|_| |_|\\___|_|_|\\___/ ' });
+				break;
+				
+			case 'fortune':
+				const fortunes = [
+					'The best time to plant a tree was 20 years ago. The second best time is now.',
+					'You will have a pleasant surprise.',
+					'Good things come to those who code.',
+					'A bug in the code is worth two in the documentation.',
+					'The Mac is the best computer ever made.',
+				];
+				const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+				output.push({ type: 'output', text: randomFortune });
+				break;
+				
+			case 'matrix':
+				output.push({ type: 'output', text: '01101101 01100001 01100011 01001111 01010011' });
+				output.push({ type: 'output', text: '01110111 01100101 01100010 00100000 01101001' });
+				output.push({ type: 'output', text: '01110011 00100000 01100001 01110111 01100101' });
+				break;
+				
 			default:
 				output.push({ type: 'error', text: `zsh: command not found: ${command}` });
 		}
@@ -156,11 +306,19 @@
 			}
 		} else if (e.key === 'Tab') {
 			e.preventDefault();
-			// Basic tab completion
-			const commands = ['help', 'ls', 'cd', 'pwd', 'cat', 'echo', 'clear', 'date', 'whoami', 'uname'];
+			// Enhanced tab completion
+			const commands = [
+				'help', 'ls', 'cd', 'pwd', 'cat', 'echo', 'clear', 'date', 'whoami', 
+				'uname', 'hostname', 'uptime', 'df', 'top', 'history',
+				'mkdir', 'touch', 'rm', 'cp', 'mv', 'grep', 'wc', 'sort',
+				'ping', 'curl', 'ifconfig', 'cowsay', 'figlet', 'fortune', 'matrix'
+			];
 			const matches = commands.filter(cmd => cmd.startsWith(currentCommand));
 			if (matches.length === 1) {
 				currentCommand = matches[0];
+			} else if (matches.length > 1) {
+				output.push({ type: 'output', text: matches.join('  ') });
+				output.push({ type: 'output', text: '' });
 			}
 		}
 	}
