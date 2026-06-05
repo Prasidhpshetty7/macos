@@ -50,15 +50,16 @@
 		switch (command) {
 			case 'help':
 				output.push({ type: 'output', text: 'Available commands:' });
-				output.push({ type: 'output', text: '  ls       - List directory contents' });
-				output.push({ type: 'output', text: '  cd       - Change directory' });
-				output.push({ type: 'output', text: '  pwd      - Print working directory' });
-				output.push({ type: 'output', text: '  cat      - Display file contents' });
-				output.push({ type: 'output', text: '  echo     - Print text' });
-				output.push({ type: 'output', text: '  clear    - Clear terminal' });
-				output.push({ type: 'output', text: '  date     - Show current date/time' });
-				output.push({ type: 'output', text: '  whoami   - Show current user' });
-				output.push({ type: 'output', text: '  uname    - Show system info' });
+				output.push({ type: 'output', text: '  File System:' });
+				output.push({ type: 'output', text: '    ls, pwd, cd, cat, mkdir, touch, rm, cp, mv' });
+				output.push({ type: 'output', text: '  System:' });
+				output.push({ type: 'output', text: '    whoami, hostname, uname, date, uptime, df, top' });
+				output.push({ type: 'output', text: '  Network:' });
+				output.push({ type: 'output', text: '    ping, curl, ifconfig' });
+				output.push({ type: 'output', text: '  Utilities:' });
+				output.push({ type: 'output', text: '    echo, clear, history, grep, wc, sort' });
+				output.push({ type: 'output', text: '  Fun:' });
+				output.push({ type: 'output', text: '    cowsay, figlet, fortune, matrix' });
 				break;
 				
 			case 'ls':
