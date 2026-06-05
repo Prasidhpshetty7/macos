@@ -2,6 +2,7 @@
 	import { system, toggleDarkMode } from '🍎/state/system.svelte';
 	
 	let isOpen = $state(false);
+	let isFullscreen = $state(false);
 	
 	function toggleControlCenter() {
 		isOpen = !isOpen;
@@ -10,9 +11,28 @@
 	function closeControlCenter() {
 		isOpen = false;
 	}
+	
+	function toggleFullscreen() {
+		if (!document.fullscreenElement) {
+			document.documentElement.requestFullscreen().then(() => {
+				isFullscreen = true;
+			}).catch((err) => {
+				console.error('Error attempting to enable fullscreen:', err);
+			});
+		} else {
+			document.exitFullscreen().then(() => {
+				isFullscreen = false;
+			});
+		}
+	}
+	
+	// Listen for fullscreen changes (including ESC key)
+	function handleFullscreenChange() {
+		isFullscreen = !!document.fullscreenElement;
+	}
 </script>
 
-<svelte:window onclick={closeControlCenter} />
+<svelte:window onclick={closeControlCenter} onfullscreenchange={handleFullscreenChange} />
 
 <button class="control-center-btn" onclick={(e) => { e.stopPropagation(); toggleControlCenter(); }} aria-label="Control Center">
 	<svg viewBox="0 0 24 24" fill="currentColor">
@@ -90,6 +110,18 @@
 					{/if}
 				</svg>
 				<span class="cc-label-small">{system.darkMode ? 'Dark' : 'Light'}</span>
+			</button>
+			
+			<!-- Fullscreen Toggle -->
+			<button class="cc-tile" class:active={isFullscreen} onclick={toggleFullscreen}>
+				<svg class="cc-icon" viewBox="0 0 24 24" fill="currentColor">
+					{#if isFullscreen}
+						<path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
+					{:else}
+						<path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+					{/if}
+				</svg>
+				<span class="cc-label-small">Full Screen</span>
 			</button>
 		</div>
 		
