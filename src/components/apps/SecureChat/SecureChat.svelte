@@ -83,7 +83,7 @@
 		}
 	});
 	
-	// Authentication function - REAL SUPABASE CONNECTION!
+	// Authentication function - SECURE WITH BCRYPT!
 	async function handleLogin() {
 		if (!username || !password) {
 			loginError = 'Please enter username and password';
@@ -94,37 +94,38 @@
 		loginError = '';
 		
 		try {
-			// Query user from Supabase
-			const { data: users, error } = await supabase
-				.from('users')
-				.select('*')
-				.eq('username', username)
-				.single();
+			// Call secure Edge Function for password verification
+			const response = await fetch(`${SUPABASE_URL}/functions/v1/secure-login`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${SUPABASE_KEY}`
+				},
+				body: JSON.stringify({ username, password })
+			});
 			
-			if (error || !users) {
-				loginError = 'Invalid credentials';
+			const data = await response.json();
+			
+			if (!response.ok || !data.success) {
+				loginError = data.error || 'Invalid credentials';
 				isLoading = false;
 				return;
 			}
 			
-			// In production, verify password hash with bcrypt
-			// For now, we'll use simple check (bcrypt verification requires backend)
-			// The password is already hashed in database, so we trust the username match
-			
-			// Set current user
+			// Set current user from secure response
 			currentUser = {
-				id: users.id,
-				username: users.username,
-				display_name: users.display_name,
+				id: data.user.id,
+				username: data.user.username,
+				display_name: data.user.display_name,
 			};
 			
 			// Load contacts
-			await loadContacts(users.id);
+			await loadContacts(data.user.id);
 			
 			isLoggedIn = true;
 		} catch (error) {
 			console.error('Login error:', error);
-			loginError = 'Invalid credentials';
+			loginError = 'Connection error. Please try again.';
 		} finally {
 			isLoading = false;
 		}
