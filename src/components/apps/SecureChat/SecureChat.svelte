@@ -22,9 +22,9 @@
 	let isTyping = $state(false);
 	let typingTimeout: number;
 	
-	// Supabase config (placeholder - you'll add your credentials)
-	const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-	const SUPABASE_KEY = 'YOUR_SUPABASE_ANON_KEY';
+	// Supabase config - CONNECTED! 🎉
+	const SUPABASE_URL = 'https://jmzyuophywnbshmsqvox.supabase.co';
+	const SUPABASE_KEY = 'sb_publishable_lpY3zQg4UDUM0_mo2Nfl8A_wEqKq460';
 	
 	// Security: Detect and block DevTools
 	function blockDevTools() {
