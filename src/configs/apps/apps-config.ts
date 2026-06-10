@@ -144,7 +144,7 @@ const terminal = create_app_config({
 });
 
 const securechat = create_app_config({
-	title: 'Messages',
+	title: 'CrimeChat',
 	resizable: true,
 	height: 600,
 	width: 900,
