@@ -87,20 +87,57 @@
 		
 		try {
 			// TODO: Connect to Supabase authentication
-			// For now, temporary mock
+			// For now, temporary mock with the 3 users
 			await new Promise(resolve => setTimeout(resolve, 800));
 			
-			// Mock user
-			currentUser = {
-				id: '1',
-				username: username,
+			// Mock user database with anonymous display names
+			const mockUsers = {
+				'Hacker9435': {
+					id: '1',
+					username: 'Hacker9435',
+					display_name: 'You',
+					contacts: [
+						{ id: '2', username: 'Techie2435', display_name: 'AnonymousT', online: true },
+						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: false },
+					]
+				},
+				'Techie2435': {
+					id: '2',
+					username: 'Techie2435',
+					display_name: 'You',
+					contacts: [
+						{ id: '1', username: 'Hacker9435', display_name: 'AnonymousH', online: true },
+						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: false },
+					]
+				},
+				'Joker3242': {
+					id: '3',
+					username: 'Joker3242',
+					display_name: 'You',
+					contacts: [
+						{ id: '1', username: 'Hacker9435', display_name: 'AnonymousH', online: true },
+						{ id: '2', username: 'Techie2435', display_name: 'AnonymousT', online: true },
+					]
+				}
 			};
 			
-			// Mock contacts
-			contacts = [
-				{ id: '2', username: 'friend1', online: true },
-				{ id: '3', username: 'friend2', online: false },
-			];
+			const user = mockUsers[username];
+			
+			if (!user) {
+				loginError = 'Invalid credentials';
+				isLoading = false;
+				return;
+			}
+			
+			// Set current user
+			currentUser = {
+				id: user.id,
+				username: user.username,
+				display_name: user.display_name,
+			};
+			
+			// Set contacts (anonymous names only)
+			contacts = user.contacts;
 			
 			isLoggedIn = true;
 		} catch (error) {
@@ -119,12 +156,11 @@
 		isLoading = true;
 		try {
 			// TODO: Load from Supabase with 24h filter
-			await new Promise(resolve => setTimeout(resolve, 500));
+			// Real-time subscription for instant updates
+			await new Promise(resolve => setTimeout(resolve, 300));
 			
-			messages = [
-				{ id: '1', sender_id: contactId, text: 'Hey!', timestamp: new Date() },
-				{ id: '2', sender_id: currentUser.id, text: 'Hi there!', timestamp: new Date() },
-			];
+			// Start empty - no messages until someone sends
+			messages = [];
 		} finally {
 			isLoading = false;
 		}
@@ -284,8 +320,8 @@
 			<div class="sidebar">
 				<div class="sidebar-header">
 					<div class="user-info">
-						<div class="user-avatar">{currentUser.username[0].toUpperCase()}</div>
-						<span class="user-name">{currentUser.username}</span>
+						<div class="user-avatar">{currentUser.display_name[0].toUpperCase()}</div>
+						<span class="user-name">{currentUser.display_name}</span>
 					</div>
 					<button class="logout-btn" onclick={logout}>
 						<svg viewBox="0 0 24 24" fill="currentColor">
@@ -301,9 +337,9 @@
 							class:active={selectedContact?.id === contact.id}
 							onclick={() => selectContact(contact)}
 						>
-							<div class="contact-avatar">{contact.username[0].toUpperCase()}</div>
+							<div class="contact-avatar">{contact.display_name[0].toUpperCase()}</div>
 							<div class="contact-info">
-								<div class="contact-name">{contact.username}</div>
+								<div class="contact-name">{contact.display_name}</div>
 								<div class="contact-status">
 									<span class="status-dot" class:online={contact.online}></span>
 									{contact.online ? 'Online' : 'Offline'}
@@ -319,9 +355,9 @@
 				{#if selectedContact}
 					<div class="chat-header">
 						<div class="chat-user">
-							<div class="chat-avatar">{selectedContact.username[0].toUpperCase()}</div>
+							<div class="chat-avatar">{selectedContact.display_name[0].toUpperCase()}</div>
 							<div>
-								<div class="chat-user-name">{selectedContact.username}</div>
+								<div class="chat-user-name">{selectedContact.display_name}</div>
 								<div class="chat-status">
 									<span class="status-dot" class:online={selectedContact.online}></span>
 									{selectedContact.online ? 'Online' : 'Offline'}
