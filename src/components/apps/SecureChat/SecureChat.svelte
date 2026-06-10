@@ -98,7 +98,7 @@
 					display_name: 'You',
 					contacts: [
 						{ id: '2', username: 'Techie2435', display_name: 'AnonymousT', online: true },
-						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: false },
+						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: true },
 					]
 				},
 				'Techie2435': {
@@ -107,7 +107,7 @@
 					display_name: 'You',
 					contacts: [
 						{ id: '1', username: 'Hacker9435', display_name: 'AnonymousH', online: true },
-						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: false },
+						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: true },
 					]
 				},
 				'Joker3242': {
