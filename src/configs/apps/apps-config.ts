@@ -143,6 +143,13 @@ const terminal = create_app_config({
 	width: 700,
 });
 
+const securechat = create_app_config({
+	title: 'Messages',
+	resizable: true,
+	height: 600,
+	width: 900,
+});
+
 export const apps_config = {
 	finder,
 	launchpad,
@@ -158,6 +165,7 @@ export const apps_config = {
 	chess,
 	drift,
 	terminal,
+	securechat,
 
 	'purus-twitter': purusTwitter,
 	'view-source': viewSource,
