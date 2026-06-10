@@ -685,6 +685,7 @@
 		width: 100%;
 		height: 100%;
 		background: #000000;
+		padding-top: 28px; /* Space for traffic lights */
 	}
 	
 	.sidebar {
@@ -696,12 +697,13 @@
 	}
 	
 	.sidebar-header {
-		padding: 20px;
+		padding: 16px 20px;
 		background: rgba(16, 185, 129, 0.05);
 		border-bottom: 1px solid rgba(16, 185, 129, 0.1);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		min-height: 70px;
 	}
 	
 	.user-info {
