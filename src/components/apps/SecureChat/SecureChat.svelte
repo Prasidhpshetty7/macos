@@ -19,6 +19,8 @@
 	let loginError = $state('');
 	let isLoading = $state(false);
 	let showPassword = $state(false);
+	let isTyping = $state(false);
+	let typingTimeout: number;
 	
 	// Supabase config (placeholder - you'll add your credentials)
 	const SUPABASE_URL = 'YOUR_SUPABASE_URL';
@@ -97,8 +99,8 @@
 					username: 'Hacker9435',
 					display_name: 'You',
 					contacts: [
-						{ id: '2', username: 'Techie2435', display_name: 'AnonymousT', online: true },
-						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: true },
+						{ id: '2', username: 'Techie2435', display_name: 'AnonymousT', online: false },
+						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: false },
 					]
 				},
 				'Techie2435': {
@@ -106,8 +108,8 @@
 					username: 'Techie2435',
 					display_name: 'You',
 					contacts: [
-						{ id: '1', username: 'Hacker9435', display_name: 'AnonymousH', online: true },
-						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: true },
+						{ id: '1', username: 'Hacker9435', display_name: 'AnonymousH', online: false },
+						{ id: '3', username: 'Joker3242', display_name: 'AnonymousJ', online: false },
 					]
 				},
 				'Joker3242': {
@@ -115,8 +117,8 @@
 					username: 'Joker3242',
 					display_name: 'You',
 					contacts: [
-						{ id: '1', username: 'Hacker9435', display_name: 'AnonymousH', online: true },
-						{ id: '2', username: 'Techie2435', display_name: 'AnonymousT', online: true },
+						{ id: '1', username: 'Hacker9435', display_name: 'AnonymousH', online: false },
+						{ id: '2', username: 'Techie2435', display_name: 'AnonymousT', online: false },
 					]
 				}
 			};
@@ -190,6 +192,14 @@
 		if (e.key === 'Enter' && !e.shiftKey) {
 			e.preventDefault();
 			sendMessage();
+			isTyping = false;
+		} else {
+			// Show typing indicator
+			isTyping = true;
+			clearTimeout(typingTimeout);
+			typingTimeout = window.setTimeout(() => {
+				isTyping = false;
+			}, 2000);
 		}
 	}
 	
@@ -340,10 +350,7 @@
 							<div class="contact-avatar">{contact.display_name[0].toUpperCase()}</div>
 							<div class="contact-info">
 								<div class="contact-name">{contact.display_name}</div>
-								<div class="contact-status">
-									<span class="status-dot" class:online={contact.online}></span>
-									{contact.online ? 'Online' : 'Offline'}
-								</div>
+								<div class="contact-status">Last seen recently</div>
 							</div>
 						</button>
 					{/each}
@@ -359,8 +366,11 @@
 							<div>
 								<div class="chat-user-name">{selectedContact.display_name}</div>
 								<div class="chat-status">
-									<span class="status-dot" class:online={selectedContact.online}></span>
-									{selectedContact.online ? 'Online' : 'Offline'}
+									{#if isTyping}
+										<span class="typing-indicator">typing...</span>
+									{:else}
+										Last seen recently
+									{/if}
 								</div>
 							</div>
 						</div>
@@ -820,9 +830,6 @@
 	.contact-status {
 		font-size: 12px;
 		color: #6b7280;
-		display: flex;
-		align-items: center;
-		gap: 6px;
 	}
 	
 	.status-dot {
@@ -830,6 +837,8 @@
 		height: 7px;
 		border-radius: 50%;
 		background: #374151;
+		display: inline-block;
+		margin-right: 6px;
 	}
 	
 	.status-dot.online {
@@ -839,6 +848,17 @@
 	}
 	
 	@keyframes pulse {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.5; }
+	}
+	
+	.typing-indicator {
+		color: #10b981;
+		font-weight: 500;
+		animation: typingPulse 1.5s infinite;
+	}
+	
+	@keyframes typingPulse {
 		0%, 100% { opacity: 1; }
 		50% { opacity: 0.5; }
 	}
