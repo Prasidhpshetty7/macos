@@ -18,6 +18,7 @@
 	let newMessage = $state('');
 	let loginError = $state('');
 	let isLoading = $state(false);
+	let showPassword = $state(false);
 	
 	// Supabase config (placeholder - you'll add your credentials)
 	const SUPABASE_URL = 'YOUR_SUPABASE_URL';
@@ -173,31 +174,64 @@
 		<div class="login-container">
 			<div class="login-card">
 				<div class="login-header">
-					<div class="logo">🔐</div>
-					<h1>SecureChat</h1>
-					<p>Your messages disappear in 24 hours</p>
+					<div class="logo">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+						</svg>
+					</div>
+					<h1>CrimeChat</h1>
+					<p class="tagline">Secure • Anonymous • Ephemeral</p>
 				</div>
 				
 				<div class="login-form">
 					<div class="input-group">
-						<input
-							type="text"
-							bind:value={username}
-							placeholder="Username"
-							class="modern-input"
-							autocomplete="off"
-						/>
+						<label class="input-label">Username</label>
+						<div class="input-wrapper">
+							<svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+								<circle cx="12" cy="7" r="4"/>
+							</svg>
+							<input
+								type="text"
+								bind:value={username}
+								placeholder="Enter username"
+								class="modern-input"
+								autocomplete="off"
+							/>
+						</div>
 					</div>
 					
 					<div class="input-group">
-						<input
-							type="password"
-							bind:value={password}
-							placeholder="Password"
-							class="modern-input"
-							autocomplete="off"
-							onkeydown={(e) => e.key === 'Enter' && handleLogin()}
-						/>
+						<label class="input-label">Password</label>
+						<div class="input-wrapper">
+							<svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+								<path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+							</svg>
+							<input
+								type={showPassword ? 'text' : 'password'}
+								bind:value={password}
+								placeholder="Enter password"
+								class="modern-input"
+								autocomplete="off"
+								onkeydown={(e) => e.key === 'Enter' && handleLogin()}
+							/>
+							<button 
+								class="password-toggle" 
+								onclick={() => showPassword = !showPassword}
+								type="button"
+							>
+								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+									{#if showPassword}
+										<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+										<line x1="1" y1="1" x2="23" y2="23"/>
+									{:else}
+										<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+										<circle cx="12" cy="12" r="3"/>
+									{/if}
+								</svg>
+							</button>
+						</div>
 					</div>
 					
 					{#if loginError}
@@ -209,12 +243,36 @@
 						onclick={handleLogin}
 						disabled={isLoading}
 					>
-						{isLoading ? 'Logging in...' : 'Login'}
+						{#if isLoading}
+							<svg class="spinner" viewBox="0 0 24 24">
+								<circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"/>
+								<path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor" stroke-width="4" fill="none"/>
+							</svg>
+							Authenticating...
+						{:else}
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+								<polyline points="10 17 15 12 10 7"/>
+								<line x1="15" y1="12" x2="3" y2="12"/>
+							</svg>
+							Access CrimeChat
+						{/if}
 					</button>
 					
 					<div class="login-footer">
-						<p>🔒 End-to-end encrypted</p>
-						<p>⏰ Messages auto-delete after 24h</p>
+						<div class="feature-badge">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+							</svg>
+							<span>End-to-end encrypted</span>
+						</div>
+						<div class="feature-badge">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<circle cx="12" cy="12" r="10"/>
+								<polyline points="12 6 12 12 16 14"/>
+							</svg>
+							<span>Messages vanish in 24h</span>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -322,10 +380,10 @@
 	.secure-chat {
 		width: 100%;
 		height: 100%;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+		background: #000000;
 		border-radius: inherit;
 		overflow: hidden;
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 	}
 	
 	/* Login Screen */
@@ -336,105 +394,253 @@
 		align-items: center;
 		justify-content: center;
 		padding: 20px;
+		background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+		            linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+		position: relative;
+		overflow: hidden;
+	}
+	
+	.login-container::before {
+		content: '';
+		position: absolute;
+		top: -50%;
+		left: -50%;
+		width: 200%;
+		height: 200%;
+		background: radial-gradient(circle, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+		background-size: 50px 50px;
+		animation: gridMove 20s linear infinite;
+	}
+	
+	@keyframes gridMove {
+		0% { transform: translate(0, 0); }
+		100% { transform: translate(50px, 50px); }
 	}
 	
 	.login-card {
-		background: rgba(255, 255, 255, 0.95);
-		backdrop-filter: blur(10px);
-		border-radius: 24px;
-		padding: 40px;
+		background: rgba(10, 10, 10, 0.8);
+		backdrop-filter: blur(20px);
+		border: 1px solid rgba(16, 185, 129, 0.2);
+		border-radius: 16px;
+		padding: 48px 40px;
 		width: 100%;
-		max-width: 400px;
-		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+		max-width: 420px;
+		box-shadow: 0 0 60px rgba(16, 185, 129, 0.1),
+		            0 20px 40px rgba(0, 0, 0, 0.4);
+		position: relative;
+		z-index: 1;
 	}
 	
 	.login-header {
 		text-align: center;
-		margin-bottom: 30px;
+		margin-bottom: 36px;
 	}
 	
 	.logo {
-		font-size: 64px;
-		margin-bottom: 16px;
+		width: 64px;
+		height: 64px;
+		margin: 0 auto 20px;
+		background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+		border-radius: 16px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+	}
+	
+	.logo svg {
+		width: 36px;
+		height: 36px;
+		color: #000;
+		stroke-width: 2.5;
 	}
 	
 	.login-header h1 {
 		margin: 0 0 8px 0;
-		font-size: 28px;
+		font-size: 32px;
 		font-weight: 700;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
+		color: #ffffff;
+		letter-spacing: -0.5px;
 	}
 	
-	.login-header p {
+	.tagline {
 		margin: 0;
-		color: #666;
-		font-size: 14px;
+		color: #6b7280;
+		font-size: 13px;
+		font-weight: 500;
+		letter-spacing: 0.5px;
+		text-transform: uppercase;
 	}
 	
 	.input-group {
-		margin-bottom: 16px;
+		margin-bottom: 20px;
+	}
+	
+	.input-label {
+		display: block;
+		color: #9ca3af;
+		font-size: 13px;
+		font-weight: 500;
+		margin-bottom: 8px;
+		letter-spacing: 0.3px;
+	}
+	
+	.input-wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+	
+	.input-icon {
+		position: absolute;
+		left: 16px;
+		width: 18px;
+		height: 18px;
+		color: #6b7280;
+		pointer-events: none;
+		z-index: 1;
 	}
 	
 	.modern-input {
 		width: 100%;
-		padding: 16px;
-		border: 2px solid #e0e0e0;
-		border-radius: 12px;
-		font-size: 16px;
-		transition: all 0.3s;
-		background: #f9f9f9;
+		padding: 14px 16px 14px 46px;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 10px;
+		font-size: 15px;
+		color: #ffffff;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+	}
+	
+	.modern-input::placeholder {
+		color: #4b5563;
 	}
 	
 	.modern-input:focus {
 		outline: none;
-		border-color: #667eea;
-		background: #fff;
+		background: rgba(255, 255, 255, 0.05);
+		border-color: #10b981;
+		box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+	}
+	
+	.password-toggle {
+		position: absolute;
+		right: 12px;
+		width: 36px;
+		height: 36px;
+		background: transparent;
+		border: none;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6px;
+		transition: background 0.2s;
+	}
+	
+	.password-toggle svg {
+		width: 18px;
+		height: 18px;
+		color: #6b7280;
+	}
+	
+	.password-toggle:hover {
+		background: rgba(255, 255, 255, 0.05);
 	}
 	
 	.error-message {
-		background: #fee;
-		color: #c33;
-		padding: 12px;
+		background: rgba(239, 68, 68, 0.1);
+		border: 1px solid rgba(239, 68, 68, 0.3);
+		color: #ef4444;
+		padding: 12px 16px;
 		border-radius: 8px;
-		margin-bottom: 16px;
-		font-size: 14px;
+		margin-bottom: 20px;
+		font-size: 13px;
+		font-weight: 500;
 	}
 	
 	.login-btn {
 		width: 100%;
-		padding: 16px;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		color: white;
+		padding: 14px 24px;
+		background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+		color: #000;
 		border: none;
-		border-radius: 12px;
-		font-size: 16px;
+		border-radius: 10px;
+		font-size: 15px;
 		font-weight: 600;
 		cursor: pointer;
-		transition: transform 0.2s;
+		transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+		margin-top: 24px;
+	}
+	
+	.login-btn svg {
+		width: 18px;
+		height: 18px;
 	}
 	
 	.login-btn:hover:not(:disabled) {
-		transform: translateY(-2px);
+		transform: translateY(-1px);
+		box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+	}
+	
+	.login-btn:active:not(:disabled) {
+		transform: translateY(0);
 	}
 	
 	.login-btn:disabled {
-		opacity: 0.6;
+		opacity: 0.5;
 		cursor: not-allowed;
 	}
 	
-	.login-footer {
-		margin-top: 24px;
-		padding-top: 24px;
-		border-top: 1px solid #e0e0e0;
-		text-align: center;
+	.spinner {
+		width: 18px;
+		height: 18px;
+		animation: spin 1s linear infinite;
 	}
 	
-	.login-footer p {
-		margin: 8px 0;
-		color: #666;
-		font-size: 13px;
+	@keyframes spin {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+	
+	.login-footer {
+		margin-top: 32px;
+		padding-top: 24px;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+	
+	.feature-badge {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		color: #6b7280;
+		font-size: 12px;
+		font-weight: 500;
+		padding: 8px 12px;
+		background: rgba(16, 185, 129, 0.05);
+		border: 1px solid rgba(16, 185, 129, 0.1);
+		border-radius: 8px;
+		transition: all 0.3s;
+	}
+	
+	.feature-badge:hover {
+		background: rgba(16, 185, 129, 0.08);
+		border-color: rgba(16, 185, 129, 0.2);
+	}
+	
+	.feature-badge svg {
+		width: 16px;
+		height: 16px;
+		color: #10b981;
+		flex-shrink: 0;
 	}
 	
 	/* Chat Interface */
