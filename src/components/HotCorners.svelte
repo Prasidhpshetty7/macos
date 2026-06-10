@@ -3,16 +3,28 @@
 	import { missionControl } from '🍎/state/mission-control.svelte';
 	import { openLaunchpad } from '🍎/state/launchpad.svelte';
 	import type { AppID } from '🍎/state/apps.svelte';
+	import { onMount } from 'svelte';
 	
 	let mouseX = $state(0);
 	let mouseY = $state(0);
 	let lastTriggerTime = 0;
 	let activeCorner = $state<string | null>(null);
+	let isReady = $state(false);
 	
 	const cornerSize = 10; // pixels
 	const cooldown = 1000; // ms between triggers
+	const activationDelay = 500; // increased from 300ms
+	
+	// Add grace period after page load to prevent accidental triggers
+	onMount(() => {
+		setTimeout(() => {
+			isReady = true;
+		}, 2000); // 2 second grace period after page load
+	});
 	
 	function handleMouseMove(e: MouseEvent) {
+		if (!isReady) return; // Don't trigger during grace period
+		
 		mouseX = e.clientX;
 		mouseY = e.clientY;
 		
@@ -26,37 +38,41 @@
 		if (mouseX < cornerSize && mouseY < cornerSize) {
 			activeCorner = 'top-left';
 			setTimeout(() => {
+				if (!isReady) return; // Double check
 				missionControl.open();
 				lastTriggerTime = Date.now();
 				activeCorner = null;
-			}, 300);
+			}, activationDelay);
 		}
 		// Top-right corner - Mission Control
 		else if (mouseX > screenWidth - cornerSize && mouseY < cornerSize) {
 			activeCorner = 'top-right';
 			setTimeout(() => {
+				if (!isReady) return;
 				missionControl.open();
 				lastTriggerTime = Date.now();
 				activeCorner = null;
-			}, 300);
+			}, activationDelay);
 		}
 		// Bottom-left corner - Launchpad
 		else if (mouseX < cornerSize && mouseY > screenHeight - cornerSize) {
 			activeCorner = 'bottom-left';
 			setTimeout(() => {
+				if (!isReady) return;
 				openLaunchpad();
 				lastTriggerTime = Date.now();
 				activeCorner = null;
-			}, 300);
+			}, activationDelay);
 		}
 		// Bottom-right corner - Show Desktop (minimize all)
 		else if (mouseX > screenWidth - cornerSize && mouseY > screenHeight - cornerSize) {
 			activeCorner = 'bottom-right';
 			setTimeout(() => {
+				if (!isReady) return;
 				showDesktop();
 				lastTriggerTime = Date.now();
 				activeCorner = null;
-			}, 300);
+			}, activationDelay);
 		}
 		else {
 			activeCorner = null;
