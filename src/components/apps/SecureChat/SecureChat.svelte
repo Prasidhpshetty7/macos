@@ -94,6 +94,8 @@
 		loginError = '';
 		
 		try {
+			console.log('Attempting login for:', username);
+			
 			// Call secure Edge Function for password verification
 			const response = await fetch(`${SUPABASE_URL}/functions/v1/secure-login`, {
 				method: 'POST',
@@ -104,7 +106,10 @@
 				body: JSON.stringify({ username, password })
 			});
 			
+			console.log('Response status:', response.status);
+			
 			const data = await response.json();
+			console.log('Response data:', data);
 			
 			if (!response.ok || !data.success) {
 				loginError = data.error || 'Invalid credentials';
@@ -125,7 +130,7 @@
 			isLoggedIn = true;
 		} catch (error) {
 			console.error('Login error:', error);
-			loginError = 'Connection error. Please try again.';
+			loginError = 'Connection error: ' + error.message;
 		} finally {
 			isLoading = false;
 		}
