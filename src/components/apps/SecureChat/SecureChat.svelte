@@ -94,43 +94,43 @@
 		loginError = '';
 		
 		try {
-			console.log('Attempting login for:', username);
+			// Get user from database
+			const { data: user, error: userError } = await supabase
+				.from('users')
+				.select('id, username, password_hash, display_name')
+				.eq('username', username)
+				.single();
 			
-			// Call secure Edge Function for password verification
-			const response = await fetch(`${SUPABASE_URL}/functions/v1/secure-login`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${SUPABASE_KEY}`
-				},
-				body: JSON.stringify({ username, password })
-			});
-			
-			console.log('Response status:', response.status);
-			
-			const data = await response.json();
-			console.log('Response data:', data);
-			
-			if (!response.ok || !data.success) {
-				loginError = data.error || 'Invalid credentials';
+			if (userError || !user) {
+				loginError = 'Invalid username or password';
 				isLoading = false;
 				return;
 			}
 			
-			// Set current user from secure response
+			// Verify password with bcrypt using bcryptjs library
+			const bcrypt = await import('bcryptjs');
+			const passwordMatch = await bcrypt.compare(password, user.password_hash);
+			
+			if (!passwordMatch) {
+				loginError = 'Invalid username or password';
+				isLoading = false;
+				return;
+			}
+			
+			// Set current user
 			currentUser = {
-				id: data.user.id,
-				username: data.user.username,
-				display_name: data.user.display_name,
+				id: user.id,
+				username: user.username,
+				display_name: user.display_name,
 			};
 			
 			// Load contacts
-			await loadContacts(data.user.id);
+			await loadContacts(user.id);
 			
 			isLoggedIn = true;
 		} catch (error) {
 			console.error('Login error:', error);
-			loginError = 'Connection error: ' + error.message;
+			loginError = 'Connection error. Please try again.';
 		} finally {
 			isLoading = false;
 		}
