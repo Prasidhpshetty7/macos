@@ -157,6 +157,13 @@ const quantumvault = create_app_config({
 	width: 800,
 });
 
+const matrixrain = create_app_config({
+	title: 'Matrix Rain',
+	resizable: true,
+	height: 600,
+	width: 900,
+});
+
 export const apps_config = {
 	finder,
 	launchpad,
@@ -174,6 +181,7 @@ export const apps_config = {
 	terminal,
 	securechat,
 	quantumvault,
+	matrixrain,
 
 	'purus-twitter': purusTwitter,
 	'view-source': viewSource,
