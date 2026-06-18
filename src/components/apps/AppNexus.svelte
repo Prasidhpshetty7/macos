@@ -62,6 +62,10 @@
 	{#await import('./SecureChat/SecureChat.svelte') then { default: SecureChat }}
 		<SecureChat {app_id} />
 	{/await}
+{:else if app_id === 'quantumvault'}
+	{#await import('./QuantumVault/QuantumVault.svelte') then { default: QuantumVault }}
+		<QuantumVault {app_id} />
+	{/await}
 {:else}
 	{#await import('./AppStore/AppStore.svelte') then { default: AppStore }}
 		<AppStore {app_id} />
