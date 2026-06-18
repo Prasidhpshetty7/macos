@@ -150,6 +150,13 @@ const securechat = create_app_config({
 	width: 900,
 });
 
+const quantumvault = create_app_config({
+	title: 'QuantumVault',
+	resizable: true,
+	height: 650,
+	width: 800,
+});
+
 export const apps_config = {
 	finder,
 	launchpad,
@@ -166,6 +173,7 @@ export const apps_config = {
 	drift,
 	terminal,
 	securechat,
+	quantumvault,
 
 	'purus-twitter': purusTwitter,
 	'view-source': viewSource,
