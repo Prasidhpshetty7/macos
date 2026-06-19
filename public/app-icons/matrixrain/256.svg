@@ -1,0 +1,27 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Black background -->
+  <rect width="256" height="256" rx="55" fill="#000000"/>
+  
+  <!-- Matrix code columns -->
+  <rect x="40" y="40" width="12" height="176" fill="#00FF00" opacity="0.3"/>
+  <rect x="40" y="40" width="12" height="60" fill="#00FF00"/>
+  
+  <rect x="70" y="60" width="12" height="156" fill="#00FF00" opacity="0.3"/>
+  <rect x="70" y="60" width="12" height="45" fill="#00FF00"/>
+  
+  <rect x="100" y="30" width="12" height="186" fill="#00FF00" opacity="0.3"/>
+  <rect x="100" y="30" width="12" height="70" fill="#00FF00"/>
+  
+  <rect x="130" y="50" width="12" height="166" fill="#00FF00" opacity="0.3"/>
+  <rect x="130" y="50" width="12" height="55" fill="#00FF00"/>
+  
+  <rect x="160" y="45" width="12" height="171" fill="#00FF00" opacity="0.3"/>
+  <rect x="160" y="45" width="12" height="62" fill="#00FF00"/>
+  
+  <rect x="190" y="35" width="12" height="181" fill="#00FF00" opacity="0.3"/>
+  <rect x="190" y="35" width="12" height="68" fill="#00FF00"/>
+  
+  <!-- Glow effect -->
+  <circle cx="128" cy="128" r="80" fill="#00FF00" opacity="0.1"/>
+  <circle cx="128" cy="128" r="60" fill="#00FF00" opacity="0.05"/>
+</svg>
